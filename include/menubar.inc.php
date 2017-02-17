@@ -116,6 +116,30 @@ function initialize_menu()
     $block->template = 'menubar_categories.tpl';
   }
 
+//------------------------------------------------------------ related categories
+  $block = $menu->get_block('mbRelatedCategories');
+
+  if ($block != null and !empty($page['items']))
+  {
+    $exclude_cat_ids = array();
+    if (isset($page['category']))
+    {
+      $exclude_cat_ids = array($page['category']['id']);
+      if (isset($page['combined_categories']))
+      {
+        foreach ($page['combined_categories'] as $cat)
+        {
+          $exclude_cat_ids[] = $cat['id'];
+        }
+      }
+    }
+
+    $block->data = array(
+      'MENU_CATEGORIES' => get_related_categories_menu($page['items'], $exclude_cat_ids),
+    );
+    $block->template = 'menubar_related_categories.tpl';
+  }
+
 //------------------------------------------------------------------------ tags
   $block = $menu->get_block('mbTags');
   if ( $block!=null and !empty($page['items']) and 'picture' != script_basename() )

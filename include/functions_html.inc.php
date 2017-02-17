@@ -456,6 +456,29 @@ function get_tags_content_title()
 }
 
 /**
+ * Returns the breadcrumb to be displayed above thumbnails on combined categories page.
+ *
+ * @return string
+ */
+function get_combined_categories_content_title()
+{
+  global $page;
+
+  $title = l10n('Albums').' ';
+
+  $is_first = true;
+  foreach (array_merge(array($page['category']), $page['combined_categories']) as $category)
+  {
+    $title.= $is_first ? '' : ' + ';
+    $is_first = false;
+
+    $title.= get_cat_display_name(array($category));
+  }
+
+  return $title;
+}
+
+/**
  * Sets the http status header (200,401,...)
  * @param int $code
  * @param string $text for exotic http codes
@@ -516,6 +539,7 @@ function register_default_menubar_blocks($menu_ref_arr)
   $menu->register_block( new RegisteredBlock( 'mbSpecials', 'Specials', 'piwigo'));
   $menu->register_block( new RegisteredBlock( 'mbMenu', 'Menu', 'piwigo'));
   $menu->register_block( new RegisteredBlock( 'mbIdentification', 'Identification', 'piwigo') );
+  $menu->register_block( new RegisteredBlock( 'mbRelatedCategories', 'Related albums', 'piwigo') );
 }
 
 /**
