@@ -784,3 +784,11 @@ LEGEND {
 .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
     padding: 0px 5px !important;
 }
+
+a.removeTag {
+  border:none;
+}
+
+a.removeTag img {
+  vertical-align:bottom;
+}

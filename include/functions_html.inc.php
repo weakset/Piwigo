@@ -467,12 +467,30 @@ function get_combined_categories_content_title()
   $title = l10n('Albums').' ';
 
   $is_first = true;
-  foreach (array_merge(array($page['category']), $page['combined_categories']) as $category)
+  $all_categories = array_merge(array($page['category']), $page['combined_categories']);
+  foreach ($all_categories as $idx => $category)
   {
     $title.= $is_first ? '' : ' + ';
     $is_first = false;
 
     $title.= get_cat_display_name(array($category));
+
+    if (count($all_categories) > 2)
+    {
+      $other_cats = $all_categories;
+      unset($other_cats[$idx]);
+      $remove_url = make_index_url(
+        array(
+          'category' => array_shift($other_cats),
+          'combined_categories' => $other_cats,
+          )
+        );
+
+      $title.=
+        '<a href="'.$remove_url.'" class="removeTag" title="'.l10n('remove this tag from the list').'">'
+        .'<img src="'.get_root_url().get_themeconf('icon_dir').'/remove_s.png" alt="x">'
+        .'</a>';
+    }
   }
 
   return $title;
