@@ -475,16 +475,20 @@ function get_combined_categories_content_title()
 
     $title.= get_cat_display_name(array($category));
 
-    if (count($all_categories) > 2)
+    if (count($all_categories) > 1) // should be always the case
     {
       $other_cats = $all_categories;
       unset($other_cats[$idx]);
-      $remove_url = make_index_url(
-        array(
-          'category' => array_shift($other_cats),
-          'combined_categories' => $other_cats,
-          )
+
+      $params = array(
+        'category' => array_shift($other_cats),
         );
+
+      if (count($other_cats) > 0)
+      {
+        $params['combined_categories'] = $other_cats;
+      }
+      $remove_url = make_index_url($params);
 
       $title.=
         '<a href="'.$remove_url.'" class="removeTag" title="'.l10n('remove this tag from the list').'">'
