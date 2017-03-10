@@ -137,7 +137,11 @@ function initialize_menu()
     $block->data = array(
       'MENU_CATEGORIES' => get_related_categories_menu($page['items'], $exclude_cat_ids),
     );
-    $block->template = 'menubar_related_categories.tpl';
+
+    if (!empty($block->data['MENU_CATEGORIES']) )
+    {
+      $block->template = 'menubar_related_categories.tpl';
+    }
   }
 
 //------------------------------------------------------------------------ tags
