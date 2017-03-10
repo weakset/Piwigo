@@ -793,6 +793,10 @@ a.removeTag img {
   vertical-align:bottom;
 }
 
+#menubar .badge {
+  margin-left:5px;
+}
+
 .badge::before {
   content:"[";
 }
