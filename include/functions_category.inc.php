@@ -748,6 +748,7 @@ SELECT
     id,
     name,
     permalink,
+    id_uppercat,
     global_rank
   FROM '.CATEGORIES_TABLE.'
   WHERE id IN ('.implode(',', array_keys($cat_ids)).')
