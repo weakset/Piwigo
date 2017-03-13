@@ -804,6 +804,13 @@ a.removeTag img {
   content:"]";
 }
 
+.badge.badgeCategories::before {
+  content:"(";
+}
+.badge.badgeCategories::after {
+  content:")";
+}
+
 /* A nicer (more modern) way to present badge, with a background color and no brackets */
 
 /*

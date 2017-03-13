@@ -749,6 +749,7 @@ SELECT
     name,
     permalink,
     id_uppercat,
+    uppercats,
     global_rank
   FROM '.CATEGORIES_TABLE.'
   WHERE id IN ('.implode(',', array_keys($cat_ids)).')
@@ -756,8 +757,11 @@ SELECT
   $cats = query2array($query);
   usort($cats, 'global_rank_compare');
 
+  $index_of_cat = array();
+
   foreach ($cats as $idx => $cat)
   {
+    $index_of_cat[ $cat['id'] ] = $idx;
     $cats[$idx]['LEVEL'] = substr_count($cat['global_rank'], '.') + 1;
 
     // if the category is directly linked to the items, we add an URL + counter
@@ -782,6 +786,20 @@ SELECT
       }
 
       $cats[$idx]['url'] = make_index_url($url_params);
+    }
+
+    // let's find how many sub-categories we have for each category. 3 options:
+    // 1. direct sub-albums
+    // 2. total indirect sub-albums
+    // 3. number of sub-albums containing photos
+    //
+    // Option 3 seems more appropriate here.
+    if (!empty($cat['id_uppercat']) and @$cats[$idx]['count_images'] > 0)
+    {
+      foreach (array_slice(explode(',', $cat['uppercats']), 0, -1) as $uppercat_id)
+      {
+        @$cats[ $index_of_cat[ $uppercat_id ] ]['count_categories']++;
+      }
     }
   }
 
