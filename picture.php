@@ -1010,6 +1010,53 @@ $template->assign(
     )
   );
 
+// thesaurus management (will be moved to a plugin)
+$thesaurus = array();
+
+foreach ($related_categories as $related_category)
+{
+  if (strpos($related_category['uppercats'], ',') === false)
+  {
+    continue;
+  }
+
+  $uppercats = explode(',', $related_category['uppercats']);
+
+  if (!isset($thesaurus[ $uppercats[0] ]))
+  {
+    $thesaurus[ $uppercats[0] ] = array(
+      'name' => $cat_map[ $uppercats[0] ]['name'],
+      'albums' => array(),
+      );
+  }
+
+  $cat_id = end($uppercats);
+  $search_cat_ids[] = $cat_id;
+
+  $thesaurus[ $uppercats[0] ]['albums'][$cat_id] = array(
+    'link' => get_cat_display_name(array($cat_map[$cat_id])),
+    );
+}
+
+$query = '
+SELECT
+    cat_id,
+    nb_images
+  FROM '.USER_CACHE_CATEGORIES_TABLE.'
+  WHERE user_id = '.$user['id'].'
+    AND cat_id IN ('.implode(',', $search_cat_ids).')
+;';
+$counter_of_cat = query2array($query, 'cat_id', 'nb_images');
+
+foreach ($thesaurus as $root_cat_id => $root_album)
+{
+  foreach ($root_album['albums'] as $cat_id => $album)
+  {
+    $thesaurus[$root_cat_id]['albums'][$cat_id]['counter'] = $counter_of_cat[$cat_id];
+  }
+}
+$template->assign('thesaurus', $thesaurus);
+
 // +-----------------------------------------------------------------------+
 // |                               sub pages                               |
 // +-----------------------------------------------------------------------+

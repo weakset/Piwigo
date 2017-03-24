@@ -226,6 +226,20 @@ y.callService(
 			</ul>
 		</dd>
 	</div>
+  {if isset($thesaurus) and count($thesaurus) > 0}
+  <div id="Thesaurus" class="imageInfo">
+    {foreach from=$thesaurus item=root_album}
+    <dt>{$root_album.name}</dt>
+    <dd>
+      <ul>
+        {foreach from=$root_album.albums item=album}
+        <li>{$album.link}<span class="counterBadge">{$album.counter}</span></li>
+        {/foreach}
+      </ul>
+    </dd>
+    {/foreach}
+  </div>
+    {/if}
 	{/if}
 	{if $display_info.visits}
 	<div id="Visits" class="imageInfo">
