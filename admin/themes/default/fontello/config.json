@@ -517,12 +517,6 @@
       "src": "fontawesome"
     },
     {
-      "uid": "f805bb95d40c7ef2bc51b3d50d4f2e5c",
-      "css": "th-list",
-      "code": 59444,
-      "src": "fontawesome"
-    },
-    {
       "uid": "ccddff8e8670dcd130e3cb55fdfc2fd0",
       "css": "down-open",
       "code": 59445,
@@ -763,6 +757,36 @@
       "search": [
         "dice-solid"
       ]
+    },
+    {
+      "uid": "f805bb95d40c7ef2bc51b3d50d4f2e5c",
+      "css": "th-list",
+      "code": 59444,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "1b5a5d7b7e3c71437f5a26befdd045ed",
+      "css": "doc",
+      "code": 128196,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "248db7c0563d8cee80b7041f7736dcad",
+      "css": "database",
+      "code": 59220,
+      "src": "entypo"
+    },
+    {
+      "uid": "f84e243b91683403debed23b950f7efb",
+      "css": "bell",
+      "code": 57553,
+      "src": "elusive"
+    },
+    {
+      "uid": "197375a3cea8cb90b02d06e4ddf1433d",
+      "css": "globe",
+      "code": 127758,
+      "src": "fontawesome"
     },
     {
       "uid": "7411608e7611ffd477aeec7d239f87e9",
