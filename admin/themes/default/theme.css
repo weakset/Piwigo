@@ -2676,6 +2676,7 @@ a#showPermissions:hover {text-decoration: none;}
   overflow: hidden;
 }
 
+.user-list-checkbox .select-checkbox,
 .tag-container .tag-box .select-checkbox {
   display: none;
   width: 15px;
@@ -2686,10 +2687,16 @@ a#showPermissions:hover {text-decoration: none;}
   border: solid #ffa646 2px;
 }
 
+.user-list-checkbox .select-checkbox {
+  display: inline-block;
+}
+
 .tag-container.selection .tag-box .select-checkbox {
   display: block;
 }
 
+.user-list-checkbox:hover .select-checkbox,
+.user-list-checkbox[data-selected='1'] .select-checkbox,
 .tag-container .tag-box:hover .select-checkbox, 
 .tag-container .tag-box[data-selected='1'] .select-checkbox {
   background-color: #ffa646;
@@ -2699,6 +2706,7 @@ a#showPermissions:hover {text-decoration: none;}
   display: block;
 }
 
+.user-list-checkbox .select-checkbox i,
 .tag-container .tag-box .select-checkbox i {
   display: none;
   font-size: 14px;
@@ -2710,6 +2718,7 @@ a#showPermissions:hover {text-decoration: none;}
   animation-timing-function: ease-out;
 }
 
+.user-list-checkbox[data-selected='1'] .select-checkbox i,
 .tag-container .tag-box[data-selected='1'] .select-checkbox i {
   display: inline;
 }

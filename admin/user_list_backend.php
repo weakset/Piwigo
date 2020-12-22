@@ -117,7 +117,6 @@ SELECT
       $sWhere .= $aColumns[$i]." LIKE '%".pwg_db_real_escape_string( $_REQUEST['search']["value"] )."%' OR ";
     }
   }
-
   $sWhere = substr_replace( $sWhere, "", -3 );
   $sWhere .= ')';
 }
@@ -140,8 +139,7 @@ for ( $i=0 ; $i<count($aColumns) ; $i++ )
     $sWhere .= $aColumns[$i]." LIKE '%".pwg_db_real_escape_string($_REQUEST['columns'][$i]['search']['value'])."%' ";
   }
 }
-	
-	
+
 /*
  * SQL queries
  * Get data to display

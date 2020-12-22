@@ -1217,6 +1217,7 @@ span.infos, span.errors {background-image:none; padding:2px 5px; margin:0;border
     <div class="userPropertiesSet userPrefs">
       <div class="userPropertiesSetTitle">{'Preferences'|translate}</div>
 
+              <option value="---">---</option>
       <div class="userProperty"><strong class="nb_image_page_infos"></strong>
         <div class="nb_image_page"></div>
         <input type="hidden" name="nb_image_page" value="<%- user.nb_image_page %>">
