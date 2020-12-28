@@ -561,7 +561,7 @@ function setupRegisterDates(register_dates) {
         range: true,
         min: 0,
         max: register_dates.length - 1,
-        value: [0, 0],
+        values: [0, register_dates.length - 1],
         change: function( event, ui ) {
             $('#advanced-filter-container .dates-select-bar .dates_info_min').html("MIN : " + getDateStr(register_dates[ui.values[0]]));
             $('#advanced-filter-container .dates-select-bar .dates_info_max').html("MAX : " + getDateStr(register_dates[ui.values[1]]));
@@ -575,9 +575,9 @@ function setupRegisterDates(register_dates) {
             $('#advanced-filter-container .period-select-bar').val(register_dates[ui.values[0]]);
         }
     });
+    $('#advanced-filter-container .dates-select-bar .dates_info_min').html("MIN : " + getDateStr(register_dates[0]));
+    $('#advanced-filter-container .dates-select-bar .dates_info_max').html("MAX : " + getDateStr(register_dates[register_dates.length - 1]));
 }
-
-$('#advanced-filter-container .dates-select-bar .select-bar-container').slider("option", "values", [0, register_dates.length - 1]);
 /*------------------
 Add User
 ------------------*/
