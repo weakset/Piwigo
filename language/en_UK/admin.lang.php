@@ -1111,3 +1111,5 @@ $lang['Nov'] = 'Nov';
 $lang['Dec'] = 'Dec';
 $lang['Change Password'] = 'Change Password';
 $lang['Photos per page'] = 'Photos per page';
+$lang['Users not logged in will have these settings applied, these settings are used by default for new users'] = 'Users not logged in will have these settings applied, these settings are used by default for new users';
+$lang['Last visit'] = 'Last visit';

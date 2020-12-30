@@ -1114,3 +1114,6 @@ $lang['Nov'] = 'Nov';
 $lang['Dec'] = 'Dec';
 $lang['Change Password'] = 'Modifier le mot de passe';
 $lang['Photos per page'] = 'Photos par page';
+
+$lang['Users not logged in will have these settings applied, these settings are used by default for new users'] = 'Les utilisateurs non connectés vont avoir ces paramètres appliqués, ces paramètres sont utilisés par défaut pour les nouveaux utilisateurs';
+$lang['Last visit'] = 'Dernière visite';

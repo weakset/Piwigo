@@ -11,6 +11,8 @@
 {combine_script id='jquery.confirm' load='header' require='jquery' path='themes/default/js/plugins/jquery-confirm.min.js'}
 {combine_css path="themes/default/js/plugins/jquery-confirm.min.css"}
 
+{combine_script id='jquery.tipTip' load='header' path='themes/default/js/plugins/jquery.tipTip.minified.js'}
+
 {footer_script}
 
 /* Translates */
@@ -22,6 +24,8 @@ const str_and_others_tags = '{'and %s others'|@translate}';
 const missingConfirm = "{'You need to confirm deletion'|translate|escape:javascript}";
 const missingUsername = "{'Please, enter a login'|translate|escape:javascript}";
 
+const registered_str = '{"Registered"|@translate}';
+const last_visit_str = '{"Last visit"|@translate}';
 const dates_infos = '{'between %s and %s'|translate}'
 const hide_str = '{'Hide'|@translate}';
 const show_str = '{'Show'|@translate}';
@@ -102,14 +106,14 @@ update_selection_content();
             </label>
           </div>
           <div class="in-selection-mode">
-            <p id="checkActions">
+            <div id="checkActions">
               <span>{'Select'|@translate}</span>
               <a href="#" id="selectAllPage">{'The whole page'|@translate}</a>
               <a href="#" id="selectSet">{'The whole set'|@translate}</a><span class="loading" style="display:none"><img src="themes/default/images/ajax-loader-small.gif"></span>
               <a href="#" id="selectNone">{'None'|@translate}</a>
               <a href="#" id="selectInvert">{'Invert'|@translate}</a>
               <span id="selectedMessage"></span>
-            </p>
+            </div>
           </div>
         </div>
         <div style="display:flex">
@@ -135,17 +139,21 @@ update_selection_content();
       <div class="advanced-filters">
         <div class="advanced-filter-status">
           <label class="advanced-filter-label">{'Status'|@translate}</label>
-          <select class="user-action-select advanced-filter-select" name="filter_status">
-            <option value="" label="" selected></option>
-            {html_options options=$pref_status_options}
-          </select>
+          <div class="advanced-filter-select-container">
+            <select class="user-action-select advanced-filter-select" name="filter_status">
+              <option value="" label="" selected></option>
+              {html_options options=$pref_status_options}
+            </select>
+          </div>
         </div>
         <div class="advanced-filter-group">
           <label class="advanced-filter-label">{'Group'|@translate}</label>
-          <select class="user-action-select advanced-filter-select" name="filter_group">
-            <option value="" label="" selected></option>
-            {html_options options=$association_options}
-          </select>
+          <div class="advanced-filter-select-container">
+            <select class="user-action-select advanced-filter-select" name="filter_group">
+              <option value="" label="" selected></option>
+              {html_options options=$association_options}
+            </select>
+          </div>
         </div>
         <div class="advanced-filter-level">
           <label class="advanced-filter-label">{'Privacy level'|@translate}</label>
@@ -159,12 +167,9 @@ update_selection_content();
         <div class="advanced-filter-date">
           <div class="advanced-filter-date-title" style="display:flex">
             <span class="advanced-filter-label">{'Registered'|@translate}</span>
-            <span class='dates-infos' style="color: #ff7700;font-weight: bold;margin-left: 15px;font-size:1.3em;margin-left:10px;"></span>
+            <span class='dates-infos'></span>
           </div>
-          <div class=" dates-select-bar">
-              <p class="dates_info_min"></p>
-
-              <p class="dates_info_max"></p>
+          <div class="dates-select-bar">
               <div class="select-bar-wrapper">
                 <div class="select-bar-container"></div>
               </div>
@@ -181,23 +186,23 @@ update_selection_content();
       </div>
       <!-- username -->
       <div class="user-header-col user-header-username">
-        <span>Username</span>
+        <span>{'Username'|@translate}</span>
       </div>
       <!-- status -->
       <div class="user-header-col user-header-status">
-        <span>Status</span>
+        <span>{'Status'|@translate}</span>
       </div>
       <!-- email adress -->
       <div class="user-header-col user-header-email not-in-selection-mode">
-        <span>Email Adress</span>
+        <span>{'Email Adress'|@translate}</span>
       </div>
       <!-- groups -->
       <div class="user-header-col user-header-groups">
-        <span>Groups</span>
+        <span>{'Groups'|@translate}</span>
       </div>
       <!-- registration date -->
       <div class="user-header-col user-header-registration">
-        <span>Registration date</span>
+        <span>{'Registered'|@translate}</span>
       </div>
     </div>
     <div class="user-update-spinner" style="position:relative">
@@ -231,7 +236,7 @@ update_selection_content();
       </div>
     </div>
   </div>
-  <div id="selection-mode-block" class="in-selection-mode tag-selection" style="width: 250px; display: block;position:relative">
+  <div id="selection-mode-block" class="in-selection-mode tag-selection" style="width: 250px; min-width:250px;display: block;position:relative">
     <div class="user-selection-content">
       <div class="selection-mode-ul">
         <p>{'Your selection'|@translate}</p>
@@ -305,7 +310,7 @@ update_selection_content();
           </div>
 
           {* enabled_high *}
-          <div id="action_enabled_high" class="bulkAction yes_no_radio" style="display:flex;justify-content:space-around">
+          <div id="action_enabled_high" class="bulkAction yes_no_radio">
             <span class="user-list-checkbox" name="enabled_high_yes">
               <span class="select-checkbox">
                 <i class="icon-ok"></i>
@@ -332,6 +337,7 @@ update_selection_content();
           {* nb_image_page *}
           <div id="action_nb_image_page" class="bulkAction">
             <div class="user-property-label photos-select-bar">{'Photos per page'|translate}
+              <br/>
               <span class="nb-img-page-infos"></span>
               <div class="select-bar-wrapper">
                 <div class="select-bar-container"></div>
@@ -362,6 +368,7 @@ update_selection_content();
           {* recent_period *}
           <div id="action_recent_period" class="bulkAction">
             <div class="user-property-label period-select-bar">{'Recent period'|translate}
+              <br />
               <span class="recent_period_infos"></span>
               <div class="select-bar-wrapper">
                 <div class="select-bar-container"></div>
@@ -518,8 +525,9 @@ update_selection_content();
             </div>
           </div>
           <div class="user-property-register-visit">
-            <p class="user-property-registered icon-clock"><!-- Registered string, example: 10 july 2018, 3 months ago --></p>
-            <p class="user-property-last-visit icon-clock"><!-- Last Visit string, example: 12 october 2018, 4 hours ago --></p>
+            <span class="user-property-register"><!-- Registered date XX/XX/XXXX --></span>
+            <span class="icon-calendar"></span>
+            <span class="user-property-last-visit"><!-- Last Visit date XX/XX/XXXX --></span>
           </div>
         </div>
         <div class="properties-container">
@@ -566,20 +574,24 @@ update_selection_content();
             <span class="select-checkbox">
               <i class="icon-ok"></i>
             </span>
-            <span class="user-list-checkbox-label">{'High definiton enabled'|translate}</span>
+            <span class="user-list-checkbox-label">{'High definition enabled'|translate}</span>
           </div>
         </div>
       </div>
-      <div class="update-container" style="display:flex;justify-content:space-between;">
+      <div class="update-container" style="display:flex;flex-direction:column">
+        <div style="display:flex;justify-content:space-between;margin-bottom: 30px;">
           <div>
             <span class="update-user-button">{'Update'|@translate}</span>
             <span class="close-update-button">{'Close'|@translate}</span>
             <span class="update-user-success icon-green">{'User updated'|@translate}</span>
-            <span class="update-user-fail icon-red"></span>
           </div>
           <div>
             <span class="delete-user-button icon-trash">{'Delete user'|@translate}</span>
           </div>
+        </div>
+        <div>
+          <span class="update-user-fail icon-red"></span>
+        </div>
       </div>
     </div>
     <div class="preferences-container">
@@ -645,7 +657,7 @@ update_selection_content();
 
     <a class="icon-cancel CloseUserList CloseGuestUserList"></a>
     <div id="guest-msg" style="background-color:#B9E2F8;padding:5;border-left:3px solid blue;display:flex;align-items:center;margin-bottom:30px">
-      <span class="icon-info-circled-1" style="background-color:#B9E2F8;color:#26409D;font-size:3em"></span><span style="font-size:1.1em;color:#26409D;font-weight:bold;">Users not logged in will have these settings applied, these settings are used by default for new users</span>
+      <span class="icon-info-circled-1" style="background-color:#B9E2F8;color:#26409D;font-size:3em"></span><span style="font-size:1.1em;color:#26409D;font-weight:bold;">{'Users not logged in will have these settings applied, these settings are used by default for new users'|@translate}</span>
     </div>
     <div style='display:flex;'>
       <div class="summary-properties-update-container">
@@ -723,15 +735,21 @@ update_selection_content();
             <span class="select-checkbox">
               <i class="icon-ok"></i>
             </span>
-            <span class="user-list-checkbox-label">{'High definiton enabled'|translate}</span>
+            <span class="user-list-checkbox-label">{'High definition enabled'|translate}</span>
           </div>
         </div>
       </div>
       <div class="update-container">
-          <span class="update-user-button">{'Update'|@translate}</span>
-          <span class="close-update-button">{'Close'|@translate}</span>
-          <span class="update-user-success icon-green">{'User updated'|@translate}</span>
-          <span class="update-user-fail icon-red"></span>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:flex;margin-bottom: 30px">
+            <span class="update-user-button">{'Update'|@translate}</span>
+            <span class="close-update-button">{'Close'|@translate}</span>
+            <span class="update-user-success icon-green">{'User updated'|@translate}</span>
+          </div>
+          <div>
+            <span class="update-user-fail icon-red"></span>
+          </div>
+        </div>
       </div>
       </div>
       <div class="preferences-container">
@@ -908,9 +926,10 @@ update_selection_content();
 
 #AddUserSuccess {
   display:none;
+  position: absolute;
+  top:80px;
+  right:30px;
   font-weight:bold;
-  margin:10px;
-  margin-left:0px;
 }
 
 #AddUserSuccess span {
@@ -955,7 +974,6 @@ update_selection_content();
 }
 
 #user-table-content {
-    min-width:80%;
     max-width:100%;
     flex-grow:1;
     display:flex;
@@ -1166,7 +1184,8 @@ update_selection_content();
   color:#FEE7BD;
 }
 
-.user-container.container-selected .user-groups {
+.user-container.container-selected .user-groups,
+.user-container.container-selected .registration-clock {
   background-color: #FEE7C8;
   color:#FF7B00;
 }
@@ -1238,6 +1257,7 @@ update_selection_content();
 
 .preferences-container {
     width:300px;
+    min-width:300px;
     padding-left:30px;
     border-left: solid 1px #ddd;
 }
@@ -1262,7 +1282,8 @@ update_selection_content();
     margin-bottom:10px;
 }
 
-.user-property-label span {
+.user-property-label span,
+.dates-infos {
 	color: #ff7700;
 	font-weight: bold;
   margin-left: 15px;
@@ -1307,6 +1328,9 @@ update_selection_content();
     font-size:1.1em;
 }
 
+
+
+
 .user-property-select-container {
     margin-bottom: 20px;
 }
@@ -1314,39 +1338,13 @@ update_selection_content();
 .advanced-filter-select-container {
   position: relative;
   text-align:left;
+  width:85%;
 }
 
-.advanced-filter-select-container::before {
-    content: '\e835';
-    font-size:1em;
-    font-family:"fontello";
-    color: #353535;
-    pointer-events:none;
-    position:absolute;
-    margin-top:5px;
-    margin-left: 75%;
+.user-action-select-container {
+  position:relative;
 }
 
-.user-action-select-container::before {
-    content: '\e835';
-    font-size:1em;
-    font-family:"fontello";
-    color: #353535;
-    pointer-events:none;
-    position:absolute;
-    margin-left:65%;
-    margin-top:5px;
-}
-.user-property-select-container::before {
-    content: '\e835';
-    font-size:1em;
-    font-family:"fontello";
-    color: #353535;
-    pointer-events:none;
-    position:absolute;
-    margin-left:270px;
-    margin-top:10px;
-}
 
 .select-bar-wrapper {
     padding-left:10px;
@@ -1379,6 +1377,10 @@ update_selection_content();
 
 .user-list-checkbox {
     margin-bottom:15px;
+}
+
+.user-list-checkbox {
+  user-select: none;
 }
 
 .user-list-checkbox i {
@@ -1509,14 +1511,28 @@ update_selection_content();
     background-color: #f0f0f0 !important;
 }
 
-.user-property-registered-visit {
+.user-property-register-visit {
     color:#A4A4A4;
     font-weight:bold;
     font-size:1.2em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.user-property-registered-visit p {
+.user-property-register-visit span {
     margin:0;
+}
+
+
+.user-property-register, .user-property-last-visit {
+  min-width: 80px;
+}
+
+.user-property-register-visit .icon-calendar {
+    margin:0;
+    font-size:2em;
+    color: #4C4C4C;
 }
 
 /* properties */
@@ -1840,6 +1856,7 @@ Advanced filter
   display:none;
   background-color:#F3F3F3;
   padding:15px;
+  font-size:1em;
 }
 
 .advanced-filters-header {
@@ -1851,7 +1868,6 @@ Advanced filter
 .advanced-filter-title {
   font-weight:bold;
   color:#3e3e3e;
-  font-size:1.2em;
 }
 
 .advanced-filters {
@@ -1873,14 +1889,12 @@ Advanced filter
 
 .advanced-filter-label {
   text-align:left;
-  font-size:1.3em;
   display:block;
   color: #3f3f3f;
   margin-bottom:5px;
 }
 
 .advanced-filter-select {
-  width:85%;
   display:block;
   border: solid 1px #D4D4D4;
 }
@@ -1904,6 +1918,19 @@ Advanced filter
   margin: 30px 0 0 0;
   display:flex;
   flex-direction:column;
+}
+
+.yes_no_radio .user-list-checkbox{
+  cursor:pointer;
+}
+
+.yes_no_radio .user-list-checkbox .user-list-checkbox-label {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+#user-table #action {
+  padding: 0;
 }
 
 </style>

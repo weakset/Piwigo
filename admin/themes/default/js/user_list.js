@@ -77,6 +77,18 @@ function isSelectionMode() {
 
 
 $( document ).ready(function() {
+    $(".user-property-register").tipTip({
+        maxWidth: "300px",
+        delay: 0,
+        fadeIn: 200,
+        fadeOut: 200
+    });
+    $(".user-property-last-visit").tipTip({
+        maxWidth: "300px",
+        delay: 0,
+        fadeIn: 200,
+        fadeOut: 200
+    });
     $(".advanced-filter-level select option").eq(1).remove();
     $('.edit-password').click(function () {
         $('.user-property-password').hide();
@@ -201,9 +213,11 @@ $( document ).ready(function() {
             data: data,
             beforeSend: function() {
                 jQuery("#applyActionLoading").show();
+                jQuery("#applyActionBlock .infos").fadeOut();
             },
             success:function(data) {
                 jQuery("#applyActionLoading").hide();
+                jQuery("#applyActionBlock .infos").fadeIn();
                 jQuery("#applyActionBlock .infos").css("display", "inline-block");
                 update_user_list();
                 if (action == 'delete') {
@@ -219,10 +233,7 @@ $( document ).ready(function() {
     });
 
     $(".yes_no_radio .user-list-checkbox").unbind("click").click(function () {
-        if ($(this).attr("data-selected") === "1") {
-            $(this).attr("data-selected", "0");
-            $(this).siblings().attr("data-selected", "1");
-        } else {
+        if ($(this).attr("data-selected") !== "1") {
             $(this).attr("data-selected", "1");
             $(this).siblings().attr("data-selected", "0");
         }
@@ -876,6 +887,16 @@ function generate_user_list() {
 Fill the pop-in values
 ---------------------*/
 
+function get_formatted_date(date_str) {
+    if (date_str === null) {
+        return "N/A"
+    }
+    let first_part = date_str.split(' ')[0];
+    let formatted = first_part.split('-').join('/');
+    console.log(formatted);
+    return (formatted);
+}
+
 function get_status_index(status) {
     for (let i = 0; i < status_arr.length; i++) {
         if (status_arr[i] === status) {
@@ -911,8 +932,10 @@ function fill_user_edit_summary(user_to_edit, pop_in) {
     pop_in.find('.user-property-username-change input').val(user_to_edit.username);
     pop_in.find('.user-property-password-change input').val('');
     pop_in.find('.user-property-permissions a').attr('href', `admin.php?page=user_perm&user_id=${user_to_edit.id}`);
-    pop_in.find('.user-property-registered').html(user_to_edit.registration_date_string + ', ' + user_to_edit.registration_date_since);;
-    pop_in.find('.user-property-last-visit').html(user_to_edit.last_visit_string + ', ' + user_to_edit.last_visit_since);
+    pop_in.find('.user-property-register').html(get_formatted_date(user_to_edit.registration_date));
+    pop_in.find('.user-property-register').tipTip({content:`${registered_str}<br />${user_to_edit.registration_date_since}`});
+    pop_in.find('.user-property-last-visit').html(get_formatted_date(user_to_edit.last_visit));
+    pop_in.find('.user-property-last-visit').tipTip({content: `${last_visit_str}<br />${user_to_edit.last_visit_since}`});
 }
 
 function fill_user_edit_properties(user_to_edit, pop_in) {
@@ -1157,7 +1180,7 @@ function update_user_info() {
         type: "POST",
         data: ajax_data,
         beforeSend: function() {
-            $("#UserList .update-user-fail").html(data.message).fadeOut();
+            $("#UserList .update-user-fail").fadeOut();
             $("#UserList .update-user-success").fadeOut();
         },
         success: function(raw_data) {
