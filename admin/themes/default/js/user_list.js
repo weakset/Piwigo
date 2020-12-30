@@ -1,4 +1,4 @@
- const color_icons = ["icon-red", "icon-blue", "icon-yellow", "icon-purple", "icon-green"];
+const color_icons = ["icon-red", "icon-blue", "icon-yellow", "icon-purple", "icon-green"];
 const status_arr = ['webmaster', 'admin', 'normal', 'generic', 'guest'];
 const level_arr = ['0', '1', '2', '4', '8'];
 let current_users = [];
@@ -7,11 +7,13 @@ let guest_user = {};
 let connected_user = 0;
 let groups_arr = [];
 let nb_days = '';
+let nb_photos = '';
 let nb_photos_per_page = '';
 let last_user_index = -1;
 let last_user_id = -1;
 let pwg_token = '';
 let selection = [];
+let first_update = true;
 /*----------------
 Escape of pop-in
 ----------------*/
@@ -49,22 +51,33 @@ let groupGuestSelectize = jQuery('[data-selectize=groups]')[1].selectize;
 OnClick functions
 -----------------*/
 function open_user_list() {
+    hide_temporary_messages();
     $("#UserList").fadeIn();
 }
 
 function close_user_list() {
+    hide_temporary_messages();
     $("#UserList").fadeOut();
 }
 
 function open_guest_user_list() {
+    hide_temporary_messages();
     $("#GuestUserList").fadeIn();
 }
 
 function close_guest_user_list() {
+    hide_temporary_messages();
     $("#GuestUserList").fadeOut();
 }
 
+
+function isSelectionMode() {
+    return $("#toggleSelectionMode").is(":checked")
+}
+
+
 $( document ).ready(function() {
+    $(".advanced-filter-level select option").eq(1).remove();
     $('.edit-password').click(function () {
         $('.user-property-password').hide();
         $('.user-property-password-change').show().css('display', 'flex');
@@ -93,9 +106,8 @@ $( document ).ready(function() {
     $("#toggleSelectionMode").attr("checked", false);
     $("#toggleSelectionMode").click(function () {
         let isSelection = $(this).is(":checked");
-        selectionMode($(this).is(":checked"));
+        selectionMode(isSelection);
     });
-    
     $('.edit-guest-user-button').click(open_guest_user_list);
     $('.CloseGuestUserList').click(close_guest_user_list);
     $('#GuestUserList .close-update-button').click(close_guest_user_list);
@@ -105,12 +117,12 @@ $( document ).ready(function() {
             $(this).removeClass("icon-eye");
             $(this).addClass("icon-eye-off");
             $("#AddUserPassword").get(0).type = "text";
-            $(this).html("Hide")
+            $(this).html(hide_str)
         } else {
             $(this).removeClass("icon-eye-off");
             $(this).addClass("icon-eye");
             $("#AddUserPassword").get(0).type = "password";
-            $(this).html("Show")
+            $(this).html(show_str)
         }
     })
     /* Action */
@@ -192,7 +204,7 @@ $( document ).ready(function() {
             },
             success:function(data) {
                 jQuery("#applyActionLoading").hide();
-                jQuery("#applyActionBlock .infos").show();
+                jQuery("#applyActionBlock .infos").css("display", "inline-block");
                 update_user_list();
                 if (action == 'delete') {
                     selection = [];
@@ -320,13 +332,17 @@ function getSliderKeyFromValue(value, values) {
 
 function getNbImagePageInfoFromIdx(idx) {
     return sprintf(
-        "%d",
+        nb_photos,
         nb_image_page_values[idx]
     );
 }
 
 function getRecentPeriodInfoFromIdx(idx) {
-    return recent_period_values[idx].toString();
+    return sprintf(
+        nb_days,
+        recent_period_values[idx]
+    );
+    //return recent_period_values[idx].toString();
 }
 
 /* Photos bar slider */
@@ -548,7 +564,7 @@ function advanced_filter_hide() {
     update_user_list();
 }
 
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+let months = [];
 
 function getDateStr(date) {
     let date_arr = date.split(' ');
@@ -563,20 +579,19 @@ function setupRegisterDates(register_dates) {
         max: register_dates.length - 1,
         values: [0, register_dates.length - 1],
         change: function( event, ui ) {
-            $('#advanced-filter-container .dates-select-bar .dates_info_min').html("MIN : " + getDateStr(register_dates[ui.values[0]]));
-            $('#advanced-filter-container .dates-select-bar .dates_info_max').html("MAX : " + getDateStr(register_dates[ui.values[1]]));
+            $("#advanced-filter-container .dates-infos").html(sprintf(dates_infos, getDateStr(register_dates[ui.values[0]]), getDateStr(register_dates[ui.values[1]])));
         },
         slide: function( event, ui ) {
-            $('#advanced-filter-container .dates-select-bar .dates_info_min').html("MIN : " + getDateStr(register_dates[ui.values[0]]));
-            $('#advanced-filter-container .dates-select-bar .dates_info_max').html("MAX : " + getDateStr(register_dates[ui.values[1]]));
+            $("#advanced-filter-container .dates-infos").html(sprintf(dates_infos, getDateStr(register_dates[ui.values[0]]), getDateStr(register_dates[ui.values[1]])));
         },
         stop: function( event, ui ) {
+            $("#advanced-filter-container .dates-infos").html(sprintf(dates_infos, getDateStr(register_dates[ui.values[0]]), getDateStr(register_dates[ui.values[1]])));
             update_user_list();
-            $('#advanced-filter-container .period-select-bar').val(register_dates[ui.values[0]]);
         }
     });
-    $('#advanced-filter-container .dates-select-bar .dates_info_min').html("MIN : " + getDateStr(register_dates[0]));
-    $('#advanced-filter-container .dates-select-bar .dates_info_max').html("MAX : " + getDateStr(register_dates[register_dates.length - 1]));
+
+    $("#advanced-filter-container .dates-infos").html(sprintf(dates_infos, getDateStr(register_dates[0]), getDateStr(register_dates[register_dates.length - 1])));
+            
 }
 /*------------------
 Add User
@@ -596,7 +611,7 @@ function gen_password(e) {
       password += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
     }
 
-    jQuery(".AddUserLabelPassword .AddUserInput").val(password);
+    jQuery("#AddUserPassword").val(password);
 }
 
 function add_user_close() {
@@ -703,6 +718,7 @@ function update_selection_content() {
         $('.selection-mode-ul').show();
     }
     set_selected_to_selection();
+    $("#applyActionBlock .infos").hide();
 }
 
 function set_selected_to_selection() {
@@ -727,6 +743,8 @@ function selectionMode(isSelection) {
     $("#permitActionUserList select[name=selectAction]").val("-1");
     $("#permitActionUserList select[name=selectAction]").trigger("change");
     if (isSelection) {
+        //resets the selection
+        //selection = [];
         set_selected_to_selection();
         $(".in-selection-mode").show();
         $(".not-in-selection-mode").hide();
@@ -741,6 +759,12 @@ function selectionMode(isSelection) {
 /*------------------
 General functions
 ------------------*/
+
+function hide_temporary_messages() {
+    $(".update-user-success").hide();
+    $("#AddUserSuccess").hide();
+    $('.error-msg').hide();
+}
 
 function get_group_name_from_id(id) {
     for (let i = 0; i < groups_arr.length; i++) {
@@ -763,6 +787,34 @@ function get_container_index_from_uid(uid) {
 /*-----------------------
 Generate User Containers
 -----------------------*/
+function user_container_click() {
+    if (!isSelectionMode()) {
+        return;
+    }
+    let curr_container = $(this)
+    let in_container = curr_container.length != 0;
+    let container_checkbox = $(this).find('.user-list-checkbox');
+    let curr_user = in_container ? current_users[parseInt(curr_container.attr("key"))] : {id: -1};
+    if (container_checkbox.attr('data-selected') == '1') {
+        container_checkbox.attr('data-selected', '0');
+        container_checkbox.find("i").hide();
+        if (in_container) {
+            curr_container.removeClass("container-selected");
+            selection = selection.filter((elem) => elem.id != curr_user.id);
+        }
+    } else {
+        container_checkbox.attr('data-selected', '1');
+        container_checkbox.find("i").show();
+        if (in_container) {
+            curr_container.addClass("container-selected");
+            selection.push({id: curr_user.id, username: curr_user.username})
+        }
+    }
+    if (in_container) {
+        update_selection_content();
+    }
+}
+
 function generate_groups(container, groups) {
     container.find(".user-container-groups").html('');
     if (groups.length >= 1) {
@@ -816,7 +868,8 @@ function generate_user_list() {
         $("#user-table-content .user-container-wrapper").append(new_container);
     }
     $('.user-container .user-list-checkbox').unbind("change").change(checkbox_change);
-    $('.user-container .user-list-checkbox').unbind("click").click(checkbox_container_click);
+    $('.user-container .user-list-checkbox').unbind("click");
+    $(".user-container").click(user_container_click);
 }
 
 /*---------------------
@@ -1103,9 +1156,13 @@ function update_user_info() {
         url: "ws.php?format=json&method=pwg.users.setInfo",
         type: "POST",
         data: ajax_data,
+        beforeSend: function() {
+            $("#UserList .update-user-fail").html(data.message).fadeOut();
+            $("#UserList .update-user-success").fadeOut();
+        },
         success: function(raw_data) {
             data = jQuery.parseJSON(raw_data);
-            if (data.stat == 'ok') {
+            if (data.stat === 'ok') {
                 let result_user = data.result.users[0];
                 if (last_user_index != -1) {
                     current_users[last_user_index].email = result_user.email;
@@ -1123,6 +1180,9 @@ function update_user_info() {
                     fill_container_user_info($('#user-table-content .user-container').eq(last_user_index), last_user_index);
                 }
                 $("#UserList .update-user-success").fadeIn();
+            } else if (data.stat === 'fail') {
+                $("#UserList .update-user-fail").html(data.message);
+                $("#UserList .update-user-fail").fadeIn();
             }
         }
     });
@@ -1208,14 +1268,25 @@ function update_user_list() {
         url: "ws.php?format=json&method=pwg.users.getList",
         type: "POST",
         data: update_data,
+        beforeSend: function () {
+            $(".user-update-spinner").show();
+        },
         success: function (raw_data) {
             data = jQuery.parseJSON(raw_data);
-            console.log(data);
+            if (data.stat === "fail") {
+                console.log(data.message);
+                return;
+            }
+            if (first_update) {
+                let total_users = data.result.total_count;
+                $("h1").append(`<span class='badge-number'>${total_users}</span>`);
+                first_update = false;
+            }
             nb_filtered_users = data.result.total_count;
             update_pagination_menu();
             current_users = data.result.users;
             generate_user_list();
-            $(".user-col .icon-pencil").click(function () {
+            $(".user-col.user-first-col.user-container-edit").click(function () {
                 let uid_index = $(this).closest('.user-container').attr('key');
                 last_user_id = current_users[uid_index].id;
                 last_user_index = uid_index;
@@ -1223,6 +1294,11 @@ function update_user_list() {
                 $("#UserList").fadeIn();
             });
             set_selected_to_selection();
+
+            $(".user-update-spinner").hide();
+        },
+        error: (raw_data) => {
+            $(".user-update-spinner").hide();
         }
     });
 }
@@ -1264,8 +1340,8 @@ function add_user() {
                         get_user_info(new_user_id, open_user_list);
                     }
                 })
-                $("#AddUserSuccess label span:first").html("User %s added".replace("%s", ajax_data.username));
-                $("#AddUserSuccess").show()
+                $("#AddUserSuccess label span:first").html(user_added_str.replace("%s", ajax_data.username));
+                $("#AddUserSuccess").css("display", "flex");
             }
             else {
                 $("#AddUser .AddUserErrors p").html('&#x2718; '+data.message)

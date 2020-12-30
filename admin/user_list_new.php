@@ -70,6 +70,7 @@ $template->assign('register_dates', implode(',' , $register_dates));
 // +-----------------------------------------------------------------------+
 $template->assign(
   array(
+    'ADMIN_PAGE_TITLE' => l10n('Manage users'),
     'ACTIVATE_COMMENTS' => $conf['activate_comments'],
     'Double_Password' => $conf['double_password_type_in_admin']
   )
@@ -162,15 +163,16 @@ SELECT id, name, is_default
 ;';
 $result = pwg_query($query);
 
-$groups_arr = [];
+$groups_arr_id = [];
+$groups_arr_name = [];
 while ($row = pwg_db_fetch_assoc($result))
 {
-  $a = [$row["id"], "'".$row["name"]."'"];
-  $groups_arr[] = "[" . implode(',', $a) . "]";
+  $groups_arr_name[] = '"'.pwg_db_real_escape_string($row["name"]).'"';
+  $groups_arr_id[] = $row["id"];
 }
 
-$template->assign('groups_arr', implode(',', $groups_arr));
-
+$template->assign('groups_arr_id', implode(',', $groups_arr_id));
+$template->assign('groups_arr_name', implode(',', $groups_arr_name));
 $template->assign('guest_id', $conf["guest_id"]);
 
 // +-----------------------------------------------------------------------+

@@ -22,11 +22,35 @@ const str_and_others_tags = '{'and %s others'|@translate}';
 const missingConfirm = "{'You need to confirm deletion'|translate|escape:javascript}";
 const missingUsername = "{'Please, enter a login'|translate|escape:javascript}";
 
+const dates_infos = '{'between %s and %s'|translate}'
+const hide_str = '{'Hide'|@translate}';
+const show_str = '{'Show'|@translate}';
+const user_added_str = '{'User %s added'|@translate}';
+
+months = [
+  "{'Jan'|@translate}",
+  "{'Feb'|@translate}",
+  "{'Mar'|@translate}",
+  "{'Apr'|@translate}",
+  "{'May'|@translate}",
+  "{'Jun'|@translate}",
+  "{'Jul'|@translate}",
+  "{'Aug'|@translate}",
+  "{'Sep'|@translate}",
+  "{'Oct'|@translate}",
+  "{'Nov'|@translate}",
+  "{'Dec'|@translate}"
+];
+
 /* Template variables */
 connected_user = {$connected_user};
-groups_arr = [{$groups_arr}];
+let groups_arr_name = [{$groups_arr_name}];
+let groups_arr_id = [{$groups_arr_id}];
+groups_arr = groups_arr_id.map((elem, index) => [elem, groups_arr_name[index]]);
 guest_id = {$guest_id};
 nb_days = "{'%d days'|@translate}";
+//per page is too long for the popin
+nb_photos = "{'%d photos'|@translate}";
 nb_photos_per_page = "{'%d photos per page'|@translate}";
 pwg_token = '{$PWG_TOKEN}';
 
@@ -61,20 +85,20 @@ update_selection_content();
     <div class="user-manager-header">
       <div style="display:flex;justify-content:space-between; flex-grow:1;">
         <div style="display:flex">
-          <div class="not-in-selection-mode user-header-button add-user-button" style="margin-right:20px">
+          <div class="not-in-selection-mode user-header-button add-user-button" style="margin-right:10px">
             <label class="user-header-button-label icon-plus-circled">
-              <p>Add a User</p>
+              <p>{'Add a user'|@translate}</p>
             </label>
           </div>
 
-          <div class="not-in-selection-mode user-header-button" style="margin-right:20px">
+          <div class="not-in-selection-mode user-header-button" style="margin-right:10px">
             <label class="user-header-button-label icon-user-1 edit-guest-user-button">
-              <p>Edit guest user</p>
+              <p>{'Edit guest user'|@translate}</p>
             </label>
           </div>
           <div id="AddUserSuccess">
             <label class="icon-ok">
-              <span>New user added</span><span class="icon-pencil edit-now">Edit it now</span>
+              <span>{'New user added'|@translate}</span><span class="icon-pencil edit-now">{'Edit'|@translate}</span>
             </label>
           </div>
           <div class="in-selection-mode">
@@ -90,7 +114,7 @@ update_selection_content();
         </div>
         <div style="display:flex">
           <div id="advanced_filter_button">
-            <span>Advanced filter</span>
+            <span>{'Advanced filter'|@translate}</span>
           </div>
           <div id='search-user'>
             <div class='search-info'> </div>
@@ -105,34 +129,38 @@ update_selection_content();
     </div>
     <div id="advanced-filter-container">
       <div class="advanced-filters-header">
-        <span class="advanced-filter-title">Advanced filter</span>
-        <span class="icon-cancel"></span>
+        <span class="advanced-filter-title">{'Advanced filter'|@translate}</span>
+        <span class="advanced-filter-close icon-cancel"></span>
       </div>
       <div class="advanced-filters">
         <div class="advanced-filter-status">
-          <label class="advanced-filter-label">Status</label>
+          <label class="advanced-filter-label">{'Status'|@translate}</label>
           <select class="user-action-select advanced-filter-select" name="filter_status">
             <option value="" label="" selected></option>
             {html_options options=$pref_status_options}
           </select>
         </div>
         <div class="advanced-filter-group">
-          <label class="advanced-filter-label">Group</label>
+          <label class="advanced-filter-label">{'Group'|@translate}</label>
           <select class="user-action-select advanced-filter-select" name="filter_group">
             <option value="" label="" selected></option>
             {html_options options=$association_options}
           </select>
         </div>
         <div class="advanced-filter-level">
-          <label class="advanced-filter-label">Privacy level</label>
-          <select class="user-action-select advanced-filter-select" name="filter_level" size="1">
-            <option value="" label="" selected></option>
-            {html_options options=$level_options}
-          </select>
+          <label class="advanced-filter-label">{'Privacy level'|@translate}</label>
+          <div class="advanced-filter-select-container">
+            <select class="user-action-select advanced-filter-select" name="filter_level" size="1">
+              <option value="" label="" selected></option>
+              {html_options options=$level_options}
+            </select>
+          </div>
         </div>
         <div class="advanced-filter-date">
-
-          <label class="advanced-filter-label">Date</label>
+          <div class="advanced-filter-date-title" style="display:flex">
+            <span class="advanced-filter-label">{'Registered'|@translate}</span>
+            <span class='dates-infos' style="color: #ff7700;font-weight: bold;margin-left: 15px;font-size:1.3em;margin-left:10px;"></span>
+          </div>
           <div class=" dates-select-bar">
               <p class="dates_info_min"></p>
 
@@ -172,6 +200,9 @@ update_selection_content();
         <span>Registration date</span>
       </div>
     </div>
+    <div class="user-update-spinner" style="position:relative">
+      <img class="loading" src="themes/default/images/ajax-loader-small.gif" style="position:absolute;top:20px;width:30px">
+    </div>
     <div class="user-container-wrapper">
     </div>
     <!-- Pagination -->
@@ -185,6 +216,10 @@ update_selection_content();
       </div>
 
       <div class="pagination-container">
+
+        <div class="user-update-spinner">
+          <img class="loading" src="themes/default/images/ajax-loader-small.gif">
+        </div>
         <div class="pagination-arrow left">
           <span class="icon-left-open"></span>
         </div>
@@ -210,26 +245,28 @@ update_selection_content();
         <div id="forbidAction">{'No users selected, no actions possible.'|@translate}</div>
         <div id="permitActionUserList" style="display:block">
 
-          <select class="user-action-select" name="selectAction">
-            <option value="-1">{'Choose an action'|@translate}</option>
-            <optgroup label="Actions">
-              <option value="delete" class="icon-trash">{'Delete selected users'|@translate}</option>
-              <option value="status">{'Status'|@translate}</option>
-              <option value="group_associate">{'associate to group'|translate}</option>
-              <option value="group_dissociate">{'dissociate from group'|@translate}</option>
-              <option value="enabled_high">{'High definition enabled'|@translate}</option>
-              <option value="level">{'Privacy level'|@translate}</option>
-              <option value="nb_image_page">{'Number of photos per page'|@translate}</option>
-              <option value="theme">{'Theme'|@translate}</option>
-              <option value="language">{'Language'|@translate}</option>
-              <option value="recent_period">{'Recent period'|@translate}</option>
-              <option value="expand">{'Expand all albums'|@translate}</option>
-      {if $ACTIVATE_COMMENTS}
-              <option value="show_nb_comments">{'Show number of comments'|@translate}</option>
-      {/if}
-              <option value="show_nb_hits">{'Show number of hits'|@translate}</option>
-            </optgroup>
-          </select>
+          <div class="user-action-select-container">
+            <select class="user-action-select" name="selectAction">
+              <option value="-1">{'Choose an action'|@translate}</option>
+              <optgroup label="Actions">
+                <option value="delete" class="icon-trash">{'Delete selected users'|@translate}</option>
+                <option value="status">{'Status'|@translate}</option>
+                <option value="group_associate">{'associate to group'|translate}</option>
+                <option value="group_dissociate">{'dissociate from group'|@translate}</option>
+                <option value="enabled_high">{'High definition enabled'|@translate}</option>
+                <option value="level">{'Privacy level'|@translate}</option>
+                <option value="nb_image_page">{'Number of photos per page'|@translate}</option>
+                <option value="theme">{'Theme'|@translate}</option>
+                <option value="language">{'Language'|@translate}</option>
+                <option value="recent_period">{'Recent period'|@translate}</option>
+                <option value="expand">{'Expand all albums'|@translate}</option>
+                {if $ACTIVATE_COMMENTS}
+                <option value="show_nb_comments">{'Show number of comments'|@translate}</option>
+                {/if}
+                <option value="show_nb_hits">{'Show number of hits'|@translate}</option>
+              </optgroup>
+            </select>
+          </div>
           {* delete *}
           <div id="action_delete" class="bulkAction">
             <div class="user-list-checkbox" name="confirm_deletion">
@@ -242,24 +279,29 @@ update_selection_content();
 
           {* status *}
           <div id="action_status" class="bulkAction">
-            <select class="user-action-select" name="status">
-              {html_options options=$pref_status_options selected=$pref_status_selected}
-            </select>
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="status">
+                {html_options options=$pref_status_options selected=$pref_status_selected}
+              </select>
+            </div>
           </div>
 
           {* group_associate *}
           <div id="action_group_associate" class="bulkAction">
-
-            <select class="user-action-select" name="associate">
-              {html_options options=$association_options selected=$associate_selected}
-            </select>
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="associate">
+                {html_options options=$association_options selected=$associate_selected}
+              </select>
+            </div>
           </div>
 
           {* group_dissociate *}
           <div id="action_group_dissociate" class="bulkAction">
-            <select class="user-action-select" name="dissociate">
-              {html_options options=$association_options selected=$dissociate_selected}
-            </select>
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="dissociate">
+                {html_options options=$association_options selected=$dissociate_selected}
+              </select>
+            </div>
           </div>
 
           {* enabled_high *}
@@ -280,15 +322,17 @@ update_selection_content();
 
           {* level *}
           <div id="action_level" class="bulkAction">
-            <select class="user-action-select" name="level" size="1">
-              {html_options options=$level_options selected=$level_selected}
-            </select>
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="level" size="1">
+                {html_options options=$level_options selected=$level_selected}
+              </select>
+            </div>
           </div>
 
           {* nb_image_page *}
           <div id="action_nb_image_page" class="bulkAction">
             <div class="user-property-label photos-select-bar">{'Photos per page'|translate}
-              <span> : </span><span class="nb-img-page-infos"></span>
+              <span class="nb-img-page-infos"></span>
               <div class="select-bar-wrapper">
                 <div class="select-bar-container"></div>
               </div>
@@ -298,16 +342,21 @@ update_selection_content();
 
           {* theme *}
           <div id="action_theme" class="bulkAction">
-            <select class="user-action-select" name="theme" size="1">
-              {html_options options=$theme_options selected=$theme_selected}
-            </select>
+
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="theme" size="1">
+                {html_options options=$theme_options selected=$theme_selected}
+              </select>
+            </div>
           </div>
 
           {* language *}
           <div id="action_language" class="bulkAction">
-            <select class="user-action-select" name="language" size="1">
-              {html_options options=$language_options selected=$language_selected}
-            </select>
+            <div class="user-action-select-container">
+              <select class="user-action-select" name="language" size="1">
+                {html_options options=$language_options selected=$language_selected}
+              </select>
+            </div>
           </div>
 
           {* recent_period *}
@@ -372,7 +421,7 @@ update_selection_content();
             <input id="applyAction" class="submit" type="submit" value="{'Apply action'|@translate}" name="submit"> <span id="applyOnDetails"></span></input>
             <span id="applyActionLoading" style="display:none"><img src="themes/default/images/ajax-loader-small.gif"></span>
             <br />
-            <span class="infos" style="display:none">&#x2714; {'Users modified'|translate}</span>
+            <span class="infos" style="display:inline-block;display:none;max-width:100%;margin:0;margin-top:30px;min-height:0;border-left: 2px solid #00FF00;">&#x2714; {'Users modified'|translate}</span>
           </p>
         </div> {* #permitActionUserList *}
       </fieldset>
@@ -438,34 +487,34 @@ update_selection_content();
         <div class="summary-container">
           <div class="user-property-initials">
             <div>
-              <span class="icon-blue">JP</span>
+              <span class="icon-blue"><!-- Initials (JP) --></span>
             </div>
           </div>
           <div class="user-property-username">
-            <span class="edit-username-title">Jessy Pinkman</span>
-            <span class="edit-username-specifier">(you)</span>
+            <span class="edit-username-title"><!-- Name (Jessy Pinkman) --></span>
+            <span class="edit-username-specifier"><!-- You specifire (you) --></span>
             <span class="edit-username icon-pencil"></span>
           </div>
           <div class="user-property-username-change">
             <div class="summary-input-container">
-              <input class="user-property-input user-property-input-username" value="" placeholder="Username" />
+              <input class="user-property-input user-property-input-username" value="" placeholder="{'Username'|@translate}" />
             </div>
             <span class="icon-ok edit-username-validate"></span>
             <span class="icon-cancel-circled edit-username-cancel"></span>
           </div>
           <div class="user-property-password-container">
             <div class="user-property-password edit-password">
-              <p class="icon-key user-property-button">Change Password</p>
+              <p class="icon-key user-property-button">{'Change Password'|@translate}</p>
             </div>
             <div class="user-property-password-change">
               <div class="summary-input-container">
-              <input class="user-property-input user-property-input-password" value="" placeholder="Password" />
+              <input class="user-property-input user-property-input-password" value="" placeholder="{'Password'|@translate}" />
               </div>
               <span class="icon-ok edit-password-validate"></span>
               <span class="icon-cancel-circled edit-password-cancel"></span>
             </div>
             <div class="user-property-permissions">
-              <p class="icon-lock user-property-button"><a href="#" >Permissions</a></p>
+              <p class="icon-lock user-property-button"><a href="#" >{'Permissions'|@translate}</a></p>
             </div>
           </div>
           <div class="user-property-register-visit">
@@ -475,38 +524,38 @@ update_selection_content();
         </div>
         <div class="properties-container">
           <div class="user-property-column-title">
-            <p>Properties</p>
+            <p>{'Properties'|@translate}</p>
           </div>
           <div class="user-property-email">
-            <p class="user-property-label">Email Adress</p>
+            <p class="user-property-label">{'Email Adress'|@translate}</p>
             <input type="text" class="user-property-input" value="contact@jessy-pinkman.com" />
           </div>
           <div class="user-property-status">
-            <p class="user-property-label">Status</p>
+            <p class="user-property-label">{'Status'|@translate}</p>
             <div class="user-property-select-container">
               <select name="status" class="user-property-select">
-                <option value="webmaster">Webmaster</option>
-                <option value="admin">Admin</option>
-                <option value="normal">normal</option>
-                <option value="generic">generic</option>
-                <option value="guest">guest</option>
+                <option value="webmaster">{'user_status_webmaster'|@translate}</option>
+                <option value="admin">{'user_status_admin'|@translate}</option>
+                <option value="normal">{'user_status_normal'|@translate}</option>
+                <option value="generic">{'user_status_generic'|@translate}</option>
+                <option value="guest">{'user_status_guest'|@translate}</option>
               </select>
             </div>
           </div>
           <div class="user-property-level">
-            <p class="user-property-label">Privacy Level</p>
+            <p class="user-property-label">{'Privacy level'|@translate}</p>
             <div class="user-property-select-container">
               <select name="privacy" class="user-property-select">
-                <option value="0">---</option>
-                <option value="1">Contacts</option>
-                <option value="2">Amis</option>
-                <option value="4">Famille</option>
-                <option value="8">Admin</option>
+                <option value="0">{'Level 0'|@translate}</option>
+                <option value="1">{'Level 1'|@translate}</option>
+                <option value="2">{'Level 2'|@translate}</option>
+                <option value="4">{'Level 4'|@translate}</option>
+                <option value="8">{'Level 8'|@translate}</option>
               </select>
             </div>
           </div>
           <div class="user-property-group-container">
-            <p class="user-property-label">Groups</p>
+            <p class="user-property-label">{'Groups'|@translate}</p>
             <div class="user-property-select-container user-property-group">
               <select class="user-property-select" data-selectize="groups" placeholder="{'Select groups or type them'|translate}" 
                 name="group_id[]" multiple style="box-sizing:border-box;"></select>
@@ -523,12 +572,13 @@ update_selection_content();
       </div>
       <div class="update-container" style="display:flex;justify-content:space-between;">
           <div>
-            <span class="update-user-button">Update</span>
-            <span class="close-update-button">Close</span>
-            <span class="update-user-success icon-green"> User updated </span>
+            <span class="update-user-button">{'Update'|@translate}</span>
+            <span class="close-update-button">{'Close'|@translate}</span>
+            <span class="update-user-success icon-green">{'User updated'|@translate}</span>
+            <span class="update-user-fail icon-red"></span>
           </div>
           <div>
-            <span class="delete-user-button icon-trash">Delete user</span>
+            <span class="delete-user-button icon-trash">{'Delete user'|@translate}</span>
           </div>
       </div>
     </div>
@@ -537,14 +587,14 @@ update_selection_content();
         <p>{'Preferences'|translate}</p>
       </div>
       <div class="user-property-label photos-select-bar">{'Photos per page'|translate}
-        <span> : </span><span class="nb-img-page-infos"></span>
+        <span class="nb-img-page-infos"></span>
         <div class="select-bar-wrapper">
           <div class="select-bar-container"></div>
         </div>
         <input name="recent_period" />
       </div>
       <div class="user-property-theme">
-        <p class="user-property-label">Theme</p>
+        <p class="user-property-label">{'Theme'|@translate}</p>
         <div class="user-property-select-container">
           <select name="privacy" class="user-property-select">
             {html_options options=$theme_options selected=$theme_selected}
@@ -552,7 +602,7 @@ update_selection_content();
         </div>
       </div>
       <div class="user-property-lang">
-        <p class="user-property-label">Language</p>
+        <p class="user-property-label">{'Language'|@translate}</p>
         <div class="user-property-select-container">
           <select name="privacy" class="user-property-select">
             {html_options options=$language_options selected=$language_selected}
@@ -560,7 +610,7 @@ update_selection_content();
         </div>
       </div>
       <div class="user-property-label period-select-bar">{'Recent period'|translate}
-        <span class="recent_period_infos">7 jours</span>
+        <span class="recent_period_infos"></span>
         <div class="select-bar-wrapper">
           <div class="select-bar-container"></div>
         </div>
@@ -603,66 +653,66 @@ update_selection_content();
         <div class="summary-container">
           <div class="user-property-initials">
             <div>
-              <span class="icon-blue">JP</span>
+              <span class="icon-blue"><!-- initials -> JP --></span>
             </div>
           </div>
           <div class="user-property-username">
-            <span class="edit-username-title">Jessy Pinkman</span>
-            <span class="edit-username-specifier">(you)</span>
+            <span class="edit-username-title"><!-- name -> Jessy Pinkman --></span>
+            <span class="edit-username-specifier"><!-- you specifier(you) --></span>
           </div>
           <div class="user-property-username-change">
             <div class="summary-input-container">
-              <input class="user-property-input user-property-input-username" value="" placeholder="Username" />
+              <input class="user-property-input user-property-input-username" value="" placeholder="{'Username'|@translate}" />
             </div>
             <span class="icon-ok edit-username-validate"></span>
             <span class="icon-cancel-circled edit-username-cancel"></span>
           </div>
           <div class="user-property-password-container">
             <div class="user-property-password edit-password">
-              <p class="icon-key user-property-button unavailable">Change Password</p>
+              <p class="icon-key user-property-button unavailable">{'Change Password'|@translate}</p>
             </div>
             <div class="user-property-password-change">
               <div class="summary-input-container">
-              <input class="user-property-input user-property-input-password" value="" placeholder="Password" />
+              <input class="user-property-input user-property-input-password" value="" placeholder="{'Password'|@translate}" />
               </div>
               <span class="icon-ok edit-password-validate"></span>
               <span class="icon-cancel-circled edit-password-cancel"></span>
             </div>
             <div class="user-property-permissions">
-              <p class="icon-lock user-property-button"><a href="admin.php?page=user_perm&user_id={$guest_id}" >Permissions</a></p>
+              <p class="icon-lock user-property-button"><a href="admin.php?page=user_perm&user_id={$guest_id}">{'Permissions'|@translate}</a></p>
             </div>
           </div>
         </div>
         <div class="properties-container">
           <div class="user-property-column-title">
-            <p>Properties</p>
+            <p>{'Properties'|@translate}</p>
           </div>
           <div class="user-property-email">
-            <p class="user-property-label">Email Adress</p>
+            <p class="user-property-label">{'Email Adress'|@translate}</p>
             <input type="text" class="user-property-input" value="N/A" readonly />
           </div>
           <div class="user-property-status">
-            <p class="user-property-label">Status</p>
+            <p class="user-property-label">{'Status'|@translate}</p>
             <div class="user-property-select-container">
               <select name="status" class="user-property-select">
-                <option value="guest">Guest</option>
+                <option value="guest">{'Guest'|@translate}</option>
               </select>
             </div>
           </div>
           <div class="user-property-level">
-            <p class="user-property-label">Privacy Level</p>
+            <p class="user-property-label">{'Privacy Level'|@translate}</p>
             <div class="user-property-select-container">
               <select name="privacy" class="user-property-select">
-                <option value="0">---</option>
-                <option value="1">Contacts</option>
-                <option value="2">Amis</option>
-                <option value="4">Famille</option>
-                <option value="8">Admin</option>
+                <option value="0">{'Level 0'|@translate}</option>
+                <option value="1">{'Level 1'|@translate}</option>
+                <option value="2">{'Level 2'|@translate}</option>
+                <option value="4">{'Level 4'|@translate}</option>
+                <option value="8">{'Level 8'|@translate}</option>
               </select>
             </div>
           </div>
           <div class="user-property-group-container">
-            <p class="user-property-label">Groups</p>
+            <p class="user-property-label">{'Groups'|@translate}</p>
             <div class="user-property-select-container user-property-group">
               <select class="user-property-select" data-selectize="groups" placeholder="{'Select groups or type them'|translate}" 
                 name="group_id[]" multiple style="box-sizing:border-box;"></select>
@@ -678,9 +728,10 @@ update_selection_content();
         </div>
       </div>
       <div class="update-container">
-          <span class="update-user-button">Update</span>
-          <span class="close-update-button">Close</span>
-          <span class="update-user-success icon-green"> User updated </span>
+          <span class="update-user-button">{'Update'|@translate}</span>
+          <span class="close-update-button">{'Close'|@translate}</span>
+          <span class="update-user-success icon-green">{'User updated'|@translate}</span>
+          <span class="update-user-fail icon-red"></span>
       </div>
       </div>
       <div class="preferences-container">
@@ -688,14 +739,14 @@ update_selection_content();
           <p>{'Preferences'|translate}</p>
         </div>
         <div class="user-property-label photos-select-bar">{'Photos per page'|translate}
-          <span> : </span><span class="nb-img-page-infos"></span>
+          <span class="nb-img-page-infos"></span>
           <div class="select-bar-wrapper">
             <div class="select-bar-container"></div>
           </div>
           <input name="recent_period" />
         </div>
         <div class="user-property-theme">
-          <p class="user-property-label">Theme</p>
+          <p class="user-property-label">{'Theme'|@translate}</p>
           <div class="user-property-select-container">
             <select name="privacy" class="user-property-select">
               {html_options options=$theme_options selected=$theme_selected}
@@ -703,7 +754,7 @@ update_selection_content();
           </div>
         </div>
         <div class="user-property-lang">
-          <p class="user-property-label">Language</p>
+          <p class="user-property-label">{'Language'|@translate}</p>
           <div class="user-property-select-container">
             <select name="privacy" class="user-property-select">
               {html_options options=$language_options selected=$language_selected}
@@ -748,28 +799,28 @@ update_selection_content();
       <span class="AddIcon icon-blue icon-plus-circled"></span>
     </div>
     <div class="AddIconTitle">
-      <span>Add a new user</span>
+      <span>{'Add a new user'|@translate}</span>
     </div>
     <div class="AddUserInputContainer">
-      <label class="AddUserLabel AddUserLabelUsername"> Username
+      <label class="AddUserLabel AddUserLabelUsername">{'Username'|@translate}
         <input class="AddUserInput" />
       </label>
     </div>
 
     <div class="AddUserInputContainer">
       <div class="AddUserPasswordWrapper">
-        <label for="AddUserPassword" class="AddUserLabel AddUserLabelPassword"> Password</label>
-        <span id="show_password" class="icon-eye">Show</span>
+        <label for="AddUserPassword" class="AddUserLabel AddUserLabelPassword">{'Password'|@translate}</label>
+        <span id="show_password" class="icon-eye">{'Show'|@translate}</span>
       </div>
       <input id="AddUserPassword" class="AddUserInput" type="password"/>
 
       <div class="AddUserGenPassword">
-        <span class="icon-dice-solid"></span><span>Generate random password</span>
+        <span class="icon-dice-solid"></span><span>{'Generate random password'|@translate}</span>
       </div>
     </div>
 
     <div class="AddUserInputContainer">
-      <label class="AddUserLabel AddUserLabelEmail"> Email
+      <label class="AddUserLabel AddUserLabelEmail">{'Email'|@translate}
         <input class="AddUserInput" />
       </label>
     </div>
@@ -786,11 +837,11 @@ update_selection_content();
     </div>
 
     <div class="AddUserSubmit">
-      <span class="icon-plus"></span><span>Add User</span>
+      <span class="icon-plus"></span><span>{'Add User'|@translate}</span>
     </div>
 
     <div class="AddUserCancel" style="display:none;">
-      <span>Cancel</span>
+      <span>{'Cancel'|@translate}</span>
     </div>
   </div>
 </div>
@@ -858,6 +909,8 @@ update_selection_content();
 #AddUserSuccess {
   display:none;
   font-weight:bold;
+  margin:10px;
+  margin-left:0px;
 }
 
 #AddUserSuccess span {
@@ -984,6 +1037,7 @@ update_selection_content();
 .user-first-col {
     border-top-left-radius: 15%;
     border-bottom-left-radius: 15%;
+    cursor:pointer;
 }
 
 .user-first-col:hover {
@@ -1208,6 +1262,13 @@ update_selection_content();
     margin-bottom:10px;
 }
 
+.user-property-label span {
+	color: #ff7700;
+	font-weight: bold;
+  margin-left: 15px;
+}
+
+
 .user-property-input {
     width: 100%;
     box-sizing:border-box;
@@ -1250,6 +1311,32 @@ update_selection_content();
     margin-bottom: 20px;
 }
 
+.advanced-filter-select-container {
+  position: relative;
+  text-align:left;
+}
+
+.advanced-filter-select-container::before {
+    content: '\e835';
+    font-size:1em;
+    font-family:"fontello";
+    color: #353535;
+    pointer-events:none;
+    position:absolute;
+    margin-top:5px;
+    margin-left: 75%;
+}
+
+.user-action-select-container::before {
+    content: '\e835';
+    font-size:1em;
+    font-family:"fontello";
+    color: #353535;
+    pointer-events:none;
+    position:absolute;
+    margin-left:65%;
+    margin-top:5px;
+}
 .user-property-select-container::before {
     content: '\e835';
     font-size:1em;
@@ -1267,16 +1354,21 @@ update_selection_content();
     margin-bottom: 30px;
 }
 
-.select-bar-wrapper .ui-slider-horizontal .ui-slider-handle{
-    background-color:#FFA646;
-    border:none;
-    border-radius:25px;
-    border: 1px solid #818181;
+.select-bar-wrapper .select-bar-container {
+  height: 2px;
 }
 
-.select-bar-wrapper .ui-slider-horizontal .ui-slider-range-min{
-    background-color:#818181;
+.select-bar-wrapper .ui-slider-horizontal .ui-slider-handle{
+    background-color:#ffaf58;
+    border: 1px solid #ffaf58;
     border-radius:25px;
+    top: -.7em !important;
+    width: 1.4em;
+    height: 1.4em;
+}
+
+.select-bar-wrapper .ui-slider-horizontal .ui-slider-range {
+  background-color: #ffaf58;
 }
 
 .select-bar-wrapper .ui-slider-horizontal{
@@ -1336,6 +1428,7 @@ update_selection_content();
 
 .user-property-password-change {
   display:none;
+  margin-bottom: 20px;
 }
 
 .summary-input-container {
@@ -1455,7 +1548,6 @@ update_selection_content();
 }
 
 .recent_period_infos {
-    margin-left:15px;
     color:#353535;
     font-weight:normal;
 }
@@ -1466,12 +1558,15 @@ update_selection_content();
     cursor:pointer;
     color:#353535;
     padding:10px 20px;
-    background-color: #F3F3F3;
     font-size:1.1em;
     font-weight:bold;
 
-    background-color: #FFC275;
-    color: white;
+    background-color: #ffa744;
+    color: #3c3c3c;
+}
+
+.update-user-button:hover {
+    background-color: #ff7700;
 }
 
 .update-user-button.can-update {
@@ -1498,8 +1593,16 @@ update_selection_content();
 
 .update-user-success {
     padding:10px;
+    display:none;s
+    background-color:  #c2f5c2;
+    color: #0a0;
+}
+
+.update-user-fail {
+    padding:10px;
     display:none
 }
+
 /* Guest Pop in */
 
 #GuestUserList {
@@ -1572,28 +1675,28 @@ update_selection_content();
   font-size:1.7em;
   font-weight:bold;
   color: #000000;
-  margin-bottom:25px;
+  margin-bottom:20px;
   margin-top:15px;
 }
 
 .AddUserInputContainer {
   display: flex;
   flex-direction: column;
-  margin: 25px 0px;
+  margin: 20px 0px;
   width:100%;
 }
 
 .AddUserLabel {
   display:block;
   color: #3E3E3E;
-  font-size:1.4em;
+  font-size:1.3em;
 }
 
 .AddUserInput {
   display:block;
   background-color:white;
   border: solid 1px #D4D4D4;
-  font-size:1.4em;
+  font-size:1.3em;
   padding: 10px 5px;
 }
 
@@ -1608,7 +1711,7 @@ update_selection_content();
 }
 
 .AddUserPasswordWrapper span {
-  font-size:1.4em;
+  font-size:1.3em;
   cursor:pointer;
 }
 
@@ -1619,7 +1722,7 @@ update_selection_content();
 
 .AddUserGenPassword {
   margin-top: 5px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   cursor:pointer;
 }
 .AddUserGenPassword:hover, .AddUserGenPassword:active {
@@ -1650,8 +1753,8 @@ update_selection_content();
   color: #3F3E40;
   background-color: #FFA836;
   padding: 10px;
-  margin: 15px;
-  font-size:1.1em;
+  margin: 20px;
+  font-size:1em;
   margin-bottom:0;
 }
 
@@ -1659,7 +1762,7 @@ update_selection_content();
   color: #3F3E40;
   font-weight: bold;
   cursor: pointer;
-  font-size:1.1em;
+  font-size:1em;
 }
 
 /* Selectize Inputs (groups) */
@@ -1730,12 +1833,13 @@ Advanced filter
   margin:4px;
   padding:10px;
   background-color:#F3F3F3;
+  margin-right:10px;
 }
 
 #advanced-filter-container {
   display:none;
   background-color:#F3F3F3;
-  padding:10px;
+  padding:15px;
 }
 
 .advanced-filters-header {
@@ -1762,17 +1866,44 @@ Advanced filter
   width:25%;
 }
 
+
+.advanced-filter-date {
+  padding-right:15px;
+}
+
 .advanced-filter-label {
   text-align:left;
   font-size:1.3em;
   display:block;
-  color: #3D3D3D;
+  color: #3f3f3f;
   margin-bottom:5px;
 }
 
 .advanced-filter-select {
   width:85%;
   display:block;
+  border: solid 1px #D4D4D4;
+}
+
+.advanced-filter-close {
+  font-size: 1.8em;
+  color: #C5C5C5;
+  cursor:pointer;
+}
+
+.user-update-spinner {
+  display:none;
+}
+
+.UserListPopInContainer .selectize-dropdown-content .option{
+  font-size: 0.9em;
+  margin-bottom:5px;
+}
+
+#permitActionUserList #applyActionBlock {
+  margin: 30px 0 0 0;
+  display:flex;
+  flex-direction:column;
 }
 
 </style>
