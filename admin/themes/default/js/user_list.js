@@ -852,7 +852,7 @@ function get_initials(username) {
     let words = username.toUpperCase().split(" ");
     let res = words[0][0];
 
-    if (words.length > 1) {
+    if (words.length > 1 && words[1][0] !== undefined ) {
         res += words[1][0];
     }
     return res;
