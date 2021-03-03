@@ -240,6 +240,11 @@ jQuery(".pluginMiniBox").each(function(index){
   <input class='search-input' type="text" placeholder="{'Filter'|@translate}">
 </div>
 
+<div class="testPlugin"> test </div>
+<div class="AlbumViewSelector">
+    <input type="radio" name="layout" class="switchLayout" id="displayTile" checked/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayDefault"/><label for="displayDefault"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
+</div>
+
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
 
 {foreach from=$plugins item=plugin name=plugins_loop}
@@ -348,3 +353,65 @@ jQuery(".pluginMiniBox").each(function(index){
   </div>
 
 {/if}
+
+
+<style>
+
+.AlbumViewSelector {
+  position: absolute;
+
+  right: 50px;
+  z-index: 2;
+
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(6px);
+}
+
+.AlbumViewSelector {
+  padding: 0px;
+  margin-right: 0px;
+  border-radius: 10px;
+  background: #fafafa !important;
+}
+
+.AlbumViewSelector span {
+  border-radius: 0;
+  padding: 8px;
+}
+
+/* Should be done with :first-child and :last-child but doesn't work */
+
+.AlbumViewSelector label span.firstIcon{
+  border-radius: 7px 0 0 7px;
+}
+
+.AlbumViewSelector label span.lastIcon{
+  border-radius: 0 7px 7px 0;
+}
+
+.icon-th-large, .icon-th-list, .icon-pause {
+  padding: 10px;
+  font-size: 19px;
+
+  transition: 0.3s;
+}
+
+.AlbumViewSelector input:checked + label{
+  background: transparent;
+  color: white !important;
+}
+
+.AlbumViewSelector input:checked + label span{
+  background: orange;
+}
+
+.switchLayout {
+  display: none;
+}
+
+
+</style>
