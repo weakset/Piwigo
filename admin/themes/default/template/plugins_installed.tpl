@@ -225,6 +225,8 @@ jQuery(".pluginMiniBox").each(function(index){
 {combine_css path="themes/default/js/plugins/jquery-confirm.min.css"}
 {combine_script id='tiptip' load='header' path='themes/default/js/plugins/jquery.tipTip.minified.js'}
 
+{combine_script id='pluginInstallated' load='footer' path='admin/themes/default/js/plugins_installated.js'}
+
 <div class="titrePage">
   <h2>{'Plugins'|@translate}</h2>
 </div>
@@ -240,9 +242,8 @@ jQuery(".pluginMiniBox").each(function(index){
   <input class='search-input' type="text" placeholder="{'Filter'|@translate}">
 </div>
 
-<div class="testPlugin"> test </div>
 <div class="AlbumViewSelector">
-    <input type="radio" name="layout" class="switchLayout" id="displayTile" checked/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayDefault"/><label for="displayDefault"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
+    <input type="radio" name="layout" class="switchLayout" id="displayTile" checked/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine"/><label for="displayLine"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
 </div>
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
@@ -303,6 +304,22 @@ jQuery(".pluginMiniBox").each(function(index){
           <a class="icon-ellipsis-vert showOptions showInfo" ></a>
         {/if}
       </div>
+
+      <div class="pluginActionsSmallIcons">
+        {if $plugin.STATE == 'active'}
+          {if $plugin.SETTINGS_URL != ''}
+            <a href="{$plugin.SETTINGS_URL}" class="icon-cog" title="{'Settings'|@translate}"></a>
+          {else}
+            <a class="icon-cog tiptip unavailablePlugin" title="{'N/A'|translate}"></a>
+          {/if}
+        {elseif $plugin.STATE == 'inactive'}
+          <a class="icon-plus" href="{$plugin.U_ACTION}&amp;action=activate" class="activate" title="{'Activate'|@translate}"></a>
+        {elseif $plugin.STATE == 'missing'}
+          <a class="uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall" title="{'Uninstall'|@translate}"></a>
+        {elseif $plugin.STATE == 'merged'}
+          <a class="" href="{$plugin.U_ACTION}&amp;action=delete" title="{'Delete'|@translate}"></a>
+        {/if}                     
+      </div>
       
       <div class="PluginOptionsBlock dropdown">
         <div class="dropdown-option-content"> {if !empty($author)}{'By %s'|@translate:$author}<br>{/if}{'Version'|@translate} {$version}</div>
@@ -360,15 +377,12 @@ jQuery(".pluginMiniBox").each(function(index){
 .AlbumViewSelector {
   position: absolute;
 
-  right: 50px;
+  right: 70px;
   z-index: 2;
 
-  height: 43px;
+  height: 55px;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  transform: translateY(6px);
 }
 
 .AlbumViewSelector {
@@ -413,5 +427,41 @@ jQuery(".pluginMiniBox").each(function(index){
   display: none;
 }
 
+/****************************************/
+
+.pluginActionsSmallIcons a, .PluginOptionsIcons a{
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pluginActionsSmallIcons {
+  position: absolute;
+  right: 20px;
+  padding: 13px;
+  top: 0px;
+  display: flex;
+}
+
+.pluginActionsSmallIcons a {
+  transform: scale(1.3);
+}
+
+.pluginMiniBox {
+  transition: 0.5s;
+}
+
+.unavailablePlugin {
+  color: #969696;
+  cursor: default;
+}
+
+.unavailablePlugin:hover {
+  color: #969696;
+  cursor: default;
+}
 
 </style>
