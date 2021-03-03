@@ -1,5 +1,6 @@
 {combine_script id='jquery.ajaxmanager' load='footer' require='jquery' path='themes/default/js/plugins/jquery.ajaxmanager.js' }
 {combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
+{combine_script id='jquery.cookie' path='themes/default/js/jquery.cookie.js' load='footer'}
 
 {footer_script require='jquery.ajaxmanager'}
 /* incompatible message */
@@ -243,7 +244,7 @@ jQuery(".pluginMiniBox").each(function(index){
 </div>
 
 <div class="AlbumViewSelector">
-    <input type="radio" name="layout" class="switchLayout" id="displayTile" checked/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine"/><label for="displayLine"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
+    <input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_plugin_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
 </div>
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
@@ -448,6 +449,10 @@ jQuery(".pluginMiniBox").each(function(index){
 
 .pluginActionsSmallIcons a {
   transform: scale(1.3);
+}
+
+.pluginActionsSmallIcons a:hover {
+  text-decoration: none;
 }
 
 .pluginMiniBox {

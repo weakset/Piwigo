@@ -14,7 +14,10 @@ function setDisplayLine() {
 
 
 $(document).ready(function () {
-    console.log("hello world");
+
+    if (!$.cookie("pwg_plugin_manager_view")) {
+        $.cookie("pwg_plugin_manager_view", "tile");
+    }
 
     if ($("#displayTile").is(":checked")) {
         setDisplayTile();
@@ -26,9 +29,11 @@ $(document).ready(function () {
 
     $("#displayTile").change(function () {
         setDisplayTile();
+        $.cookie("pwg_plugin_manager_view", "tile");
     })
 
     $("#displayLine").change(function () {
         setDisplayLine();
+        $.cookie("pwg_plugin_manager_view", "line");
     })
 })
