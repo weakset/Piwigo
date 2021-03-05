@@ -4,8 +4,8 @@ function setDisplayCompact() {
     $(".pluginActions").show();
     $(".pluginActionsSmallIcons").hide();
 
-    $(".PluginOptionsIcons a, .pluginActionsSmallIcons a").removeClass("biggerIcon");
-
+    $(".PluginOptionsIcons a").removeClass("biggerIcon");
+    $(".pluginActionsSmallIcons a").removeClass("biggerIcon");
     $(".pluginMiniBoxNameCell").removeClass("pluginMiniBoxNameCellCompact");
 
     normalTitle();
@@ -17,7 +17,8 @@ function setDisplayTile() {
     $(".pluginActions").hide();
     $(".pluginActionsSmallIcons").show();
 
-    $(".PluginOptionsIcons a, .pluginActionsSmallIcons a").addClass("biggerIcon");
+    $(".PluginOptionsIcons a").addClass("biggerIcon");
+    $(".pluginActionsSmallIcons a").addClass("biggerIcon");
 
     $(".pluginMiniBoxNameCell").addClass("pluginMiniBoxNameCellCompact");
 
@@ -33,7 +34,7 @@ function reduceTitle() {
         if (text.length > length) {
             var newText = text.substring(0, length);
             newText = newText + "...";
-            
+
             div.innerHTML = newText;
             div.title =  text   
         }

@@ -302,7 +302,7 @@ jQuery(".pluginMiniBox").each(function(index){
     <div class="pluginContent">
       <div class="PluginOptionsIcons">
         {if $plugin.STATE == 'active' || $plugin.STATE == 'inactive'}
-          <a class="icon-ellipsis-vert showOptions showInfo" ></a>
+          <a class="icon-ellipsis-v showOptions showInfo" ></a>
         {/if}
       </div>
 
@@ -333,16 +333,16 @@ jQuery(".pluginMiniBox").each(function(index){
       </div>
       
       <div class="PluginOptionsBlock dropdown">
-        <div class="dropdown-option-content"> {if !empty($author)}{'By %s'|@translate:$author}<br>{/if}{'Version'|@translate} {$version}</div>
-        {if $plugin.STATE == 'active'}
-          <a class="dropdown-option icon-cancel-circled" href="{$plugin.U_ACTION}&amp;action=deactivate">{'Deactivate'|@translate}</a>
-          <a class="dropdown-option icon-back-in-time plugin-restore" href="{$plugin.U_ACTION}&amp;action=restore">{'Restore'|@translate}</a>   
-        {elseif $plugin.STATE == 'inactive'}
-          <a class="dropdown-option icon-trash delete-plugin-button" href="{$plugin.U_ACTION}&amp;action=delete">{'Delete'|@translate}</a>
-        {/if}      
+        <div class="dropdown-option-content"> {if !empty($author)}{'By %s'|@translate:$author} | {/if}{'Version'|@translate} {$version}</div>
         <div class="pluginDescCompact">
           {$plugin.DESC}
         </div>
+        {if $plugin.STATE == 'active'}
+          <a class="dropdown-option icon-back-in-time plugin-restore separator-top" href="{$plugin.U_ACTION}&amp;action=restore">{'Restore'|@translate}</a>  
+          <a class="dropdown-option icon-cancel-circled" href="{$plugin.U_ACTION}&amp;action=deactivate">{'Deactivate'|@translate}</a>
+        {elseif $plugin.STATE == 'inactive'}
+          <a class="dropdown-option icon-trash delete-plugin-button" href="{$plugin.U_ACTION}&amp;action=delete">{'Delete'|@translate}</a>
+        {/if}      
       </div>
       <div class="pluginMiniBoxNameCell" data-title="{$plugin.NAME}">
         {$plugin.NAME}
@@ -507,5 +507,16 @@ jQuery(".pluginMiniBox").each(function(index){
   padding: 5px 10px;
 }
 
+.dropdown-option-content {
+  font-weight: bold;
+}
+
+.separator-top {
+  border-top: 1px solid #ffffff45;
+}
+
+.dropdown-option.icon-cancel-circled {
+  margin-bottom: 0px;
+}
 
 </style>
