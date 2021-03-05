@@ -244,7 +244,7 @@ jQuery(".pluginMiniBox").each(function(index){
 </div>
 
 <div class="AlbumViewSelector">
-    <input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_plugin_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list lastIcon tiptip" title="{'Line View'|translate}"></span></label>
+    <input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-pause firstIcon tiptip" title="{'Tile View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_plugin_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
 </div>
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
@@ -309,16 +309,16 @@ jQuery(".pluginMiniBox").each(function(index){
       <div class="pluginActionsSmallIcons">
         {if $plugin.STATE == 'active'}
           {if $plugin.SETTINGS_URL != ''}
-            <a href="{$plugin.SETTINGS_URL}" class="icon-cog" title="{'Settings'|@translate}"></a>
+            <a href="{$plugin.SETTINGS_URL}" class="icon-cog tiptip" title="{'Settings'|@translate}"></a>
           {else}
-            <a class="icon-cog tiptip unavailablePlugin" title="{'N/A'|translate}"></a>
+            <a class="icon-cog unavailablePlugin tiptip" title="{'N/A'|translate}"></a>
           {/if}
         {elseif $plugin.STATE == 'inactive'}
-          <a class="icon-plus" href="{$plugin.U_ACTION}&amp;action=activate" class="activate" title="{'Activate'|@translate}"></a>
+          <a class="icon-plus-circled tiptip" href="{$plugin.U_ACTION}&amp;action=activate" class="activate" title="{'Activate'|@translate}"></a>
         {elseif $plugin.STATE == 'missing'}
-          <a class="uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall" title="{'Uninstall'|@translate}"></a>
+          <a class="uninstall-plugin-button tiptip" href="{$plugin.U_ACTION}&amp;action=uninstall" title="{'Uninstall'|@translate}"></a>
         {elseif $plugin.STATE == 'merged'}
-          <a class="" href="{$plugin.U_ACTION}&amp;action=delete" title="{'Delete'|@translate}"></a>
+          <a class="tiptip" href="{$plugin.U_ACTION}&amp;action=delete" title="{'Delete'|@translate}"></a>
         {/if}                     
       </div>
       
@@ -330,8 +330,11 @@ jQuery(".pluginMiniBox").each(function(index){
         {elseif $plugin.STATE == 'inactive'}
           <a class="dropdown-option icon-trash delete-plugin-button" href="{$plugin.U_ACTION}&amp;action=delete">{'Delete'|@translate}</a>
         {/if}      
+        <div class="pluginDescCompact">
+          {$plugin.DESC}
+        </div>
       </div>
-      <div class="pluginMiniBoxNameCell">
+      <div class="pluginMiniBoxNameCell tiptip" title="{$plugin.NAME}">
         {$plugin.NAME}
       </div>
       <div class="pluginDesc">
@@ -378,19 +381,21 @@ jQuery(".pluginMiniBox").each(function(index){
 .AlbumViewSelector {
   position: absolute;
 
-  right: 70px;
+  right: 60px;
   z-index: 2;
 
-  height: 55px;
+  height: 43px;
   display: flex;
   align-items: center;
+
+  transform: translateY(6px);
 }
 
 .AlbumViewSelector {
   padding: 0px;
   margin-right: 0px;
-  border-radius: 10px;
-  background: #fafafa !important;
+  border-radius: 7px;
+  {* background: #fafafa !important; *}
 }
 
 .AlbumViewSelector span {
@@ -417,7 +422,7 @@ jQuery(".pluginMiniBox").each(function(index){
 
 .AlbumViewSelector input:checked + label{
   background: transparent;
-  color: white !important;
+  color: white;
 }
 
 .AlbumViewSelector input:checked + label span{
@@ -437,6 +442,17 @@ jQuery(".pluginMiniBox").each(function(index){
   display: flex;
   justify-content: center;
   align-items: center;
+
+  color: #7f7f7f;
+}
+
+.pluginActionsSmallIcons a:hover, .PluginOptionsIcons a:hover {
+  color: #000000;
+  transition: 0.2s;
+}
+
+.biggerIcon {
+  transform: scale(1.5) !important;
 }
 
 .pluginActionsSmallIcons {
@@ -460,13 +476,20 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .unavailablePlugin {
-  color: #969696;
   cursor: default;
+  opacity: 0.5;
 }
 
 .unavailablePlugin:hover {
-  color: #969696;
   cursor: default;
+  color: #7f7f7f !important;
+  opacity: 0.5;
 }
+
+.pluginDescCompact {
+  max-width: 150px;
+  padding: 5px 10px;
+}
+
 
 </style>
