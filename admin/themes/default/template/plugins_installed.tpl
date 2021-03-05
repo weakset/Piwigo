@@ -309,16 +309,26 @@ jQuery(".pluginMiniBox").each(function(index){
       <div class="pluginActionsSmallIcons">
         {if $plugin.STATE == 'active'}
           {if $plugin.SETTINGS_URL != ''}
-            <a href="{$plugin.SETTINGS_URL}" class="icon-cog tiptip" title="{'Settings'|@translate}"></a>
+            <div class="tiptip" title="{'Settings'|@translate}"> 
+              <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
+            </div>
           {else}
-            <a class="icon-cog unavailablePlugin tiptip" title="{'N/A'|translate}"></a>
+            <div class="tiptip" title="{'N/A'|translate}">
+              <a class="icon-cog unavailablePlugin"></a>
+            </div>
           {/if}
         {elseif $plugin.STATE == 'inactive'}
-          <a class="icon-plus-circled tiptip" href="{$plugin.U_ACTION}&amp;action=activate" class="activate" title="{'Activate'|@translate}"></a>
+          <div class="tiptip" title="{'Activate'|@translate}">
+            <a class="icon-plus-circled" href="{$plugin.U_ACTION}&amp;action=activate" class="activate"></a>
+          </div>
         {elseif $plugin.STATE == 'missing'}
-          <a class="uninstall-plugin-button tiptip" href="{$plugin.U_ACTION}&amp;action=uninstall" title="{'Uninstall'|@translate}"></a>
+          <div class="tiptip" title="{'Uninstall'|@translate}">
+            <a class="uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall"></a>
+          </div>
         {elseif $plugin.STATE == 'merged'}
-          <a class="tiptip" href="{$plugin.U_ACTION}&amp;action=delete" title="{'Delete'|@translate}"></a>
+          <div class="tiptip" title="{'Delete'|@translate}">
+            <a class="" href="{$plugin.U_ACTION}&amp;action=delete"></a>
+          </div>
         {/if}                     
       </div>
       
@@ -334,7 +344,7 @@ jQuery(".pluginMiniBox").each(function(index){
           {$plugin.DESC}
         </div>
       </div>
-      <div class="pluginMiniBoxNameCell tiptip" title="{$plugin.NAME}">
+      <div class="pluginMiniBoxNameCell" data-title="{$plugin.NAME}">
         {$plugin.NAME}
       </div>
       <div class="pluginDesc">
@@ -381,7 +391,7 @@ jQuery(".pluginMiniBox").each(function(index){
 .AlbumViewSelector {
   position: absolute;
 
-  right: 60px;
+  right: 20px;
   z-index: 2;
 
   height: 43px;
@@ -467,6 +477,12 @@ jQuery(".pluginMiniBox").each(function(index){
   transform: scale(1.3);
 }
 
+.pluginActionsSmallIcons a span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .pluginActionsSmallIcons a:hover {
   text-decoration: none;
 }
@@ -487,7 +503,7 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .pluginDescCompact {
-  max-width: 150px;
+  max-width: 200px;
   padding: 5px 10px;
 }
 

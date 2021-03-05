@@ -7,6 +7,8 @@ function setDisplayCompact() {
     $(".PluginOptionsIcons a, .pluginActionsSmallIcons a").removeClass("biggerIcon");
 
     $(".pluginMiniBoxNameCell").removeClass("pluginMiniBoxNameCellCompact");
+
+    normalTitle();
 }
 
 function setDisplayTile() {
@@ -18,8 +20,33 @@ function setDisplayTile() {
     $(".PluginOptionsIcons a, .pluginActionsSmallIcons a").addClass("biggerIcon");
 
     $(".pluginMiniBoxNameCell").addClass("pluginMiniBoxNameCellCompact");
+
+    reduceTitle()
 }
 
+function reduceTitle() {
+    var x = document.getElementsByClassName("pluginMiniBoxNameCell");
+    var length = 20;
+
+    for (const div of x) {
+        var text = div.innerHTML.trim()
+        if (text.length > length) {
+            var newText = text.substring(0, length);
+            newText = newText + "...";
+            
+            div.innerHTML = newText;
+            div.title =  text   
+        }
+    }
+}
+
+function normalTitle() {
+    var x = document.getElementsByClassName("pluginMiniBoxNameCell");
+
+    for (const div of x) {
+        div.innerHTML = div.dataset.title
+    }
+}
 
 $(document).ready(function () {
 
