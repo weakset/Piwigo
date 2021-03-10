@@ -516,7 +516,11 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .dropdown-option.icon-cancel-circled {
-  margin-bottom: 0px;
+  margin-bottom: -5px;
+}
+
+.dropdown-option {
+  font-weight: bold;
 }
 
 </style>
