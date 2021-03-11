@@ -1076,3 +1076,7 @@ $lang['Please upgrade your PHP version before any update.'] = 'Please upgrade yo
 $lang['Requires PHP %s'] = 'Requires PHP %s';
 $lang['%s MB used'] = '%s MB used';
 $lang['%s GB used'] = '%s GB used';
+$lang['Cache size'] = "Cache size";
+$lang['calculated'] = "calculated";
+$lang['months ago'] = "months ago";
+$lang['Delete these sizes'] = 'Delete these sizes';
