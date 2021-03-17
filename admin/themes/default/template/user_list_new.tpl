@@ -75,6 +75,8 @@ update_selection_content();
 
 {combine_script id='user_list' load='footer' path='admin/themes/default/js/user_list.js'}
 
+{combine_script id='jquery.cookie' path='admin/themes/default/js/jquery.cookie.js' load='footer'}
+
 <div class="selection-mode-group-manager" style="right:30px">
   <label class="switch">
     <input type="checkbox" id="toggleSelectionMode">
@@ -87,6 +89,11 @@ update_selection_content();
 <div id="user-table">
   <div id="user-table-content">
     <div class="user-manager-header">
+
+      <div class="AlbumViewSelector">
+        <input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_user_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout tiptip" id="displayLine" {if $smarty.cookies.pwg_user_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_user_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-pause lastIcon tiptip" title="{'Tile View'|translate}"></span></label>
+      </div>
+
       <div style="display:flex;justify-content:space-between; flex-grow:1;">
         <div style="display:flex">
           <div class="not-in-selection-mode user-header-button add-user-button" style="margin-right:10px">
@@ -1931,6 +1938,63 @@ Advanced filter
 
 #user-table #action {
   padding: 0;
+}
+
+
+/*View Selector*/
+
+.selectedAlbum-first {
+  margin-left: 0px;
+}
+
+.AlbumViewSelector {
+  padding: 7px 0px;
+  margin-right: 0px;
+  border-radius: 10px;
+  background: #fafafa !important;
+
+  position: absolute;
+  z-index: 2;
+  right: 200px;
+}
+
+.AlbumViewSelector span {
+  border-radius: 0;
+  padding: 7px;
+}
+
+.addAlbum button {
+  white-space: nowrap;
+}
+
+/* Should be done with :first-child and :last-child but doesn't work */
+
+.AlbumViewSelector label span.firstIcon{
+  border-radius: 7px 0 0 7px;
+}
+
+.AlbumViewSelector label span.lastIcon{
+  border-radius: 0 7px 7px 0;
+}
+
+.icon-th-large, .icon-th-list, .icon-pause {
+  padding: 10px;
+  font-size: 19px;
+
+  transition: 0.3s;
+}
+
+.AlbumViewSelector input:checked + label{
+  background: transparent;
+  color: white !important;
+}
+
+.AlbumViewSelector input:checked + label span{
+  background: orange;
+}
+
+.switchLayout {
+  display: none;
 }
 
 </style>
