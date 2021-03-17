@@ -291,7 +291,68 @@ $( document ).ready(function() {
     $("#advanced-filter-container span.icon-cancel").click(advanced_filter_hide);
     $(".advanced-filter-select").change(update_user_list);
     $("#user_search").on("input", update_user_list);
+
+
+    /*View manager*/
+
+    if (!$.cookie("pwg_user_manager_view")) {
+        $.cookie("pwg_user_manager_view", "tile");
+    }
+
+    if ($("#displayCompact").is(":checked")) {
+        setDisplayCompact();
+    };
+
+    if ($("#displayLine").is(":checked")) {
+        setDisplayLine();
+    };
+
+    if ($("#displayTile").is(":checked")) {
+        setDisplayTile();
+    };
+
+    $("#displayCompact").change(function () {
+        setDisplayCompact();
+
+        if ($(".addAlbum").hasClass("input-mode")) {
+            $(".addAlbum p").hide();
+        }
+        
+        $.cookie("pwg_user_manager_view", "compact");
+    });
+
+    $("#displayLine").change(function () {
+        setDisplayLine();
+
+        if ($(".addAlbum").hasClass("input-mode")) {
+            $(".addAlbum p").hide();
+        }
+
+        $.cookie("pwg_user_manager_view", "line");
+    });
+
+    $("#displayTile").change(function () {
+        setDisplayTile();
+
+        if ($(".addAlbum").hasClass("input-mode")) {
+            $(".addAlbum p").show();
+        }
+        
+        $.cookie("pwg_user_manager_view", "tile");
+    });
 });
+
+function setDisplayTile() {
+    console.log("display Tile");
+}
+
+function setDisplayLine() {
+    console.log("display Line");
+}
+
+function setDisplayCompact() {
+    console.log("display Compact");
+}
 
 
 /*----------------
