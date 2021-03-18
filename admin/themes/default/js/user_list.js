@@ -344,14 +344,19 @@ $( document ).ready(function() {
 
 function setDisplayTile() {
     console.log("display Tile");
+    $(".user-container-wrapper").addClass("tileView");
+    $(".user-header-col").addClass("hide");
 }
 
 function setDisplayLine() {
     console.log("display Line");
+    $(".user-container-wrapper").removeClass("tileView");
+    $(".user-header-col").removeClass("hide");
 }
 
 function setDisplayCompact() {
     console.log("display Compact");
+    $(".user-header-col").addClass("hide");
 }
 
 

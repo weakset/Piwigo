@@ -90,7 +90,7 @@ update_selection_content();
   <div id="user-table-content">
     <div class="user-manager-header">
 
-      <div class="AlbumViewSelector">
+      <div class="UserViewSelector">
         <input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_user_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout tiptip" id="displayLine" {if $smarty.cookies.pwg_user_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_user_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-pause lastIcon tiptip" title="{'Tile View'|translate}"></span></label>
       </div>
 
@@ -123,7 +123,7 @@ update_selection_content();
             </div>
           </div>
         </div>
-        <div style="display:flex">
+        <div style="display:flex; width: 500px;">
           <div id="advanced_filter_button">
             <span>{'Advanced filter'|@translate}</span>
           </div>
@@ -1026,7 +1026,7 @@ update_selection_content();
 }
 
 .user-header-username,
-.user-container-username {
+   {
     width:20%;
 }
 
@@ -1053,7 +1053,6 @@ update_selection_content();
 .user-col {
     text-align: left;
     padding: 0;
-    height:100%;
     display:flex;
     align-items:center;
     flex-grow:1;
@@ -1947,33 +1946,29 @@ Advanced filter
   margin-left: 0px;
 }
 
-.AlbumViewSelector {
-  padding: 7px 0px;
+.UserViewSelector {
+  padding: 6px 0px;
   margin-right: 0px;
   border-radius: 10px;
   background: #fafafa !important;
 
   position: absolute;
   z-index: 2;
-  right: 200px;
+  right: 260px;
 }
 
-.AlbumViewSelector span {
+.UserViewSelector span {
   border-radius: 0;
-  padding: 7px;
-}
-
-.addAlbum button {
-  white-space: nowrap;
+  padding: 6px;
 }
 
 /* Should be done with :first-child and :last-child but doesn't work */
 
-.AlbumViewSelector label span.firstIcon{
+.UserViewSelector label span.firstIcon{
   border-radius: 7px 0 0 7px;
 }
 
-.AlbumViewSelector label span.lastIcon{
+.UserViewSelector label span.lastIcon{
   border-radius: 0 7px 7px 0;
 }
 
@@ -1984,12 +1979,12 @@ Advanced filter
   transition: 0.3s;
 }
 
-.AlbumViewSelector input:checked + label{
+.UserViewSelector input:checked + label{
   background: transparent;
   color: white !important;
 }
 
-.AlbumViewSelector input:checked + label span{
+.UserViewSelector input:checked + label span{
   background: orange;
 }
 
@@ -1997,5 +1992,95 @@ Advanced filter
   display: none;
 }
 
-</style>
 
+/* Tile View */
+
+.tileView {
+  display: flex;
+  flex-direction: row;
+
+  flex-wrap: wrap;
+}
+
+.tileView .user-container{
+  display: flex;
+  flex-direction: column;
+
+  width: 200px;
+  height: 250px;
+
+  margin: 20px 20px 20px 0;
+}
+
+.tileView .user-container-registration {
+  display: none;
+}
+
+.tileView .user-container > div:not( .user-container-edit, .user-container-select, .user-container-status, .user-container-username, .user-container-email, .user-container-groups ) {
+  margin: 0 auto;
+  justify-content: center;
+  max-height: 40px;
+}
+
+.tileView .user-container-status,
+.tileView .user-container-username {
+  margin: 0 auto;
+  justify-content: center;
+  max-height: 18px;
+}
+
+.tileView .user-container-username {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: black;
+  font-size: 13px;
+
+  height: 15px;
+
+  width: 140px;
+  overflow: hidden;
+}
+
+.tileView .user-container-username span {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tileView .user-container-email {
+  margin: 10px auto;
+  justify-content: center;
+  max-height: 40px;
+}
+
+.tileView .user-container-groups {
+  margin: auto auto 15px auto;
+  justify-content: center;
+  max-height: 40px;
+}
+
+.tileView .user-container .user-container-edit,
+.tileView .user-container .user-container-select {
+  height: 40px;
+  width: 40px;
+  margin: 5px 0 0 5px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tileView .user-container .user-container-checkbox {
+  transform: translate3d(-1px, 1px, 0px);
+}
+
+.tileView .user-container-initials-wrapper {
+    padding-left:0px;
+}
+
+.hide {
+  display: none !important;
+}
+
+</style>
