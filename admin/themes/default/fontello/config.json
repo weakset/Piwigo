@@ -765,6 +765,18 @@
       ]
     },
     {
+      "uid": "0b28050bac9d3facf2f0226db643ece0",
+      "css": "pause",
+      "code": 59484,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "dd492243d64e21dfe16a92452f7861cb",
+      "css": "th-large",
+      "code": 59451,
+      "src": "fontawesome"
+    },
+    {
       "uid": "7411608e7611ffd477aeec7d239f87e9",
       "css": "dice",
       "code": 59401,

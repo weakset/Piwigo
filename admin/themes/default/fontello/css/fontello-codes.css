@@ -75,6 +75,7 @@
 .icon-flow-tree:before { content: '\e839'; } /* '' */
 .icon-link-1:before { content: '\e83a'; } /* '' */
 .icon-user-minus:before { content: '\e83b'; } /* '' */
+.icon-th-large:before { content: '\e83b'; } /* '' */
 .icon-user-1:before { content: '\e83c'; } /* '' */
 .icon-users-1:before { content: '\e83d'; } /* '' */
 .icon-clone:before { content: '\e83e'; } /* '' */
@@ -85,6 +86,7 @@
 .icon-zoom-square:before { content: '\e843'; } /* '' */
 .icon-grip-vertical-solid:before { content: '\e844'; } /* '' */
 .icon-dice-solid:before { content: '\e845'; } /* '' */
+.icon-pause:before { content: '\e85c'; } /* '' */
 .icon-hdd:before { content: '\f0a0'; } /* '' */
 .icon-tasks:before { content: '\f0ae'; } /* '' */
 .icon-filter:before { content: '\f0b0'; } /* '' */
