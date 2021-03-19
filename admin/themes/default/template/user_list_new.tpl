@@ -1939,6 +1939,9 @@ Advanced filter
   padding: 0;
 }
 
+.user-container-username {
+  min-width: 140px;
+}
 
 /*View Selector*/
 
@@ -2016,7 +2019,7 @@ Advanced filter
   display: none;
 }
 
-.tileView .user-container > div:not( .user-container-edit, .user-container-select, .user-container-status, .user-container-username, .user-container-email, .user-container-groups ) {
+.tileView .user-container > div:not( .user-container-edit, .user-container-select, .user-container-status, .user-container-username, .user-container-email, .user-container-groups, .user-container-initials ) {
   margin: 0 auto;
   justify-content: center;
   max-height: 40px;
@@ -2079,8 +2082,21 @@ Advanced filter
     padding-left:0px;
 }
 
+.tileView .user-container-initials {
+  margin: -10px auto 0 auto;
+  justify-content: center;
+  max-height: 40px;
+}
+
 .hide {
   display: none !important;
 }
 
+.tileView .user-container-edit {
+  color: transparent;
+}
+
+.tileView .user-container:hover .user-container-edit{
+  color: #777;
+}
 </style>
