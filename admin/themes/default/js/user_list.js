@@ -344,19 +344,23 @@ $( document ).ready(function() {
 
 function setDisplayTile() {
     console.log("display Tile");
-    $(".user-container-wrapper").addClass("tileView");
+    $(".user-container-wrapper").removeClass("compactView").removeClass("lineView").addClass("tileView");
     $(".user-header-col").addClass("hide");
+    $(".user-container-edit-v2").addClass("hide")
 }
 
 function setDisplayLine() {
     console.log("display Line");
-    $(".user-container-wrapper").removeClass("tileView");
+    $(".user-container-wrapper").removeClass("tileView").removeClass("compactView").addClass("lineView");
     $(".user-header-col").removeClass("hide");
+    $(".user-container-edit-v2").addClass("hide")
 }
 
 function setDisplayCompact() {
     console.log("display Compact");
+    $(".user-container-wrapper").removeClass("tileView").removeClass("lineView").addClass("compactView");
     $(".user-header-col").addClass("hide");
+    $(".user-container-edit-v2").removeClass("hide")
 }
 
 

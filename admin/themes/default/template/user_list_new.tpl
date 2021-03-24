@@ -91,7 +91,7 @@ update_selection_content();
     <div class="user-manager-header">
 
       <div class="UserViewSelector">
-        <input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_user_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout tiptip" id="displayLine" {if $smarty.cookies.pwg_user_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_user_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-pause lastIcon tiptip" title="{'Tile View'|translate}"></span></label>
+        <input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_user_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large firstIcon tiptip" title="{'Compact View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout tiptip" id="displayLine" {if $smarty.cookies.pwg_user_manager_view == 'line' || !$smarty.cookies.pwg_user_manager_view}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_user_manager_view == 'tile'}checked{/if}/><label for="displayTile"><span class="icon-pause lastIcon tiptip" title="{'Tile View'|translate}"></span></label>
       </div>
 
       <div style="display:flex;justify-content:space-between; flex-grow:1;">
@@ -481,6 +481,17 @@ update_selection_content();
           <span class="user-container-registration-time"><!-- time HH:mm:ss --></span>
         </div>
       </div>
+    </div>
+    <!-- edit-v2 -->
+    <div class="user-col user-container-select user-container-select-v2 in-selection-mode user-first-col no-flex-grow">
+      <div class="user-container-checkbox user-list-checkbox" name="select_container">
+        <span class="select-checkbox">
+          <i class="icon-ok"></i>
+        </span>
+      </div>
+    </div>
+    <div class="user-col user-container-edit user-container-edit-v2 not-in-selection-mode user-first-col no-flex-grow">
+      <span class="icon-pencil"></span>
     </div>
   </div>
   <span class="user-groups group-primary"></span>
@@ -1006,12 +1017,13 @@ update_selection_content();
 .user-container {
     display:flex;
     width:100%;
-    height:80px;
+    height:50px;
     background-color:#F3F3F3;
     font-weight:bold;
     border-radius:10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
     transition: background-color 500ms linear;
+    box-shadow: 0px 2px 5px #00000024;
 }
 
 .user-header-select,
@@ -1025,9 +1037,8 @@ update_selection_content();
     width:80px;
 }
 
-.user-header-username,
-   {
-    width:20%;
+.user-header-username{
+    width:150px;
 }
 
 .user-header-status,
@@ -1066,6 +1077,10 @@ update_selection_content();
 
 .user-first-col:hover {
     background-color:#FFC276;
+}
+
+.user-first-col:hover span{
+    color: #000;
 }
 
 .user-container-checkbox.user-list-checkbox {
@@ -1160,7 +1175,7 @@ update_selection_content();
 }
 
 .user-groups {
-    margin-left: 5px;
+    margin-right: 5px;
     border-radius:9999px;
     padding: 10px 15px;
 }
@@ -1940,7 +1955,22 @@ Advanced filter
 }
 
 .user-container-username {
-  min-width: 140px;
+  width: 140px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding-right: 10px;
+
+}
+
+.user-container-username span {
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*View Selector*/
@@ -2048,6 +2078,9 @@ Advanced filter
   max-width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  text-align: left;
+  white-space: nowrap;
 }
 
 .tileView .user-container-email {
@@ -2060,6 +2093,11 @@ Advanced filter
   margin: auto auto 15px auto;
   justify-content: center;
   max-height: 40px;
+  width: 90%;
+}
+
+.tileView .group-primary {
+  max-width: 45%;
 }
 
 .tileView .user-container .user-container-edit,
@@ -2099,4 +2137,85 @@ Advanced filter
 .tileView .user-container:hover .user-container-edit{
   color: #777;
 }
+
+.tileView .user-container-username {
+  padding-right: 0;
+}
+
+/* Compact View */
+
+.compactView {
+  display: flex;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.compactView .user-container {
+  height: 50px;
+  padding: 0;
+
+  width: min-content;
+
+  margin: 20px 20px 0  0 !important;
+  border-radius: 25px;
+}
+
+.compactView .user-container > div:not( .user-container-edit-v2, .user-container-select-v2, .user-container-username, .user-container-initials) {
+  display: none !important;
+}
+
+.compactView .user-container-username  {
+  width: max-content;
+  min-width: auto;
+
+  margin-right: 10px ;
+}
+
+.compactView .user-container-initials-wrapper {
+  padding-left: 0;
+}
+
+.compactView .user-container .user-container-edit,
+.compactView .user-container .user-container-select {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.compactView .user-container-initials {
+  width: 60px;
+}
+
+.compactView .user-container .user-container-checkbox {
+  transform: translate3d(-1px, 1px, 0px);
+}
+
+.compactView .group-primary {
+  max-width: 100px;
+}
+
+.compactView .user-container-username {
+  padding-right: 0;
+}
+
+
+
+/* Line View */
+
+.lineView .user-container-initials-wrapper > span {
+  padding: 0px;
+  height: 40px;
+  width: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 </style>
