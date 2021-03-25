@@ -347,6 +347,7 @@ function setDisplayTile() {
     $(".user-container-wrapper").removeClass("compactView").removeClass("lineView").addClass("tileView");
     $(".user-header-col").addClass("hide");
     $(".user-container-edit-v2").addClass("hide")
+    $(".user-container-select-v2").addClass("hide")
 }
 
 function setDisplayLine() {
@@ -354,6 +355,7 @@ function setDisplayLine() {
     $(".user-container-wrapper").removeClass("tileView").removeClass("compactView").addClass("lineView");
     $(".user-header-col").removeClass("hide");
     $(".user-container-edit-v2").addClass("hide")
+    $(".user-container-select-v2").addClass("hide")
 }
 
 function setDisplayCompact() {
@@ -361,6 +363,7 @@ function setDisplayCompact() {
     $(".user-container-wrapper").removeClass("tileView").removeClass("lineView").addClass("compactView");
     $(".user-header-col").addClass("hide");
     $(".user-container-edit-v2").removeClass("hide")
+    $(".user-container-select-v2").removeClass("hide")
 }
 
 
@@ -829,6 +832,10 @@ function selectionMode(isSelection) {
         set_selected_to_selection();
         $(".in-selection-mode").show();
         $(".not-in-selection-mode").hide();
+
+        if ($.cookie("pwg_user_manager_view") === "tile") {
+            $(".user-container-email").show()
+        }
     } else {
         $(".container-selected").removeClass("container-selected");
         $(".in-selection-mode").hide();

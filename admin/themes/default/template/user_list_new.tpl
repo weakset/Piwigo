@@ -2203,7 +2203,9 @@ Advanced filter
   padding-right: 0;
 }
 
-
+.compactView {
+  margin-bottom: 10px;
+}
 
 /* Line View */
 
@@ -2216,6 +2218,5 @@ Advanced filter
   justify-content: center;
   align-items: center;
 }
-
 
 </style>
