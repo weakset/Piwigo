@@ -203,14 +203,18 @@ update_selection_content();
       <div class="user-header-col user-header-email not-in-selection-mode">
         <span>{'Email Adress'|@translate}</span>
       </div>
-      <!-- groups -->
+      {* <!-- groups -->
       <div class="user-header-col user-header-groups">
         <span>{'Groups'|@translate}</span>
-      </div>
+      </div> *}
       <!-- registration date -->
       <div class="user-header-col user-header-registration">
         <span>{'Registered'|@translate}</span>
       </div>
+       <!-- groups -->
+       <div class="user-header-col user-header-groups">
+       <span>{'Groups'|@translate}</span>
+     </div>
     </div>
     <div class="user-update-spinner" style="position:relative">
       <img class="loading" src="themes/default/images/ajax-loader-small.gif" style="position:absolute;top:20px;width:30px">
@@ -446,14 +450,14 @@ update_selection_content();
 <!-- User container template -->
 <div id="template">
   <div class="user-container">
-    <div class="user-col user-container-select in-selection-mode user-first-col no-flex-grow">
+    <div class="user-col user-container-select tmp-select in-selection-mode user-first-col no-flex-grow">
       <div class="user-container-checkbox user-list-checkbox" name="select_container">
         <span class="select-checkbox">
           <i class="icon-ok"></i>
         </span>
       </div>
     </div>
-    <div class="user-col user-container-edit not-in-selection-mode user-first-col no-flex-grow">
+    <div class="user-col user-container-edit tmp-edit not-in-selection-mode user-first-col no-flex-grow">
       <span class="icon-pencil"></span>
     </div>
     <div class="user-col user-container-initials no-flex-grow">
@@ -470,17 +474,21 @@ update_selection_content();
     <div class="user-col user-container-email not-in-selection-mode">
       <span><!-- email --></span>
     </div>
-    <div class="user-col user-container-groups">
+    {* <div class="user-col user-container-groups">
       <!-- groups -->
-    </div>
+    </div> *}
     <div class="user-col user-container-registration">
       <div>
-        <span class="icon-clock registration-clock"></span>
+        {* <span class="icon-clock registration-clock"></span> *}
         <div class="user-container-registration-info-wrapper">
-          <span class="user-container-registration-date"><b><!-- date DD/MM/YY --></b></span>
-          <span class="user-container-registration-time"><!-- time HH:mm:ss --></span>
+          {* <span class="user-container-registration-date"><b><!-- date DD/MM/YY --></b></span>
+          <span class="user-container-registration-time"><!-- time HH:mm:ss --></span> *}
+          <span class="user-container-registration-date-since"><!-- date_since --></span>
         </div>
       </div>
+    </div>
+    <div class="user-col user-container-groups">
+      <!-- groups -->
     </div>
     <!-- edit-v2 -->
     <div class="user-col user-container-select user-container-select-v2 in-selection-mode user-first-col no-flex-grow">
@@ -529,7 +537,7 @@ update_selection_content();
           </div>
           <div class="user-property-password-container">
             <div class="user-property-password edit-password">
-              <p class="icon-key user-property-button">{'Change Password'|@translate}</p>
+              <p class="user-property-button"><span class="icon-key user-edit-icon"> </span>{'Change Password'|@translate}</p>
             </div>
             <div class="user-property-password-change">
               <div class="summary-input-container">
@@ -539,7 +547,7 @@ update_selection_content();
               <span class="icon-cancel-circled edit-password-cancel"></span>
             </div>
             <div class="user-property-permissions">
-              <p class="icon-lock user-property-button"><a href="#" >{'Permissions'|@translate}</a></p>
+              <p class="user-property-button"> <span class="icon-lock user-edit-icon"> </span><a href="#" >{'Permissions'|@translate}</a></p>
             </div>
           </div>
           <div class="user-property-register-visit">
@@ -699,7 +707,7 @@ update_selection_content();
           </div>
           <div class="user-property-password-container">
             <div class="user-property-password edit-password">
-              <p class="icon-key user-property-button unavailable">{'Change Password'|@translate}</p>
+              <p class="user-property-button unavailable"><span class="icon-key user-edit-icon"></span>{'Change Password'|@translate}</p>
             </div>
             <div class="user-property-password-change">
               <div class="summary-input-container">
@@ -709,7 +717,7 @@ update_selection_content();
               <span class="icon-cancel-circled edit-password-cancel"></span>
             </div>
             <div class="user-property-permissions">
-              <p class="icon-lock user-property-button"><a href="admin.php?page=user_perm&user_id={$guest_id}">{'Permissions'|@translate}</a></p>
+              <p class="user-property-button"><span class="icon-lock user-edit-icon"></span><a href="admin.php?page=user_perm&user_id={$guest_id}">{'Permissions'|@translate}</a></p>
             </div>
           </div>
         </div>
@@ -1034,31 +1042,66 @@ update_selection_content();
 
 .user-header-initials,
 .user-container-initials {
-    width:80px;
+    width:60px;
 }
 
 .user-header-username{
-    width:150px;
+  width: 20%;
+  max-width: 200px;
+}
+.user-container-username {
+  width: 20%;
+  max-width: 150px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding-right: 10px;
+
+}
+
+.user-container-username span {
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-header-status,
 .user-container-status {
     width:10%;
+    max-width: 140px;
 }
 
 .user-header-email,
 .user-container-email {
     width:20%;
+    max-width: 200px;
 }
 
 .user-header-groups,
 .user-container-groups {
-    width:25%;
+    width:20%;
+    max-width: 900px;
+    min-width: 100px;
+}
+
+.user-header-col.user-header-registration,
+.user-col.user-container-registration {
+  flex-grow: 0;
+}
+
+.user-groups .group-primary {
+  width: 100px;
 }
 
 .user-header-registration,
 .user-container-registration {
-    width: 15%;
+    width: 10% !important;
+    max-width: 700px;
+    margin-left: auto;
 }
 
 .user-col {
@@ -1181,7 +1224,7 @@ update_selection_content();
 }
 
 .group-primary {
-    max-width:20%;
+    max-width:30%;
     text-overflow: ellipsis;
     overflow:hidden;
     white-space:nowrap;
@@ -1332,7 +1375,7 @@ update_selection_content();
     color:#353535;
     margin-bottom:20px;
     cursor:pointer;
-    padding:10px 20px;
+    padding:10px;
     border:none;
     color:#353535;
     background-color:#F3F3F3;
@@ -1954,24 +1997,11 @@ Advanced filter
   padding: 0;
 }
 
-.user-container-username {
-  width: 140px;
 
-  white-space: nowrap;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  padding-right: 10px;
-
+.user-header-initials {
+  width: 10px;
 }
 
-.user-container-username span {
-  max-width: 100%;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 /*View Selector*/
 
@@ -2039,7 +2069,7 @@ Advanced filter
   display: flex;
   flex-direction: column;
 
-  width: 200px;
+  width: 220px;
   height: 250px;
 
   margin: 20px 20px 20px 0;
@@ -2047,12 +2077,6 @@ Advanced filter
 
 .tileView .user-container-registration {
   display: none;
-}
-
-.tileView .user-container > div:not( .user-container-edit, .user-container-select, .user-container-status, .user-container-username, .user-container-email, .user-container-groups, .user-container-initials ) {
-  margin: 0 auto;
-  justify-content: center;
-  max-height: 40px;
 }
 
 .tileView .user-container-status,
@@ -2094,10 +2118,16 @@ Advanced filter
   justify-content: center;
   max-height: 40px;
   width: 90%;
+  min-width: 0px;
 }
 
 .tileView .group-primary {
   max-width: 45%;
+  font-size: 11px;
+}
+
+.tileView .user-groups {
+  padding: 5px 10px;
 }
 
 .tileView .user-container .user-container-edit,
@@ -2142,6 +2172,18 @@ Advanced filter
   padding-right: 0;
 }
 
+.tileView .user-container .tmp-edit {
+  display: flex;
+}
+
+.tileView #toggleSelectionMode:checked .tmp-edit {
+  display: none !important;
+}
+
+.tileView #toggleSelectionMode:checked .tmp-select {
+  display: flex !important;
+}
+
 /* Compact View */
 
 .compactView {
@@ -2161,9 +2203,23 @@ Advanced filter
   border-radius: 25px;
 }
 
-.compactView .user-container > div:not( .user-container-edit-v2, .user-container-select-v2, .user-container-username, .user-container-initials) {
+.compactView .user-container .user-container-status,
+.compactView .user-container .user-container-email,
+.compactView .user-container .user-container-groups,
+.compactView .user-container .user-container-registration {
   display: none !important;
 }
+
+.compactView .user-container .tmp-select,
+.compactView .user-container .tmp-edit {
+  display: none !important;
+}
+
+.compactView .user-container .user-container-edit-v2,
+.compactView .user-container .user-container-select-v2 {
+  display: flex;
+} 
+
 
 .compactView .user-container-username  {
   width: max-content;
@@ -2219,4 +2275,30 @@ Advanced filter
   align-items: center;
 }
 
+.lineView .user-container .tmp-edit {
+  display: flex;
+}
+
+.lineView #toggleSelectionMode:checked .tmp-edit {
+  display: none !important;
+}
+
+.lineView #toggleSelectionMode:checked .tmp-select {
+  display: flex !important;
+}
+
+.lineView .group-primary{
+  margin-right: 15px;
+}
+
+
+/* User Edit */
+
+.user-edit-icon {
+  margin-right: 5px;
+}
+
+.selectize-input.items .item {
+  color: #000 !important;
+}
 </style>
