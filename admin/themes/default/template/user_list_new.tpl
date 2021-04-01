@@ -2310,6 +2310,11 @@ Advanced filter
   margin-bottom: 20px;
 }
 
+.lineView .user-container.container-selected {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
 .lineView .user-container-initials-wrapper > span {
   padding: 0px;
   height: 40px;
