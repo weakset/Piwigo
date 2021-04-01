@@ -673,9 +673,13 @@ Advanced filter
 
 function advanced_filter_button_click() {
     if ($("#advanced-filter-container").css("display") === "none") {
+
         advanced_filter_show();
+        $("#advanced_filter_button").addClass("extended-filter-btn")
     } else {
+        
         advanced_filter_hide();
+        $("#advanced_filter_button").removeClass("extended-filter-btn")
     }
 }
 

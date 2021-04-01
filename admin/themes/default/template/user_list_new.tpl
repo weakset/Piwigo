@@ -123,21 +123,30 @@ update_selection_content();
             </div>
           </div>
         </div>
-        <div style="display:flex; width: 380px;">
-          <div id="advanced_filter_button">
+        <div style="display:flex; width: 270px;">
+          {* <div id="advanced_filter_button">
             <span>{'Advanced filter'|@translate}</span>
-          </div>
-          <div id='search-user'>
+          </div> *}
+          {* <div id='search-user'>
             <div class='search-info'> </div>
             <span class='icon-filter search-icon'> </span>
             <span class="icon-cancel search-cancel"></span>
             <input id="user_search" class='search-input' type='text' placeholder='{'Filter'|@translate}'>
-          </div>
+          </div> *}
         </div>
       </div>
       <div class="not-in-selection-mode" style="width: 264px; height:2px">
       </div>
     </div>
+    <div id="advanced_filter_button">
+      <span>{'Advanced filter'|@translate}</span>
+    </div>
+    <div id='search-user'>
+        <div class='search-info'> </div>
+          <span class='icon-filter search-icon'> </span>
+          <span class="icon-cancel search-cancel"></span>
+          <input id="user_search" class='search-input' type='text' placeholder='{'Filter'|@translate}'>
+        </div>
     <div id="advanced-filter-container">
       <div class="advanced-filters-header">
         <span class="advanced-filter-title">{'Advanced filter'|@translate}</span>
@@ -1909,7 +1918,7 @@ update_selection_content();
 }
 
 .search-icon {
-  top: 212px;
+  top: 20px;
   z-index: 13;
 }
 
@@ -1922,11 +1931,30 @@ Advanced filter
 }
 
 #advanced_filter_button {
+
+  width: 100px;
+
+  position: absolute;
+  z-index: 2;
+  right: 542px;
+  top: 192px;
+
+
   cursor:pointer;
-  margin:4px;
   padding:10px;
   background-color:#F3F3F3;
   margin-right:10px;
+}
+
+#search-user {
+  position: absolute;
+  z-index: 2;
+  right: 400px;
+  top: 188px;
+}
+
+.extended-filter-btn {
+  height: 25px;
 }
 
 #advanced-filter-container {
@@ -2351,4 +2379,6 @@ Advanced filter
 .selectize-input.items .item {
   color: #000 !important;
 }
+
+
 </style>
