@@ -319,6 +319,7 @@ $( document ).ready(function() {
         }
         
         $.cookie("pwg_user_manager_view", "compact");
+
     });
 
     $("#displayLine").change(function () {
@@ -340,6 +341,27 @@ $( document ).ready(function() {
         
         $.cookie("pwg_user_manager_view", "tile");
     });
+
+    /* Pagination */
+
+    if ($.cookie("pwg_user_manager_view") === "compact") {
+        if (per_page < 10) {
+            per_page = 10
+            update_pagination_menu();
+            update_user_list();
+        
+            $("#pagination-per-page-5").removeClass("selected-pagination");
+            $("#pagination-per-page-10").addClass("selected-pagination");
+            $("#pagination-per-page-25").removeClass("selected-pagination");
+            $("#pagination-per-page-50").removeClass("selected-pagination");
+        }
+    } else {
+        $("#pagination-per-page-5").addClass("selected-pagination");
+        $("#pagination-per-page-10").removeClass("selected-pagination");
+        $("#pagination-per-page-25").removeClass("selected-pagination");
+        $("#pagination-per-page-50").removeClass("selected-pagination");
+    }
+
 });
 
 function setDisplayTile() {
@@ -348,6 +370,7 @@ function setDisplayTile() {
     $(".user-header-col").addClass("hide");
     $(".user-container-edit-v2").addClass("hide");
     $(".user-container-select-v2").addClass("hide");
+
 }
 
 function setDisplayLine() {
@@ -356,6 +379,7 @@ function setDisplayLine() {
     $(".user-header-col").removeClass("hide");
     $(".user-container-edit-v2").addClass("hide");
     $(".user-container-select-v2").addClass("hide");
+
 }
 
 function setDisplayCompact() {
@@ -364,6 +388,17 @@ function setDisplayCompact() {
     $(".user-header-col").addClass("hide");
     $(".user-container-edit-v2").removeClass("hide");
     $(".user-container-select-v2").removeClass("hide");
+
+    if (per_page < 10) {
+        per_page = 10
+        update_pagination_menu();
+        update_user_list();
+    
+        $("#pagination-per-page-5").removeClass("selected-pagination");
+        $("#pagination-per-page-10").addClass("selected-pagination");
+        $("#pagination-per-page-25").removeClass("selected-pagination");
+        $("#pagination-per-page-50").removeClass("selected-pagination");
+    }
 }
 
 
@@ -536,6 +571,7 @@ $('#permitActionUserList .period-select-bar .recent_period_infos').html(period_i
 /* -----------
 Pagination
 ------------*/
+
 let per_page = 5;
 let actual_page = 1;
 let max_page = 1;
@@ -566,6 +602,11 @@ $('.pagination-per-page a').on('click',function () {
     actual_page = 1;
     update_pagination_menu();
     update_user_list();
+
+
+    $(this).parent().children("a").removeClass("selected-pagination");
+
+    $(this).addClass("selected-pagination");
 });
 
 function append_pagination_item(page = null) {

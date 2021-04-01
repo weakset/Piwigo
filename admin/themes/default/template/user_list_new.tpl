@@ -95,14 +95,14 @@ update_selection_content();
       </div>
 
       <div style="display:flex;justify-content:space-between; flex-grow:1;">
-        <div style="display:flex">
-          <div class="not-in-selection-mode user-header-button add-user-button" style="margin-right:10px">
+        <div style="display:flex; align-items: center;">
+          <div class="not-in-selection-mode user-header-button add-user-button" style="margin: auto; margin-right: 10px">
             <label class="user-header-button-label icon-plus-circled">
               <p>{'Add a user'|@translate}</p>
             </label>
           </div>
 
-          <div class="not-in-selection-mode user-header-button" style="margin-right:10px">
+          <div class="not-in-selection-mode user-header-button" style="margin: auto; margin-right: 10px">
             <label class="user-header-button-label icon-user-1 edit-guest-user-button">
               <p>{'Edit guest user'|@translate}</p>
             </label>
@@ -123,7 +123,7 @@ update_selection_content();
             </div>
           </div>
         </div>
-        <div style="display:flex; width: 500px;">
+        <div style="display:flex; width: 380px;">
           <div id="advanced_filter_button">
             <span>{'Advanced filter'|@translate}</span>
           </div>
@@ -225,10 +225,10 @@ update_selection_content();
     <div class="user-pagination">
       <div class="pagination-per-page">
         <span class="thumbnailsActionsShow" style="font-weight: bold;">{'Display'|@translate}</span>
-        <a>5</a>
-        <a>10</a>
-        <a>25</a>
-        <a>50</a>
+        <a id="pagination-per-page-5">5</a>
+        <a id="pagination-per-page-10">10</a>
+        <a id="pagination-per-page-25">25</a>
+        <a id="pagination-per-page-50">50</a>
       </div>
 
       <div class="pagination-container">
@@ -913,7 +913,7 @@ update_selection_content();
   position: relative;
   width: 223px;
   top: -20px;
-  min-height:calc(100vh - 171px);
+  min-height: 100%;
 }
 
 #forbidAction {
@@ -978,8 +978,12 @@ update_selection_content();
 
 /* filters bar */
 
-#search-user {
-    
+#user_search {
+    width: 100px;
+}
+
+.advanced-filter-date {
+  width: auto;
 }
 
 /* Pagination */
@@ -989,6 +993,10 @@ update_selection_content();
     padding: 0;
     justify-content: space-between;
     align-items: center;
+}
+
+.selected-pagination {
+  background: #ffd2a1;
 }
 
 /* User Table */
@@ -1908,6 +1916,11 @@ update_selection_content();
 /*----------------------
 Advanced filter
 ----------------------*/
+
+.filter-div {
+  margin-left: 500px;
+}
+
 #advanced_filter_button {
   cursor:pointer;
   margin:4px;
@@ -1941,11 +1954,32 @@ Advanced filter
 
 .advanced-filter-status, 
 .advanced-filter-group, 
-.advanced-filter-level, 
-.advanced-filter-date {
-  width:25%;
+.advanced-filter-level {
+  min-width: 130px;
+  width: 16%;
 }
 
+.advanced-filter-date {
+  width: 40%;
+  min-width: 330px;
+  margin: 0 auto 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} 
+
+.advanced-filter-date-title {
+  width: 105%;
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+}
+
+.select-bar-wrapper {
+  margin-top: 12px;
+}
 
 .advanced-filter-date {
   padding-right:15px;
@@ -1997,11 +2031,14 @@ Advanced filter
   padding: 0;
 }
 
-
 .user-header-initials {
   width: 10px;
 }
 
+.group-bonus {
+  color: #000;
+  background: #DDDDDD;
+}
 
 /*View Selector*/
 
@@ -2017,7 +2054,7 @@ Advanced filter
 
   position: absolute;
   z-index: 2;
-  right: 260px;
+  right: 280px;
 }
 
 .UserViewSelector span {
@@ -2063,6 +2100,8 @@ Advanced filter
   flex-direction: row;
 
   flex-wrap: wrap;
+
+  margin-bottom: 20px;
 }
 
 .tileView .user-container{
@@ -2123,6 +2162,10 @@ Advanced filter
 
 .tileView .group-primary {
   max-width: 45%;
+  font-size: 11px;
+}
+
+.tileView .group-bonus {
   font-size: 11px;
 }
 
@@ -2191,6 +2234,8 @@ Advanced filter
 
   flex-direction: row;
   flex-wrap: wrap;
+
+  margin-bottom: 35px;
 }
 
 .compactView .user-container {
@@ -2259,11 +2304,11 @@ Advanced filter
   padding-right: 0;
 }
 
-.compactView {
-  margin-bottom: 10px;
-}
-
 /* Line View */
+
+.lineView {
+  margin-bottom: 20px;
+}
 
 .lineView .user-container-initials-wrapper > span {
   padding: 0px;
