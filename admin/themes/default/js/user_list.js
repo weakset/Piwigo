@@ -368,8 +368,6 @@ function setDisplayTile() {
     console.log("display Tile");
     $(".user-container-wrapper").removeClass("compactView").removeClass("lineView").addClass("tileView");
     $(".user-header-col").addClass("hide");
-    $(".user-container-edit-v2").addClass("hide");
-    $(".user-container-select-v2").addClass("hide");
 
 }
 
@@ -377,8 +375,6 @@ function setDisplayLine() {
     console.log("display Line");
     $(".user-container-wrapper").removeClass("tileView").removeClass("compactView").addClass("lineView");
     $(".user-header-col").removeClass("hide");
-    $(".user-container-edit-v2").addClass("hide");
-    $(".user-container-select-v2").addClass("hide");
 
 }
 
@@ -386,8 +382,6 @@ function setDisplayCompact() {
     console.log("display Compact");
     $(".user-container-wrapper").removeClass("tileView").removeClass("lineView").addClass("compactView");
     $(".user-header-col").addClass("hide");
-    $(".user-container-edit-v2").removeClass("hide");
-    $(".user-container-select-v2").removeClass("hide");
 
     if (per_page < 10) {
         per_page = 10
@@ -673,23 +667,21 @@ Advanced filter
 
 function advanced_filter_button_click() {
     if ($("#advanced-filter-container").css("display") === "none") {
-
-        advanced_filter_show();
-        $("#advanced_filter_button").addClass("extended-filter-btn")
-    } else {
-        
-        advanced_filter_hide();
-        $("#advanced_filter_button").removeClass("extended-filter-btn")
+        advanced_filter_show(); 
+    } else { 
+        advanced_filter_hide(); 
     }
 }
 
 function advanced_filter_show() {
     $("#advanced-filter-container").show();
+    $("#advanced_filter_button").addClass("extended-filter-btn");
     update_user_list();
 }
 
 function advanced_filter_hide() {
     $("#advanced-filter-container").hide();
+    $("#advanced_filter_button").removeClass("extended-filter-btn");
     update_user_list();
 }
 

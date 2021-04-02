@@ -162,21 +162,21 @@ update_selection_content();
             </select>
           </div>
         </div>
-        <div class="advanced-filter-group">
-          <label class="advanced-filter-label">{'Group'|@translate}</label>
-          <div class="advanced-filter-select-container">
-            <select class="user-action-select advanced-filter-select" name="filter_group">
-              <option value="" label="" selected></option>
-              {html_options options=$association_options}
-            </select>
-          </div>
-        </div>
         <div class="advanced-filter-level">
           <label class="advanced-filter-label">{'Privacy level'|@translate}</label>
           <div class="advanced-filter-select-container">
             <select class="user-action-select advanced-filter-select" name="filter_level" size="1">
               <option value="" label="" selected></option>
               {html_options options=$level_options}
+            </select>
+          </div>
+        </div>
+        <div class="advanced-filter-group">
+          <label class="advanced-filter-label">{'Group'|@translate}</label>
+          <div class="advanced-filter-select-container">
+            <select class="user-action-select advanced-filter-select" name="filter_group">
+              <option value="" label="" selected></option>
+              {html_options options=$association_options}
             </select>
           </div>
         </div>
@@ -459,6 +459,7 @@ update_selection_content();
 <!-- User container template -->
 <div id="template">
   <div class="user-container">
+  <!-- edit-v1 -->
     <div class="user-col user-container-select tmp-select in-selection-mode user-first-col no-flex-grow">
       <div class="user-container-checkbox user-list-checkbox" name="select_container">
         <span class="select-checkbox">
@@ -498,17 +499,6 @@ update_selection_content();
     </div>
     <div class="user-col user-container-groups">
       <!-- groups -->
-    </div>
-    <!-- edit-v2 -->
-    <div class="user-col user-container-select user-container-select-v2 in-selection-mode user-first-col no-flex-grow">
-      <div class="user-container-checkbox user-list-checkbox" name="select_container">
-        <span class="select-checkbox">
-          <i class="icon-ok"></i>
-        </span>
-      </div>
-    </div>
-    <div class="user-col user-container-edit user-container-edit-v2 not-in-selection-mode user-first-col no-flex-grow">
-      <span class="icon-pencil"></span>
     </div>
   </div>
   <span class="user-groups group-primary"></span>
@@ -935,7 +925,7 @@ update_selection_content();
 	flex-wrap: nowrap;
 	align-items: center;
 	overflow: hidden;
-  padding-bottom:5px;
+  padding-bottom:10px;
 }
 
 .user-header-button {
@@ -1011,9 +1001,12 @@ update_selection_content();
 /* User Table */
 #user-table {
     margin-left:30px;
+    margin-top: 30px;
     display:flex;
     flex-wrap:nowrap;
     min-height: calc(100vh - 216px);
+
+    position: relative;
 }
 
 #user-table-content {
@@ -1027,14 +1020,14 @@ update_selection_content();
 .user-container-header {
     display:flex;
     text-align:left;
-    font-size:1.3em;
+    font-size:1.1em;
     font-weight:bold;
     margin-top:20px;
     color:#9e9e9e;
 }
 
 .user-header-col {
-    height:50px;
+    height:30px;
     flex-grow:1;
 }
 
@@ -1076,7 +1069,6 @@ update_selection_content();
   text-overflow: ellipsis;
 
   padding-right: 10px;
-
 }
 
 .user-container-username span {
@@ -1416,7 +1408,7 @@ update_selection_content();
 .advanced-filter-select-container {
   position: relative;
   text-align:left;
-  width:85%;
+  width:100%;
 }
 
 .user-action-select-container {
@@ -1934,8 +1926,7 @@ Advanced filter
 
   position: absolute;
   z-index: 2;
-  right: 542px;
-  top: 192px;
+  right: 550px;
 
 
   cursor:pointer;
@@ -1947,12 +1938,12 @@ Advanced filter
 #search-user {
   position: absolute;
   z-index: 2;
-  right: 400px;
-  top: 188px;
+  right: 404px;
+  top: -3px;
 }
 
 .extended-filter-btn {
-  height: 25px;
+  height: 30px;
 }
 
 #advanced-filter-container {
@@ -1979,14 +1970,26 @@ Advanced filter
 }
 
 .advanced-filter-status, 
-.advanced-filter-group, 
+.advanced-filter-level,
+.advanced-filter-group {
+  margin-right: 30px;
+    
+}
+
+.advanced-filter-status, 
 .advanced-filter-level {
   min-width: 130px;
+  max-width: 160px;
   width: 16%;
 }
 
+.advanced-filter-group {
+  min-width: 200px;
+  width: 20%;
+}
+
 .advanced-filter-date {
-  width: 40%;
+  width: 52%;
   min-width: 330px;
   margin: 0 auto 0 auto;
 
@@ -1996,11 +1999,9 @@ Advanced filter
 } 
 
 .advanced-filter-date-title {
-  width: 105%;
+  width: 100%;
   display: flex;
   flex-direction: row;
-
-  justify-content: center;
 }
 
 .select-bar-wrapper {
@@ -2241,18 +2242,6 @@ Advanced filter
   padding-right: 0;
 }
 
-.tileView .user-container .tmp-edit {
-  display: flex;
-}
-
-.tileView #toggleSelectionMode:checked .tmp-edit {
-  display: none !important;
-}
-
-.tileView #toggleSelectionMode:checked .tmp-select {
-  display: flex !important;
-}
-
 /* Compact View */
 
 .compactView {
@@ -2266,12 +2255,14 @@ Advanced filter
 
 .compactView .user-container {
   height: 50px;
-  padding: 0;
+  padding: 0 50px 0 0;
 
   width: min-content;
 
   margin: 20px 20px 0  0 !important;
   border-radius: 25px;
+
+  position: relative;
 }
 
 .compactView .user-container .user-container-status,
@@ -2280,17 +2271,6 @@ Advanced filter
 .compactView .user-container .user-container-registration {
   display: none !important;
 }
-
-.compactView .user-container .tmp-select,
-.compactView .user-container .tmp-edit {
-  display: none !important;
-}
-
-.compactView .user-container .user-container-edit-v2,
-.compactView .user-container .user-container-select-v2 {
-  display: flex;
-} 
-
 
 .compactView .user-container-username  {
   width: max-content;
@@ -2305,6 +2285,9 @@ Advanced filter
 
 .compactView .user-container .user-container-edit,
 .compactView .user-container .user-container-select {
+  position: absolute;
+  right: 0px;
+
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -2353,14 +2336,6 @@ Advanced filter
 
 .lineView .user-container .tmp-edit {
   display: flex;
-}
-
-.lineView #toggleSelectionMode:checked .tmp-edit {
-  display: none !important;
-}
-
-.lineView #toggleSelectionMode:checked .tmp-select {
-  display: flex !important;
 }
 
 .lineView .group-primary{
