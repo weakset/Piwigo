@@ -2684,7 +2684,7 @@ a#showPermissions:hover {text-decoration: none;}
   width: 15px;
   height: 15px;
   border-radius: 100%;
-  margin: 2px 0px;
+  /* margin: 2px 0px; */
   margin-left: 3.4px;
   border: solid #ffa646 2px;
 }

@@ -614,7 +614,7 @@ update_selection_content();
         </div>
       </div>
       <div class="update-container" style="display:flex;flex-direction:column">
-        <div style="display:flex;justify-content:space-between;margin-bottom: 30px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom: 10px;">
           <div>
             <span class="update-user-button">{'Update'|@translate}</span>
             <span class="close-update-button">{'Close'|@translate}</span>
@@ -640,7 +640,7 @@ update_selection_content();
         </div>
         <input name="recent_period" />
       </div>
-      <div class="user-property-theme">
+      <div class="user-property-theme" style="margin-top: 37px;">
         <p class="user-property-label">{'Theme'|@translate}</p>
         <div class="user-property-select-container">
           <select name="privacy" class="user-property-select">
@@ -1289,17 +1289,15 @@ update_selection_content();
 
 .UserListPopInContainer{
     display:block;
-    width:1100px;
     position:absolute;
     left:50%;
     top: 50%;
     transform:translate(-50%, -48%);
     text-align:left;
-    padding:30px;
+    padding:20px;
     display:flex;
     background-color:white;
-    padding:30px;
-    width:1020px
+    width:870px
 }
 
 .summary-properties-update-container {
@@ -1314,32 +1312,29 @@ update_selection_content();
 }
 
 .summary-container {
-    width:300px;
+    width:250px;
     display:flex;
     flex-direction:column;
     align-items:center;
     padding:5px;
-    padding-right:30px;
+    padding-right:20px;
 }
 
 .properties-container {
-    width:300px;
+    width:250px;
     border-left:solid 1px #ddd;
-    padding-left:30px;
-    padding-right:30px;
-    padding-bottom:20px;
+    padding: 0 20px
 }
 
 .update-container {
     border-top:solid 1px #ddd;
-    padding-right:30px;
+    padding-right:20px;
     padding-top:30px;
 }
 
 .preferences-container {
-    width:300px;
-    min-width:300px;
-    padding-left:30px;
+    width:250px;
+    padding-left:20px;
     border-left: solid 1px #ddd;
 }
 
@@ -1347,8 +1342,8 @@ update_selection_content();
 .user-property-column-title {
     color:#353535;
     font-weight:bold;
-    margin-bottom:30px;
-    font-size:1.7em;
+    margin-bottom:15px;
+    font-size:1.4em;
 }
 
 .user-property-column-title > p {
@@ -1359,8 +1354,8 @@ update_selection_content();
 .user-property-label {
     color:#A4A4A4;
     font-weight:bold;
-    font-size:1.3em;
-    margin-bottom:10px;
+    font-size:1.1em;
+    margin-bottom:5px;
 }
 
 .user-property-label span,
@@ -1375,7 +1370,7 @@ update_selection_content();
     width: 100%;
     box-sizing:border-box;
     font-size:1.1em;
-    padding:10px 20px;
+    padding:8px 16px;
     border:none;
     color:#353535;
     background-color:#F3F3F3;
@@ -1388,11 +1383,11 @@ update_selection_content();
 
 .user-property-button {
     margin-top:0;
-    font-size:1.3em;
+    font-size:1.1em;
     color:#353535;
-    margin-bottom:20px;
+    margin-bottom:15px;
     cursor:pointer;
-    padding:10px;
+    padding:8px;
     border:none;
     color:#353535;
     background-color:#F3F3F3;
@@ -1405,15 +1400,17 @@ update_selection_content();
     -webkit-appearance:none;
     border:none;
     width:100%;
-    padding: 10px 20px;
+    padding: 10px;
     font-size:1.1em;
 }
 
-
-
-
 .user-property-select-container {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+}
+
+.user-property-select-container::before {
+  margin-top: 10px;
+  margin-left: 220px;
 }
 
 .advanced-filter-select-container {
@@ -1469,9 +1466,9 @@ update_selection_content();
 }
 
 .user-list-checkbox-label {
-    margin-left: 10px;
+    margin-left: 5px;
     vertical-align:top;
-    font-size:1.2em;
+    font-size:1em;
     cursor:pointer;
 }
 
@@ -1487,26 +1484,26 @@ update_selection_content();
 .user-property-initials span{
     border-radius:50%;
     padding:5px;
-    width:120px;
-    height:120px;
+    width:100px;
+    height:100px;
     display:inline-block;
     text-align:center;
-    font-size:4.5em;
-    line-height:2em;
+    font-size:4em;
+    line-height:1.9em;
     font-weight:bold;
 }
 
 .user-property-username {
     font-weight:bold;
-    margin-bottom:40px;
-    height:38px;
+    margin-bottom:34px;
+    height:30px;
 }
 
 .user-property-username-change {
     justify-content:center;
     align-items:center;
     display:none;
-    margin-bottom:40px;
+    margin-bottom:25px;
 }
 
 .user-property-password-change {
@@ -1515,17 +1512,17 @@ update_selection_content();
 }
 
 .summary-input-container {
-  width:230px;
+  width:171px;
   display:inline-block;
 }
 
 .edit-username {
-    font-size:1.5em;
+    font-size:1.4em;
     cursor:pointer;
 }
 
 .edit-username-title {
-    font-size:1.5em;
+    font-size:1.4em;
     color:#353535;
 }
 
@@ -1547,7 +1544,7 @@ update_selection_content();
 .user-property-password-container {
     display:flex;
     flex-direction:column;
-    margin-bottom:40px;
+    margin-bottom:30px;
     width:100%;
 }
 
@@ -1560,7 +1557,7 @@ update_selection_content();
     color: #3c3c3c;
     font-size: 17px;
     font-weight: 700;
-    padding: 7px 5.5px;
+    padding: 7px;
 }
 
 .edit-username-validate:hover,
@@ -1608,11 +1605,12 @@ update_selection_content();
 
 .user-property-register, .user-property-last-visit {
   min-width: 80px;
+  font-size: 15px;
 }
 
 .user-property-register-visit .icon-calendar {
     margin:0;
-    font-size:2em;
+    font-size:1.8em;
     color: #4C4C4C;
 }
 
@@ -1725,7 +1723,7 @@ update_selection_content();
     top: 50%;
     transform:translate(-50%, -48%);
     text-align:left;
-    padding:30px;
+    padding:10px;
     display:flex;
     background-color:white;
     padding:30px;
