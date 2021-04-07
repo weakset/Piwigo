@@ -365,21 +365,18 @@ $( document ).ready(function() {
 });
 
 function setDisplayTile() {
-    console.log("display Tile");
     $(".user-container-wrapper").removeClass("compactView").removeClass("lineView").addClass("tileView");
     $(".user-header-col").addClass("hide");
 
 }
 
 function setDisplayLine() {
-    console.log("display Line");
     $(".user-container-wrapper").removeClass("tileView").removeClass("compactView").addClass("lineView");
     $(".user-header-col").removeClass("hide");
 
 }
 
 function setDisplayCompact() {
-    console.log("display Compact");
     $(".user-container-wrapper").removeClass("tileView").removeClass("lineView").addClass("compactView");
     $(".user-header-col").addClass("hide");
 
@@ -958,6 +955,13 @@ function generate_groups(container, groups) {
         let bonus_grp = $("#template .group-bonus").clone();
         bonus_grp.html("...");
         bonus_grp.addClass(color_icons[groups[2] % 5]);
+        bonus_grp.addClass("tiptip");
+        let groups_in_title = "";
+        for (let i = 2; i < groups.length; i++) {
+            groups_in_title += get_group_name_from_id(groups[i]) + ", ";
+        }
+        groups_in_title = groups_in_title.substring(0, groups_in_title.length -2);
+        bonus_grp.prop('title', groups_in_title);
         container.find(".user-container-groups").append(bonus_grp);
     }
 }
