@@ -4609,6 +4609,7 @@ li.plupload_delete a:hover {background: url("images/cancelhover.svg")!important;
 .permitActionItem .selectize-input.items.full.has-options.has-items {width: 500px !important; line-height: 23px;}
 #action_associate {display: flex;}
 #action_associate a:last-child {margin-left: 15px; padding: 10px;}
+#action_associate .selectize-input { min-width: 500px; height: 45px;}
 #applyAction i {margin-right: 15px;}
 #action_delete_derivatives, #action_generate_derivatives {display: flex; flex-wrap: wrap; margin-top: 0px;}
 .deleteDerivButtons a {border-radius: 4px; padding: 4px 10px; margin: 5px;}

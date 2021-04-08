@@ -684,7 +684,7 @@ UL.thumbnails SPAN.wrap2 {ldelim}
 
       <!-- associate -->{* also used for "move" action *}
       <div id="action_associate" class="bulkAction">
-        <select data-selectize="categories" data-default="first" name="associate" style="width:600px"></select>
+        <select data-selectize="categories" placeholder="{'Select an album... or type it!'|translate}" data-default="" name="associate" style="width:600px"></select>
         <a href="#" data-add-album="associate" title="{'create a new album'|@translate}" class="icon-plus"></a>
       </div>
 
