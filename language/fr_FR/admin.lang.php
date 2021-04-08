@@ -1124,3 +1124,4 @@ $lang['Compact View'] = 'Affichage compact';
 $lang['Tile View'] = 'Affichage tuiles';
 $lang['Line View'] = 'Affichage lignes';
 $lang['Add Album'] = 'Ajouter un Album';
+$lang['Select an album... or type it!'] = 'Selectionnez un album... ou entrez-le au clavier !';

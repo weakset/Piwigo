@@ -1122,3 +1122,4 @@ $lang['Compact View'] = 'Compact View';
 $lang['Tile View'] = 'Tile View';
 $lang['Line View'] = 'Line View';
 $lang['Add Album'] = 'Add Album';
+$lang['Select an album... or type it!'] = 'Select an album... or type it!';
