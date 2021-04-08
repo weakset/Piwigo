@@ -870,10 +870,24 @@ function selectionMode(isSelection) {
         if ($.cookie("pwg_user_manager_view") === "tile") {
             $(".user-container-email").show();
         }
+
+        if ($.cookie("pwg_user_manager_view") === "tile" || $.cookie("pwg_user_manager_view") === "line") {
+            $(".user-container-email").css({
+                display: "flex"
+            })
+        }
+        
+        
     } else {
         $(".container-selected").removeClass("container-selected");
         $(".in-selection-mode").hide();
         $(".not-in-selection-mode").show();
+
+        if ($.cookie("pwg_user_manager_view") === "tile" || $.cookie("pwg_user_manager_view") === "line") {
+            $(".user-container-email").css({
+                display: "flex"
+            })
+        }
     }
 }
 
