@@ -1,4 +1,4 @@
-function setDisplayCompact() {
+function setDisplayTile() {
     $(".pluginDesc").show();
     $(".pluginDescCompact").hide();
     $(".pluginActions").show();
@@ -11,7 +11,7 @@ function setDisplayCompact() {
     normalTitle();
 }
 
-function setDisplayTile() {
+function setDisplayCompact() {
     $(".pluginDesc").hide();
     $(".pluginDescCompact").show();
     $(".pluginActions").hide();
