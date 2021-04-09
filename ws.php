@@ -128,6 +128,15 @@ function ws_addDefaultMethods( $arr )
       array('admin_only'=>true)
     );
 
+    $service->addMethod(
+      'pwg.getActivityInfos',
+      'ws_getActivityInfos',
+      null,
+      'Returns general informations.',
+      $ws_functions_root . 'pwg.php',
+      array('admin_only'=>true)
+    );
+
   $service->addMethod(
       'pwg.caddie.add',
       'ws_caddie_add',

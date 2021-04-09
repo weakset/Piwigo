@@ -338,4 +338,64 @@ function ws_session_getStatus($params, &$service)
   return $res;
 }
 
+/**
+ * API method
+ * Test for activity
+ */
+
+function ws_getActivityInfos($param, &$service) {
+
+
+  $ligne['0'] = array("user" => "Naruto",
+                      "action" => "edit",
+                      "objet" => "album",
+                      "startDate" => "1 Janvier 2021 12:00", 
+                      "endDate" => "1 Janvier 2021 12:05",  
+                      "details" => array("api" => "apiMethod", 
+                                         "ip" => "127.0.0.1"));
+
+  $ligne['1'] = array("user" => "Sasuke",
+                      "action" => "delete",
+                      "objet" => "album",
+                      "startDate" => "1 Janvier 2021 13:00", 
+                      "endDate" => "1 Janvier 2021 13:05",  
+                      "details" => array("api" => "apiMethod", 
+                                         "ip" => "127.0.0.1"));
+
+  $ligne['2'] = array("user" => "Sakura",
+                      "action" => "add",
+                      "objet" => "album",
+                      "startDate" => "1 Janvier 2021 14:00", 
+                      "endDate" => "1 Janvier 2021 14:05",  
+                      "details" => array("api" => "apiMethod", 
+                                         "ip" => "127.0.0.1"));
+
+  $ligne['3'] = array("user" => "Kakashi",
+                      "action" => "login",
+                      "objet" => "session",
+                      "startDate" => "1 Janvier 2021 15:00", 
+                      "endDate" => "1 Janvier 2021 15:05",  
+                      "details" => array("api" => "apiMethod", 
+                                         "ip" => "127.0.0.1"));
+
+  $ligne['4'] = array("user" => "Gaara",
+                      "action" => "logout",
+                      "objet" => "session",
+                      "startDate" => "1 Janvier 2021 16:00", 
+                      "endDate" => "1 Janvier 2021 16:05",  
+                      "details" => array("api" => "apiMethod", 
+                                         "ip" => "127.0.0.1"));
+
+
+  foreach ($ligne as $id => $infos)
+  {
+    $output[] = array(
+      'id' => $id,
+      'infos' => $infos,
+    );
+  }
+
+  return new PwgNamedArray($output, 'item');
+}
+
 ?>
