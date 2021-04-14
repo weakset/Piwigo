@@ -340,58 +340,77 @@ function ws_session_getStatus($params, &$service)
 
 /**
  * API method
- * Test for activity
+ * Returns lines of users activity
  */
 
 function ws_getActivityInfos($param, &$service) {
 
 
-  $ligne['0'] = array("user" => "Naruto",
-                      "action" => "edit",
-                      "objet" => "album",
-                      "startDate" => "1 Janvier 2021 12:00", 
-                      "endDate" => "1 Janvier 2021 12:05",  
-                      "details" => array("api" => "apiMethod", 
-                                         "ip" => "127.0.0.1"));
+  $ligne['0'] = array("action_section" => array("action_type" => "Edit", 
+                                                "action_infos" => array("nb_items" => "42", 
+                                                                        "object" => "photo", 
+                                                                        "action" => "édité")),
+                      "date_section" => array("date_day" => "1 Janvier 2021",
+                                              "date_hour" => "à 10:00"),
+                      "user_section" => array("user_pic" => "PHOTO",
+                                              "user_name" => "Naruto Uzumaki"),
+                      "detail_section" => array("detail_1" => "Détail n°1",
+                                                "detail_2" => "Détail n°2",
+                                                "detail_3" => "Détail n°3"));
 
-  $ligne['1'] = array("user" => "Sasuke",
-                      "action" => "delete",
-                      "objet" => "album",
-                      "startDate" => "1 Janvier 2021 13:00", 
-                      "endDate" => "1 Janvier 2021 13:05",  
-                      "details" => array("api" => "apiMethod", 
-                                         "ip" => "127.0.0.1"));
+  $ligne['1'] = array("action_section" => array("action_type" => "Delete", 
+                                                "action_infos" => array("nb_items" => "42", 
+                                                                        "object" => "photo", 
+                                                                        "action" => "supprimé")),
+                      "date_section" => array("date_day" => "1 Janvier 2021",
+                                              "date_hour" => "à 10:00"),
+                      "user_section" => array("user_pic" => "PHOTO",
+                                              "user_name" => "Naruto Uzumaki"),
+                      "detail_section" => array("detail_1" => "Détail n°1",
+                                                "detail_2" => "Détail n°2",
+                                                "detail_3" => "Détail n°3"));
 
-  $ligne['2'] = array("user" => "Sakura",
-                      "action" => "add",
-                      "objet" => "album",
-                      "startDate" => "1 Janvier 2021 14:00", 
-                      "endDate" => "1 Janvier 2021 14:05",  
-                      "details" => array("api" => "apiMethod", 
-                                         "ip" => "127.0.0.1"));
+  $ligne['2'] = array("action_section" => array("action_type" => "Edit", 
+                                                "action_infos" => array("nb_items" => "42", 
+                                                                        "object" => "photo", 
+                                                                        "action" => "édité")),
+                      "date_section" => array("date_day" => "1 Janvier 2021",
+                                              "date_hour" => "à 10:00"),
+                      "user_section" => array("user_pic" => "PHOTO",
+                                              "user_name" => "Naruto Uzumaki"),
+                      "detail_section" => array("detail_1" => "Détail n°1",
+                                                "detail_2" => "Détail n°2",
+                                                "detail_3" => "Détail n°3"));
+                                                
+  $ligne['3'] = array("action_section" => array("action_type" => "Edit", 
+                                                "action_infos" => array("nb_items" => "42", 
+                                                                        "object" => "photo", 
+                                                                        "action" => "édité")),
+                      "date_section" => array("date_day" => "1 Janvier 2021",
+                                              "date_hour" => "à 10:00"),
+                      "user_section" => array("user_pic" => "PHOTO",
+                                              "user_name" => "Naruto Uzumaki"),
+                      "detail_section" => array("detail_1" => "Détail n°1",
+                                                "detail_2" => "Détail n°2",
+                                                "detail_3" => "Détail n°3"));
 
-  $ligne['3'] = array("user" => "Kakashi",
-                      "action" => "login",
-                      "objet" => "session",
-                      "startDate" => "1 Janvier 2021 15:00", 
-                      "endDate" => "1 Janvier 2021 15:05",  
-                      "details" => array("api" => "apiMethod", 
-                                         "ip" => "127.0.0.1"));
-
-  $ligne['4'] = array("user" => "Gaara",
-                      "action" => "logout",
-                      "objet" => "session",
-                      "startDate" => "1 Janvier 2021 16:00", 
-                      "endDate" => "1 Janvier 2021 16:05",  
-                      "details" => array("api" => "apiMethod", 
-                                         "ip" => "127.0.0.1"));
-
-
+  $ligne['4'] = array("action_section" => array("action_type" => "Edit", 
+                                                "action_infos" => array("nb_items" => "42", 
+                                                                        "object" => "photo", 
+                                                                        "action" => "édité")),
+                      "date_section" => array("date_day" => "1 Janvier 2021",
+                                              "date_hour" => "à 10:00"),
+                      "user_section" => array("user_pic" => "PHOTO",
+                                              "user_name" => "Naruto Uzumaki"),
+                      "detail_section" => array("detail_1" => "Détail n°1",
+                                                "detail_2" => "Détail n°2",
+                                                "detail_3" => "Détail n°3"));
+                  
   foreach ($ligne as $id => $infos)
   {
     $output[] = array(
-      'id' => $id,
-      'infos' => $infos,
+      'line_id' => $id,
+      'line_infos' => $infos,
     );
   }
 
