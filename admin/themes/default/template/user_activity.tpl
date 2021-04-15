@@ -3,7 +3,51 @@
 
 {combine_script id='activity_js_file' load='footer' path='admin/themes/default/js/user_activity.js'}
 
+
+{combine_script id='jquery.selectize' load='footer' path='themes/default/js/plugins/selectize.min.js'}
+{combine_css id='jquery.selectize' path="themes/default/js/plugins/selectize.{$themeconf.colorscheme}.css"}
+
+{combine_script id='LocalStorageCache' load='footer' path='admin/themes/default/js/LocalStorageCache.js'}
+
+{footer_script}
+{* <!-- USERS --> *}
+var usersCache = new UsersCache({
+  serverKey: '{$CACHE_KEYS.users}',
+  serverId: '{$CACHE_KEYS._hash}',
+  rootUrl: '{$ROOT_URL}'
+});
+
+usersCache.selectize(jQuery('[data-selectize=users]'));
+{/footer_script}
+
 <div class="container"> 
+
+    <div class="activity-header">
+        <div class="select-user">
+            <span class="select-user-title"> Selected user </span>
+
+            {* <select class="user-selecter" name="users">
+                <option>--Select option--</option>
+                <option> Eren </option>
+                <option> Mikasa</option>
+                <option> Rivaille</option>
+                <option> Armin</option>
+                <option> Zoe</option>
+            </select> *}
+
+            
+            <select class="user-selecter" data-selectize="users" placeholder="{'Select user'|translate}"
+                single style="width:250px; height: 10px;"></select>
+        </div>
+        <div class="acivity-time">
+            <span class="acivity-time-text"> Activity time from</span>
+            <span class="start-date"> 1 January 1970 </span>
+            <span class="acivity-time-text"> to </span>
+            <span class="end-date"> 15 April 2021 </span>
+        </div>
+    </div>
+
+
 
     <div class="tab-title">
         <div class="action-title">
@@ -28,38 +72,38 @@
         <div class="line" id="-1">
             <div class="action-section">
                 <div class="action-type">
-                    <span class="action-icon"> </span>
-                    <span class="action-name"> Edition </span>
+                    <span class="action-icon"></span>
+                    <span class="action-name"> Edit </span>
                 </div>
                 <div class="action-infos">
-                    <span class="nb_item"> 50 </span>
-                    <span class="object"> photos </span>
-                    <span class="action"> édités </span>
+                    <span class="nb_items"> 1 </span>
+                    <span class="object"> photo</span>
+                    <span class="action"> edited </span>
                 </div>
             </div>
 
             <div class="date-section">
                 <span class="icon-clock"> </span>
-                <span class="date-day">15 Janvier 2020</span>
-                <span class="date-hour">à 8:45</span>
+                <span class="date-day">1 Janvier 1970</span>
+                <span class="date-hour">a 00:00</span>
             </div> 
 
             <div class="user-section">
                 <div class="user-pic">
                 </div>
                 <div class="user-name">
-                    Jean-fred
+                    Username
                 </div>
             </div>
 
             <div class="detail-section">
-                <div class="detail-item">
+                <div class="detail-item detail-item-1">
                     detail 1
                 </div>
-                <div class="detail-item">
+                <div class=" detail-item detail-item-2">
                     detail 2
                 </div>
-                <div class="detail-item">
+                <div class="detail-item detail-item-3">
                     detail 3
                 </div>
             </div>
@@ -95,6 +139,8 @@
     height: 40px;
 
     align-items: center;
+
+    margin-bottom: 10px;
 }
 
 .tab-title div {
@@ -111,12 +157,20 @@
 
 .tab-title .action-title, 
 .line .action-section {
-    min-width: 220px;
+    min-width: 230px;
+    max-width: 280px;
 }
 
 .tab-title .date-title, 
 .line .date-section {
     min-width: 220px;
+    max-width: 270px;
+}
+
+.tab-title .user-title, 
+.line .user-section {
+    min-width: 200px;
+    max-width: 250px;
 }
 
 
@@ -148,6 +202,10 @@
     margin: 0 10px 0 0;
     padding: 3px 6px;
     border-radius: 20px;
+
+    min-width: 50px; 
+
+    white-space: nowrap;
 }
 
 .action-section {
@@ -159,8 +217,10 @@
 .action-type {
     background: #f0f0f0f0;
     margin: 0 10px 0 15px;
-    padding: 3px 6px;
+    padding: 3px 10px;
     border-radius: 20px;
+
+    white-space: nowrap;
 }
 
 .action-infos {
@@ -240,32 +300,80 @@
     color: black;
 }
 
-/* Actions color */
+/* Activity Header */
 
-.action-type.action-color-green {
-    background: #d2ffcb;
-    color: #48d73d;
+.activity-header {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    height: 100px;
+    width: 100%;
 }
 
-.action-type.action-color-red {
-    background: #ffd0d0;
-    color: #ff4545;
+.select-user {
+    background: #fafafa;
+    height: 50%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    box-shadow: 0px 2px 4px #00000024;
+    border-radius: 5px;
 }
 
-.action-type.action-color-blue {
-    background: #d0ebff;
-    color: #2b84c3;
+.select-user span {
+    font-size: 15px;
+    font-weight: bold;
+
+    margin-right: 20px;
 }
 
-.action-type.action-color-yellow {
-    background: #ffe9ce;
-    color: #ffae50;
-
+.acivity-time {
+    margin: 0 25px;
 }
 
-.action-type.action-color-gray {
-    background: #a3a3a3;
-    color: black ;
+.acivity-time-text {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.start-date, 
+.end-date {
+    padding: 3px 6px;
+    background: #eaeaea;
+    border-radius: 50px;
+    margin: 5px;
+}
+
+.user-selecter {
+    width: 150px;
+}
+
+/* Selectize */
+
+.selectize-control.single .selectize-input {
+    height: 30px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.selectize-input {
+    text-align: left;
+}
+
+.selectize-control.single .selectize-input input{
+    height: 30px;
+}
+
+.selectize-dropdown {
+    text-align: left;
 }
 
 </style>
