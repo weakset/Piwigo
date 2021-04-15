@@ -25,10 +25,10 @@
 
 
     <div class="tab">
-        <div class="line" id="0">
+        <div class="line" id="-1">
             <div class="action-section">
                 <div class="action-type">
-                    <span class="icon-pencil"> </span>
+                    <span class="action-icon"> </span>
                     <span class="action-name"> Edition </span>
                 </div>
                 <div class="action-infos">
@@ -109,6 +109,17 @@
     padding-bottom: 5px;
 }
 
+.tab-title .action-title, 
+.line .action-section {
+    min-width: 220px;
+}
+
+.tab-title .date-title, 
+.line .date-section {
+    min-width: 220px;
+}
+
+
 .line .action-section,
 .line .date-section,
 .line .user-section,
@@ -147,7 +158,7 @@
 
 .action-type {
     background: #f0f0f0f0;
-    margin: 0 10px 0 25px;
+    margin: 0 10px 0 15px;
     padding: 3px 6px;
     border-radius: 20px;
 }
@@ -175,6 +186,8 @@
     width: 30px;
     height: 30px;
 
+    min-width: 30px;
+
     border-radius: 50%;
     background: #9c9c9c;
 
@@ -185,5 +198,74 @@
     font-weight: bold;
 }
 
+/* Lines Color */
+
+.line.line-color-green {
+    border-left: 5px solid #d2ffcb;
+}
+.line.line-color-green .action-type {
+    background: #d2ffcb;
+    color: #48d73d;
+}
+
+.line.line-color-red {
+    border-left: 5px solid #ffd0d0;
+}
+.line.line-color-red .action-type {
+    background: #ffd0d0;
+    color: #ff4545;
+}
+
+.line.line-color-blue {
+    border-left: 5px solid #d0ebff;
+}
+.line.line-color-blue .action-type {
+    background: #d0ebff;
+    color: #2b84c3;
+}
+
+.line.line-color-yellow {
+    border-left: 5px solid #ffe9ce;
+}
+.line.line-color-yellow .action-type {
+    background: #ffe9ce;
+    color: #ffae50;
+}
+
+.line.line-color-gray {
+    border-left: 5px solid #a3a3a3;
+}
+.line.line-color-gray .action-type {
+    background: #a3a3a3;
+    color: black;
+}
+
+/* Actions color */
+
+.action-type.action-color-green {
+    background: #d2ffcb;
+    color: #48d73d;
+}
+
+.action-type.action-color-red {
+    background: #ffd0d0;
+    color: #ff4545;
+}
+
+.action-type.action-color-blue {
+    background: #d0ebff;
+    color: #2b84c3;
+}
+
+.action-type.action-color-yellow {
+    background: #ffe9ce;
+    color: #ffae50;
+
+}
+
+.action-type.action-color-gray {
+    background: #a3a3a3;
+    color: black ;
+}
 
 </style>

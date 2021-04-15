@@ -10,8 +10,11 @@ function get_user_activity() {
             b: 2
         },
         success: (data) => {
-            console.log(data);
-            displayData(data)
+            
+            data.result.forEach(line => {
+                lineConstructor(line)
+            });
+            displayLine(data)
         }, 
         error: () => {
             console.log("ajax call failed");
@@ -20,8 +23,16 @@ function get_user_activity() {
     })
 }
 
-function displayData(data) {
-    console.log("data displayed");
+function lineConstructor(line) {
+    defaultLine = document.getElementById("-1").clone();
+
+    console.log(defaultLine);
+
+    // displayLine(newLine)
+}
+
+function displayLine(line) {
+    document.getElementsByClassName("tab").innerHTML += line
 }
 
 $(document).ready(function () {
