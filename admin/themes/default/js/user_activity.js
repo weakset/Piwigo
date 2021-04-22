@@ -135,7 +135,7 @@ function lineConstructor(line) {
     newLine.find(".date-hour").html(line.hour);
 
     /* User _Section */
-    newLine.find(".user-pic").html("PHOTO LA");
+    newLine.find(".user-pic").html(get_initials(line.username));
     newLine.find(".user-name").html(line.username);
 
     /* Detail_section */
@@ -148,6 +148,16 @@ function lineConstructor(line) {
 
 function displayLine(line) {
     $(".tab").append(line);
+}
+
+function get_initials(username) {
+    let words = username.toUpperCase().split(" ");
+    let res = words[0][0];
+
+    if (words.length > 1 && words[1][0] !== undefined ) {
+        res += words[1][0];
+    }
+    return res;
 }
 
 function filterUsers(username) {
