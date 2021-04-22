@@ -514,7 +514,7 @@ function ws_getActivityInfos($param, &$service) {
       // echo $details['script'];
     }
   
-    $line_key = $row['session_idx'].'~'.$row['object'].'~'.$row['action']; // idx~photo~add
+    $line_key = $row['object'].'~'.$row['action']; // idx~photo~add
   
     if ($line_key === $current_key)
     {

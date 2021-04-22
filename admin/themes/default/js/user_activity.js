@@ -11,12 +11,11 @@ function get_user_activity() {
         },
         success: (data) => {
             console.log(data);
-            // var line_id =0
-            // data.result.forEach(line => {
-            //     lineConstructor(line, line_id);
-            //     line_id++
-            // });
-            // displayLine(data);
+            
+            data.result.forEach(line => {
+                lineConstructor(line);
+            });
+            displayLine(data);
         }, 
         error: (e) => {
             console.log("ajax call failed");
@@ -28,12 +27,12 @@ function get_user_activity() {
     })
 }
 
-function lineConstructor(line, line_id) {
+function lineConstructor(line) {
     let newLine = $("#-1").clone();
 
     console.log(line);
     // newLine.attr("id", line.line_id);
-    newLine.attr("id", line_id)
+    newLine.attr("id", line.id)
 
     switch (line.action) {
         case "edit":
@@ -42,7 +41,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("edited");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
             } else {
                 newLine.find(".object").html(line.object);
@@ -55,7 +54,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("added");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
             } else {
                 newLine.find(".object").html(line.object);
@@ -68,7 +67,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("deleted");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
             } else {
                 newLine.find(".object").html(line.object);
@@ -82,7 +81,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("moved");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
             } else {
                 newLine.find(".object").html(line.object);
@@ -95,7 +94,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("logged in");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
                 newLine.find(".action-icon").addClass("icon-users");
             } else {
@@ -110,7 +109,7 @@ function lineConstructor(line, line_id) {
 
             newLine.find(".action").html("logged out");
 
-            if (line.nb_items > 1) {
+            if (line.counter > 1) {
                 newLine.find(".object").html(line.object + "s");
                 newLine.find(".action-icon").addClass("icon-users");
             } else {
@@ -128,21 +127,19 @@ function lineConstructor(line, line_id) {
 
     /* Action_section */
     newLine.find(".action-name").html(line.action);
-    newLine.find(".nb_items").html(line.nb_items);
+    newLine.find(".nb_items").html(line.counter);
     // newLine.find(".action").html(line.line_infos.action_section.action_infos.action);
 
-    var date = line.occured_on.split(" ");
-
     /* Date_section */
-    newLine.find(".date-day").html(date[0]);
-    newLine.find(".date-hour").html(date[1]);
+    newLine.find(".date-day").html(line.date);
+    newLine.find(".date-hour").html(line.hour);
 
     /* User _Section */
     newLine.find(".user-pic").html("PHOTO LA");
     newLine.find(".user-name").html(line.username);
 
     /* Detail_section */
-    newLine.find(".detail-item-1").html(line.details);
+    // newLine.find(".detail-item-1").html(line.details);
     // newLine.find(".detail-item-2").html(line.line_infos.detail_section.detail_2);
     // newLine.find(".detail-item-3").html(line.line_infos.detail_section.detail_3);
 
