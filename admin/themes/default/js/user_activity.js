@@ -11,13 +11,16 @@ function get_user_activity() {
         },
         success: (data) => {
             console.log(data);
-            data.result.forEach(line => {
-                lineConstructor(line);
-            });
-            displayLine(data);
+            // var line_id =0
+            // data.result.forEach(line => {
+            //     lineConstructor(line, line_id);
+            //     line_id++
+            // });
+            // displayLine(data);
         }, 
-        error: () => {
+        error: (e) => {
             console.log("ajax call failed");
+            console.log(e);
         }
 
     }).done( () => {
@@ -25,79 +28,93 @@ function get_user_activity() {
     })
 }
 
-function lineConstructor(line) {
+function lineConstructor(line, line_id) {
     let newLine = $("#-1").clone();
 
-    newLine.attr("id", line.line_id);
+    console.log(line);
+    // newLine.attr("id", line.line_id);
+    newLine.attr("id", line_id)
 
-    switch (line.line_infos.action_section.action_type) {
-        case "Edit":
+    switch (line.action) {
+        case "edit":
             newLine.addClass("line-color-blue");
             newLine.find(".action-icon").addClass("icon-pencil");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("edited");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
             }
             break;
     
-        case "Add":
+        case "add":
             newLine.addClass("line-color-green");
             newLine.find(".action-icon").addClass("icon-plus");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("added");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
             }
             break;
     
-        case "Delete":
+        case "delete":
             newLine.addClass("line-color-red");
             newLine.find(".action-icon").addClass("icon-trash-1");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("deleted");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
             }
             
             break;
     
-        case "Move":
+        case "move":
             newLine.addClass("line-color-yellow");
             newLine.find(".action-icon").addClass("icon-move");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("moved");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
             }
 
             break;
 
-        case "Login":
+        case "login":
             newLine.addClass("line-color-gray");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("logged in");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
                 newLine.find(".action-icon").addClass("icon-users");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
                 newLine.find(".action-icon").addClass("icon-user-1");
             }
             
             break;
  
-        case "Logout":
+        case "logout":
             newLine.addClass("line-color-gray");
 
-            if (line.line_infos.action_section.action_infos.nb_items > 1) {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object + "s");
+            newLine.find(".action").html("logged out");
+
+            if (line.nb_items > 1) {
+                newLine.find(".object").html(line.object + "s");
                 newLine.find(".action-icon").addClass("icon-users");
             } else {
-                newLine.find(".object").html(line.line_infos.action_section.action_infos.object);
+                newLine.find(".object").html(line.object);
                 newLine.find(".action-icon").addClass("icon-user-1");
             }
             
@@ -110,22 +127,24 @@ function lineConstructor(line) {
     }
 
     /* Action_section */
-    newLine.find(".action-name").html(line.line_infos.action_section.action_type);
-    newLine.find(".nb_items").html(line.line_infos.action_section.action_infos.nb_items);
-    newLine.find(".action").html(line.line_infos.action_section.action_infos.action);
+    newLine.find(".action-name").html(line.action);
+    newLine.find(".nb_items").html(line.nb_items);
+    // newLine.find(".action").html(line.line_infos.action_section.action_infos.action);
+
+    var date = line.occured_on.split(" ");
 
     /* Date_section */
-    newLine.find(".date-day").html(line.line_infos.date_section.date_day);
-    newLine.find(".date-hour").html(line.line_infos.date_section.date_hour);
+    newLine.find(".date-day").html(date[0]);
+    newLine.find(".date-hour").html(date[1]);
 
     /* User _Section */
-    newLine.find(".user-pic").html(line.line_infos.user_section.user_pic);
-    newLine.find(".user-name").html(line.line_infos.user_section.user_name);
+    newLine.find(".user-pic").html("PHOTO LA");
+    newLine.find(".user-name").html(line.username);
 
     /* Detail_section */
-    newLine.find(".detail-item-1").html(line.line_infos.detail_section.detail_1);
-    newLine.find(".detail-item-2").html(line.line_infos.detail_section.detail_2);
-    newLine.find(".detail-item-3").html(line.line_infos.detail_section.detail_3);
+    newLine.find(".detail-item-1").html(line.details);
+    // newLine.find(".detail-item-2").html(line.line_infos.detail_section.detail_2);
+    // newLine.find(".detail-item-3").html(line.line_infos.detail_section.detail_3);
 
     displayLine(newLine);
 }
@@ -134,10 +153,36 @@ function displayLine(line) {
     $(".tab").append(line);
 }
 
-$(document).ready(function () {
-    console.log("hello world!");
+function filterUsers(username) {
+    let lines =  $(".line");
 
-    $(".item").change(function (user) {
-        console.log(user);
-    })
-})
+    showAllLines()
+
+    for (let index = 1; index < lines.length; index++) {
+        
+        if (username != lines[index].children[2].children[1].innerHTML) {
+            $("#" + lines[index].id).hide();
+        }
+    }
+}
+
+function showAllLines() {
+    let lines =  $(".line");
+    for (let index = 1; index < lines.length; index++) {
+        $("#" + lines[index].id).show();
+    }
+
+    $("#-1").hide();
+}
+
+$(document).ready(function () {
+
+    $('select').on('change', function (user) {
+        try {
+            filterUsers($(".selectize-input .item")[0].innerHTML);
+        } catch (error) {
+            showAllLines();
+        }
+    });
+});
+

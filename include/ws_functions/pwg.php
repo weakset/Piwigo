@@ -345,136 +345,203 @@ function ws_session_getStatus($params, &$service)
 
 function ws_getActivityInfos($param, &$service) {
 
+  // $ligne['0'] = array("action_section" => array("action_type" => "Edit", 
+  //                                               "action_infos" => array("nb_items" => "42", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "edited")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 10:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Eren Jäger"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['0'] = array("action_section" => array("action_type" => "Edit", 
-                                                "action_infos" => array("nb_items" => "42", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "edited")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 10:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Eren Jäger"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['1'] = array("action_section" => array("action_type" => "Delete", 
+  //                                               "action_infos" => array("nb_items" => "69", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "deleted")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 9:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Mikasa Ackerman"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['1'] = array("action_section" => array("action_type" => "Delete", 
-                                                "action_infos" => array("nb_items" => "69", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "deleted")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 9:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Mikasa Ackerman"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
-
-  $ligne['2'] = array("action_section" => array("action_type" => "Add", 
-                                                "action_infos" => array("nb_items" => "420", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "added")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 11:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Armin Arlert"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['2'] = array("action_section" => array("action_type" => "Add", 
+  //                                               "action_infos" => array("nb_items" => "420", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "added")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 11:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Armin Arlert"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
                                                 
-  $ligne['3'] = array("action_section" => array("action_type" => "Move", 
-                                                "action_infos" => array("nb_items" => "1337", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "moved")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 8:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Rivaille Ackerman"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['3'] = array("action_section" => array("action_type" => "Move", 
+  //                                               "action_infos" => array("nb_items" => "1337", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "moved")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 8:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Rivaille Ackerman"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['4'] = array("action_section" => array("action_type" => "Logout", 
-                                                "action_infos" => array("nb_items" => "1", 
-                                                                        "object" => "user", 
-                                                                        "action" => "loged out")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 12:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Hansi Zoe"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['4'] = array("action_section" => array("action_type" => "Logout", 
+  //                                               "action_infos" => array("nb_items" => "1", 
+  //                                                                       "object" => "user", 
+  //                                                                       "action" => "loged out")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 12:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Hansi Zoe"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['5'] = array("action_section" => array("action_type" => "Edit", 
-                                                "action_infos" => array("nb_items" => "42", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "edited")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 10:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Eren Jäger"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['5'] = array("action_section" => array("action_type" => "Edit", 
+  //                                               "action_infos" => array("nb_items" => "42", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "edited")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 10:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Frank"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['6'] = array("action_section" => array("action_type" => "Delete", 
-                                                "action_infos" => array("nb_items" => "69", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "deleted")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 9:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Mikasa Ackerman"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['6'] = array("action_section" => array("action_type" => "Delete", 
+  //                                               "action_infos" => array("nb_items" => "69", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "deleted")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 9:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Mikasa Ackerman"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['7'] = array("action_section" => array("action_type" => "Add", 
-                                                "action_infos" => array("nb_items" => "420", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "added")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 11:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Armin Arlert"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['7'] = array("action_section" => array("action_type" => "Add", 
+  //                                               "action_infos" => array("nb_items" => "420", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "added")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 11:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Armin Arlert"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
                                                 
-  $ligne['8'] = array("action_section" => array("action_type" => "Move", 
-                                                "action_infos" => array("nb_items" => "1337", 
-                                                                        "object" => "photo", 
-                                                                        "action" => "moved")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 8:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Rivaille Ackerman"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
+  // $ligne['8'] = array("action_section" => array("action_type" => "Move", 
+  //                                               "action_infos" => array("nb_items" => "1337", 
+  //                                                                       "object" => "photo", 
+  //                                                                       "action" => "moved")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 8:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Rivaille Ackerman"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
 
-  $ligne['9'] = array("action_section" => array("action_type" => "Login", 
-                                                "action_infos" => array("nb_items" => "1", 
-                                                                        "object" => "user", 
-                                                                        "action" => "loged in")),
-                      "date_section" => array("date_day" => "1 Janvier 2021",
-                                              "date_hour" => "à 12:00"),
-                      "user_section" => array("user_pic" => "PHOTO",
-                                              "user_name" => "Hansi Zoe"),
-                      "detail_section" => array("detail_1" => "Détail n°1",
-                                                "detail_2" => "Détail n°2",
-                                                "detail_3" => "Détail n°3"));
-                  
-  foreach ($ligne as $id => $infos)
+  // $ligne['9'] = array("action_section" => array("action_type" => "Login", 
+  //                                               "action_infos" => array("nb_items" => "1", 
+  //                                                                       "object" => "user", 
+  //                                                                       "action" => "loged in")),
+  //                     "date_section" => array("date_day" => "1 Janvier 2021",
+  //                                             "date_hour" => "à 12:00"),
+  //                     "user_section" => array("user_pic" => "PHOTO",
+  //                                             "user_name" => "Hansi Zoe"),
+  //                     "detail_section" => array("detail_1" => "Détail n°1",
+  //                                               "detail_2" => "Détail n°2",
+  //                                               "detail_3" => "Détail n°3"));
+  
+  sleep(1);
+  
+  // $query = 'SELECT object, action, username, ip_address, occured_on, details, count(*) as nb_items 
+  //           FROM piwigo_activity, piwigo_users 
+  //           WHERE piwigo_users.id = piwigo_activity.performed_by 
+  //           GROUP BY action, object, session_idx 
+  //           ORDER BY occured_on DESC;';
+
+  $output_lines = array();
+  $current_key = '';
+  
+  // $query = '
+  // SELECT
+  //     *
+  //   FROM piwigo_activity
+  //   ORDER BY activity_id DESC
+  // ;';
+
+  $query = '
+  SELECT 
+      activity_id, 
+      object, action, 
+      session_idx, 
+      ip_address, 
+      occured_on, 
+      details, 
+      username 
+    FROM piwigo_activity, 
+         piwigo_users 
+    WHERE piwigo_activity.performed_by = piwigo_users.id 
+    ORDER BY activity_id DESC;
+  ';
+
+  $line_id = 0;
+  $result = pwg_query($query);
+  while ($row = pwg_db_fetch_assoc($result))
   {
-    $output[] = array(
-      'line_id' => $id,
-      'line_infos' => $infos,
-    );
+    // echo $row['details']."##".$i."##";
+    // $details = unserialize($row['details']);
+
+    if (isset($details['method']))
+    {
+      // echo $details['method'];
+    }
+    if (isset($details['script']))
+    {
+      // echo $details['script'];
+    }
+  
+    $line_key = $row['session_idx'].'~'.$row['object'].'~'.$row['action']; // idx~photo~add
+  
+    if ($line_key === $current_key)
+    {
+      // j'incrémente le counter de la ligne précédente
+      $output_lines[count($output_lines)-1]['counter']++;
+    }
+    else
+    {
+      list($date, $hour) = explode(' ', $row['occured_on']);
+      // New line
+      $output_lines[] = array(
+        'id' => $line_id,
+        'object' => $row['object'],
+        'action' => $row['action'],
+        'ip_address' => $row['ip_address'],
+        'date' => format_date($date),
+        'hour' => $hour,
+        'username' => $row['username'],
+        'counter' => 1, 
+      );
+  
+      $current_key = $line_key;
+      $line_id++;
+    }
   }
 
-  return new PwgNamedArray($output, 'item');
+  return $output_lines;
 }
 
 ?>

@@ -181,7 +181,7 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .tab-title .date-title,
 .tab-title .user-title {
     text-align: left;
-    width: 22%;
+    {* width: 22%; *}
 }
 
 .line .action-section,
@@ -204,6 +204,10 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
     border-radius: 20px;
 
     min-width: 50px; 
+
+    max-width: 50%;
+
+    overflow: hidden;
 
     white-space: nowrap;
 }
