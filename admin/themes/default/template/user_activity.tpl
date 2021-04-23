@@ -18,6 +18,12 @@ var usersCache = new UsersCache({
 });
 
 usersCache.selectize(jQuery('[data-selectize=users]'));
+
+jQuery(".cancel-icon").click(function() {
+  jQuery(".user-selecter")[0].selectize.setValue(null);
+  return false;
+});
+
 {/footer_script}
 
 <div class="container"> 
@@ -38,6 +44,9 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
             
             <select class="user-selecter" data-selectize="users" placeholder="{'Select user'|translate}"
                 single style="width:250px; height: 10px;"></select>
+            
+            <span class="icon-cancel cancel-icon"> </span>
+
         </div>
         <div class="acivity-time">
             <span class="acivity-time-text"> Activity time from</span>
@@ -163,8 +172,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 
 .tab-title .date-title, 
 .line .date-section {
-    min-width: 220px;
-    max-width: 270px;
+    min-width: 240px;
+    max-width: 280px;
 }
 
 .tab-title .user-title, 
@@ -256,6 +265,14 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
     background: #9c9c9c;
 
     margin-right: 10px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 600;
+    font-size: 17px;
 }
 
 .user-section .user-name {
@@ -267,7 +284,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .line.line-color-green {
     border-left: 5px solid #d2ffcb;
 }
-.line.line-color-green .action-type {
+.line.line-color-green .action-type,
+.line.line-color-green .user-pic{
     background: #d2ffcb;
     color: #48d73d;
 }
@@ -275,7 +293,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .line.line-color-red {
     border-left: 5px solid #ffd0d0;
 }
-.line.line-color-red .action-type {
+.line.line-color-red .action-type,
+.line.line-color-red .user-pic {
     background: #ffd0d0;
     color: #ff4545;
 }
@@ -283,7 +302,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .line.line-color-blue {
     border-left: 5px solid #d0ebff;
 }
-.line.line-color-blue .action-type {
+.line.line-color-blue .action-type,
+.line.line-color-blue .user-pic {
     background: #d0ebff;
     color: #2b84c3;
 }
@@ -291,7 +311,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .line.line-color-yellow {
     border-left: 5px solid #ffe9ce;
 }
-.line.line-color-yellow .action-type {
+.line.line-color-yellow .action-type,
+.line.line-color-yellow .user-pic {
     background: #ffe9ce;
     color: #ffae50;
 }
@@ -299,7 +320,8 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 .line.line-color-gray {
     border-left: 5px solid #a3a3a3;
 }
-.line.line-color-gray .action-type {
+.line.line-color-gray .action-type,
+.line.line-color-gray .user-pic {
     background: #a3a3a3;
     color: black;
 }
@@ -378,6 +400,12 @@ usersCache.selectize(jQuery('[data-selectize=users]'));
 
 .selectize-dropdown {
     text-align: left;
+}
+
+.cancel-icon {
+    margin: 0 0 0 10px !important;
+
+    cursor: pointer;
 }
 
 </style>

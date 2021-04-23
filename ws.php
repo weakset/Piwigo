@@ -129,8 +129,8 @@ function ws_addDefaultMethods( $arr )
     );
 
     $service->addMethod(
-      'pwg.getActivityInfos',
-      'ws_getActivityInfos',
+      'pwg.activity.getList',
+      'ws_getActivityList',
       null,
       'Returns general informations.',
       $ws_functions_root . 'pwg.php',

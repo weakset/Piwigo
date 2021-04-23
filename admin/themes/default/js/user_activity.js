@@ -2,7 +2,7 @@ get_user_activity();
 
 function get_user_activity() {
     $.ajax({
-        url: "ws.php?format=json&method=pwg.getActivityInfos",
+        url: "ws.php?format=json&method=pwg.activity.getList",
         type: "POST",
         dataType: "json",
         data: {
@@ -11,6 +11,8 @@ function get_user_activity() {
         },
         success: (data) => {
             console.log(data);
+
+            setCreationDate(data.result[data.result.length-1].date, data.result[0].date);
             
             data.result.forEach(line => {
                 lineConstructor(line);
@@ -30,7 +32,7 @@ function get_user_activity() {
 function lineConstructor(line) {
     let newLine = $("#-1").clone();
 
-    console.log(line);
+    // console.log(line);
     // newLine.attr("id", line.line_id);
     newLine.attr("id", line.id)
 
@@ -139,7 +141,7 @@ function lineConstructor(line) {
     newLine.find(".user-name").html(line.username);
 
     /* Detail_section */
-    // newLine.find(".detail-item-1").html(line.details);
+    newLine.find(".detail-item-1").html(line.ip_address);
     // newLine.find(".detail-item-2").html(line.line_infos.detail_section.detail_2);
     // newLine.find(".detail-item-3").html(line.line_infos.detail_section.detail_3);
 
@@ -180,6 +182,12 @@ function showAllLines() {
     }
 
     $("#-1").hide();
+}
+
+function setCreationDate(startDate, endDate) {
+    $(".start-date").html(startDate)
+
+    $(".end-date").html(endDate)
 }
 
 $(document).ready(function () {

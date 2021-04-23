@@ -343,7 +343,7 @@ function ws_session_getStatus($params, &$service)
  * Returns lines of users activity
  */
 
-function ws_getActivityInfos($param, &$service) {
+function ws_getActivityList($param, &$service) {
 
   // $ligne['0'] = array("action_section" => array("action_type" => "Edit", 
   //                                               "action_infos" => array("nb_items" => "42", 
@@ -514,7 +514,7 @@ function ws_getActivityInfos($param, &$service) {
       // echo $details['script'];
     }
   
-    $line_key = $row['object'].'~'.$row['action']; // idx~photo~add
+    $line_key = $row['session_idx'].'~'.$row['object'].'~'.$row['action']; // idx~photo~add
   
     if ($line_key === $current_key)
     {
