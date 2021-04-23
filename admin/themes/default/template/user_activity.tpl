@@ -8,7 +8,7 @@
 {combine_css id='jquery.selectize' path="themes/default/js/plugins/selectize.{$themeconf.colorscheme}.css"}
 
 {combine_script id='LocalStorageCache' load='footer' path='admin/themes/default/js/LocalStorageCache.js'}
-
+{combine_css path="admin/themes/default/fontello/css/animation.css"}
 {footer_script}
 {* <!-- USERS --> *}
 var usersCache = new UsersCache({
@@ -78,7 +78,10 @@ jQuery(".cancel-icon").click(function() {
 
 
     <div class="tab">
-        <div class="line" id="-1">
+    <div class="loading"> 
+        <span class="icon-spin6 animate-spin"> </span>
+    </div>
+        <div class="line hide" id="-1">
             <div class="action-section">
                 <div class="action-type">
                     <span class="action-icon"></span>
@@ -135,6 +138,10 @@ jQuery(".cancel-icon").click(function() {
 .tab-title {
     display: flex;
     flex-direction: row;
+}
+
+.hide {
+    display: none !important;
 }
 
 .line {
@@ -414,4 +421,7 @@ jQuery(".cancel-icon").click(function() {
     cursor: pointer;
 }
 
+.loading {
+    font-size: 25px;
+}
 </style>

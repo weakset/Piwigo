@@ -13,6 +13,7 @@ function get_user_activity() {
             console.log(data);
 
             setCreationDate(data.result[data.result.length-1].date, data.result[0].date);
+            $(".loading").hide();
             
             data.result.forEach(line => {
                 lineConstructor(line);
@@ -31,6 +32,8 @@ function get_user_activity() {
 
 function lineConstructor(line) {
     let newLine = $("#-1").clone();
+
+    newLine.removeClass("hide");
 
     // console.log(line);
     // newLine.attr("id", line.line_id);
