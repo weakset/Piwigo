@@ -38,7 +38,8 @@ function lineConstructor(line) {
 
     switch (line.action) {
         case "edit":
-            newLine.addClass("line-color-blue");
+            newLine.find(".action-type").addClass("icon-blue");
+            newLine.find(".user-pic").addClass("icon-blue");
             newLine.find(".action-icon").addClass("icon-pencil");
 
             newLine.find(".action").html("edited");
@@ -51,7 +52,8 @@ function lineConstructor(line) {
             break;
     
         case "add":
-            newLine.addClass("line-color-green");
+            newLine.find(".action-type").addClass("icon-green");
+            newLine.find(".user-pic").addClass("icon-green");
             newLine.find(".action-icon").addClass("icon-plus");
 
             newLine.find(".action").html("added");
@@ -64,7 +66,8 @@ function lineConstructor(line) {
             break;
     
         case "delete":
-            newLine.addClass("line-color-red");
+            newLine.find(".action-type").addClass("icon-red");
+            newLine.find(".user-pic").addClass("icon-red");
             newLine.find(".action-icon").addClass("icon-trash-1");
 
             newLine.find(".action").html("deleted");
@@ -78,7 +81,8 @@ function lineConstructor(line) {
             break;
     
         case "move":
-            newLine.addClass("line-color-yellow");
+            newLine.find(".action-type").addClass("icon-yellow");
+            newLine.find(".user-pic").addClass("icon-yellow");
             newLine.find(".action-icon").addClass("icon-move");
 
             newLine.find(".action").html("moved");
@@ -92,7 +96,8 @@ function lineConstructor(line) {
             break;
 
         case "login":
-            newLine.addClass("line-color-gray");
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
 
             newLine.find(".action").html("logged in");
 
@@ -107,7 +112,8 @@ function lineConstructor(line) {
             break;
  
         case "logout":
-            newLine.addClass("line-color-gray");
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple ");
 
             newLine.find(".action").html("logged out");
 
@@ -142,8 +148,22 @@ function lineConstructor(line) {
 
     /* Detail_section */
     newLine.find(".detail-item-1").html(line.ip_address);
-    // newLine.find(".detail-item-2").html(line.line_infos.detail_section.detail_2);
-    // newLine.find(".detail-item-3").html(line.line_infos.detail_section.detail_3);
+    newLine.find(".detail-item-1").attr("title", "Ip");
+
+    if (line.detailsType == "script") {
+        newLine.find(".detail-item-2").html(line.details.script);
+        newLine.find(".detail-item-2").attr('title', 'script');
+    } else if (line.detailsType == "method") {
+        newLine.find(".detail-item-2").html(line.details.method);
+        newLine.find(".detail-item-2").attr('title', 'method');
+    }   
+    
+    if (line.details.agent) {
+        newLine.find(".detail-item-3").html(line.details.agent);
+        newLine.find(".detail-item-3").attr('title', line.details.agent);
+    } else {
+        newLine.find(".detail-item-3").remove();
+    }
 
     displayLine(newLine);
 }

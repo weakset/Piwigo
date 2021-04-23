@@ -144,7 +144,6 @@ jQuery(".cancel-icon").click(function() {
     display: flex;
     flex-direction: row;
 
-    border-radius: 5px;
     height: 40px;
 
     align-items: center;
@@ -154,14 +153,19 @@ jQuery(".cancel-icon").click(function() {
 
 .tab-title div {
     text-align: left;
-    font-size: 17px;
+    font-size: 1.1em;
     font-weight: bold;
 
-    margin: 0 20px 20px 0;
+    margin: 0 20px 10px 0px;
 
-    border-bottom: 3px solid #9c9c9c;
+    color: #9e9e9e;
 
     padding-bottom: 5px;
+}
+
+.tab-title div:first-child {
+    margin: 0 4px 10px 23px;
+
 }
 
 .tab-title .action-title, 
@@ -213,12 +217,16 @@ jQuery(".cancel-icon").click(function() {
     border-radius: 20px;
 
     min-width: 50px; 
+    max-width: 200px;
 
-    max-width: 50%;
+    text-align: center;
 
     overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
 
     white-space: nowrap;
+
 }
 
 .action-section {
@@ -228,7 +236,6 @@ jQuery(".cancel-icon").click(function() {
 }
 
 .action-type {
-    background: #f0f0f0f0;
     margin: 0 10px 0 15px;
     padding: 3px 10px;
     border-radius: 20px;
@@ -262,7 +269,6 @@ jQuery(".cancel-icon").click(function() {
     min-width: 30px;
 
     border-radius: 50%;
-    background: #9c9c9c;
 
     margin-right: 10px;
 
@@ -383,7 +389,7 @@ jQuery(".cancel-icon").click(function() {
 
 .selectize-control.single .selectize-input {
     height: 30px;
-    padding: 0;
+    padding: 0 10px;
 
     display: flex;
     align-items: center;
