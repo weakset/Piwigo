@@ -139,8 +139,7 @@ function lineConstructor(line) {
     /* Action_section */
     newLine.find(".action-name").html(line.action);
     newLine.find(".nb_items").html(line.counter);
-    // newLine.find(".action").html(line.line_infos.action_section.action_infos.action);
-
+    
     /* Date_section */
     newLine.find(".date-day").html(line.date);
     newLine.find(".date-hour").html(line.hour);

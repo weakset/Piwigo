@@ -1,14 +1,14 @@
 {include file='include/colorbox.inc.tpl'}
 {combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
 
-{combine_script id='activity_js_file' load='footer' path='admin/themes/default/js/user_activity.js'}
+{* {combine_script id='activity_js_file' load='footer' path='admin/themes/default/js/user_activity.js'} *}
 
 
 {combine_script id='jquery.selectize' load='footer' path='themes/default/js/plugins/selectize.min.js'}
 {combine_css id='jquery.selectize' path="themes/default/js/plugins/selectize.{$themeconf.colorscheme}.css"}
 
 {combine_script id='LocalStorageCache' load='footer' path='admin/themes/default/js/LocalStorageCache.js'}
-{combine_css path="admin/themes/default/fontello/css/animation.css"}
+{combine_css path="admin/themes/default/fontello/css/animation.css" order=10}
 {footer_script}
 {* <!-- USERS --> *}
 var usersCache = new UsersCache({
@@ -24,35 +24,298 @@ jQuery(".cancel-icon").click(function() {
   return false;
 });
 
+{*<-- Translation keys -->*}
+
+var actionType_add = "{'add'|translate}";
+var actionType_delete = "{'deletion'|translate}";
+var actionType_move = "{'move'|translate}";
+var actionType_edit = "{'edit'|translate}";
+var actionType_log = "{'log'|translate}";
+
+var action_add = "{'added'|translate}";
+var action_delete = "{'deleted'|translate}";
+var action_move = "{'moved'|translate}";
+var action_edit = "{'edited'|translate}";
+var action_login = "{'logged in'|translate}";
+var action_logout = "{'logged out'|translate}";
+
+var object_user = "{'user'|translate}";
+var object_album = "{'album'|translate}";
+var object_photo = "{'photo'|translate}";
+
+{*<-- Getting and Displaying Activities -->*}
+
+get_user_activity();
+
+function get_user_activity() {
+    $.ajax({
+        url: "ws.php?format=json&method=pwg.activity.getList",
+        type: "POST",
+        dataType: "json",
+        data: {
+            a: 1,
+            b: 2
+        },
+        success: (data) => {
+            console.log(data);
+
+            setCreationDate(data.result[data.result.length-1].date, data.result[0].date);
+            $(".loading").hide();
+            
+            data.result.forEach(line => {
+                lineConstructor(line);
+            });
+            displayLine(data);
+        }, 
+        error: (e) => {
+            console.log("ajax call failed");
+            console.log(e);
+        }
+
+    }).done( () => {
+        $("#-1").hide();
+    })
+}
+
+function lineConstructor(line) {
+    let newLine = $("#-1").clone();
+
+    newLine.removeClass("hide");
+
+    // console.log(line);
+    // newLine.attr("id", line.line_id);
+    newLine.attr("id", line.id);
+
+    switch (line.object) { // La gestion du pluriel se fera ici.
+        case "user":
+            line.object = object_user;
+        break;
+
+        case "album":
+            line.object = object_album;
+        break;
+
+        case "photo":
+            line.object = object_photo;
+        break;
+    };
+
+    switch (line.action) {
+        case "edit":
+            newLine.find(".action-type").addClass("icon-blue");
+            newLine.find(".user-pic").addClass("icon-blue");
+            newLine.find(".action-icon").addClass("icon-pencil");
+
+            newLine.find(".action").html(action_edit);
+            newLine.find(".action-name").html(actionType_edit);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+            } else {
+                newLine.find(".object").html(line.object);
+            }
+            break;
+    
+        case "add":
+            newLine.find(".action-type").addClass("icon-green");
+            newLine.find(".user-pic").addClass("icon-green");
+            newLine.find(".action-icon").addClass("icon-plus");
+
+            newLine.find(".action").html(action_add);
+            newLine.find(".action-name").html(actionType_add);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+            } else {
+                newLine.find(".object").html(line.object);
+            }
+            break;
+    
+        case "delete":
+            newLine.find(".action-type").addClass("icon-red");
+            newLine.find(".user-pic").addClass("icon-red");
+            newLine.find(".action-icon").addClass("icon-trash-1");
+
+            newLine.find(".action").html(action_delete);
+            newLine.find(".action-name").html(actionType_delete);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+            } else {
+                newLine.find(".object").html(line.object);
+            }
+            
+            break;
+    
+        case "move":
+            newLine.find(".action-type").addClass("icon-yellow");
+            newLine.find(".user-pic").addClass("icon-yellow");
+            newLine.find(".action-icon").addClass("icon-move");
+
+            newLine.find(".action").html(action_move);
+            newLine.find(".action-name").html(actionType_move);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+            } else {
+                newLine.find(".object").html(line.object);
+            }
+
+            break;
+
+        case "login":
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
+
+            newLine.find(".action").html(action_login);
+            newLine.find(".action-name").html(actionType_log);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+                newLine.find(".action-icon").addClass("icon-users");
+            } else {
+                newLine.find(".object").html(line.object);
+                newLine.find(".action-icon").addClass("icon-user-1");
+            }
+            
+            break;
+ 
+        case "logout":
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple ");
+
+            newLine.find(".action").html(action_logout);
+            newLine.find(".action-name").html(actionType_log);
+
+            if (line.counter > 1) {
+                newLine.find(".object").html(line.object + "s");
+                newLine.find(".action-icon").addClass("icon-users");
+            } else {
+                newLine.find(".object").html(line.object);
+                newLine.find(".action-icon").addClass("icon-user-1");
+            }
+            
+            break;
+        default:
+            newLine.addClass("line-color-gray");
+            newLine.find(".action-name").html("Error");
+
+            newLine.find(".object").html("ERROR ERROR")
+            break;
+    }
+
+    /* Action_section */
+    {* newLine.find(".action-name").html(line.action); *}
+    newLine.find(".nb_items").html(line.counter);
+    
+    /* Date_section */
+    newLine.find(".date-day").html(line.date);
+    newLine.find(".date-hour").html(line.hour);
+
+    /* User _Section */
+    newLine.find(".user-pic").html(get_initials(line.username));
+    newLine.find(".user-name").html(line.username);
+
+    /* Detail_section */
+    newLine.find(".detail-item-1").html(line.ip_address);
+    newLine.find(".detail-item-1").attr("title", "Ip");
+
+    if (line.detailsType == "script") {
+        newLine.find(".detail-item-2").html(line.details.script);
+        newLine.find(".detail-item-2").attr('title', 'script');
+    } else if (line.detailsType == "method") {
+        newLine.find(".detail-item-2").html(line.details.method);
+        newLine.find(".detail-item-2").attr('title', 'method');
+    }   
+    
+    if (line.details.agent) {
+        newLine.find(".detail-item-3").html(line.details.agent);
+        newLine.find(".detail-item-3").attr('title', line.details.agent);
+    } else {
+        newLine.find(".detail-item-3").remove();
+    }
+
+    displayLine(newLine);
+}
+
+function displayLine(line) {
+    $(".tab").append(line);
+}
+
+function get_initials(username) {
+    let words = username.toUpperCase().split(" ");
+    let res = words[0][0];
+
+    if (words.length > 1 && words[1][0] !== undefined ) {
+        res += words[1][0];
+    }
+    return res;
+}
+
+function filterUsers(username) {
+    let lines =  $(".line");
+
+    showAllLines()
+
+    for (let index = 1; index < lines.length; index++) {
+        
+        if (username != lines[index].children[2].children[1].innerHTML) {
+            $("#" + lines[index].id).hide();
+        }
+    }
+}
+
+function showAllLines() {
+    let lines =  $(".line");
+    for (let index = 1; index < lines.length; index++) {
+        $("#" + lines[index].id).show();
+    }
+
+    $("#-1").hide();
+}
+
+function setCreationDate(startDate, endDate) {
+    $(".start-date").html(startDate)
+
+    $(".end-date").html(endDate)
+}
+
+$(document).ready(function () {
+
+    $('select').on('change', function (user) {
+        try {
+            filterUsers($(".selectize-input .item")[0].innerHTML);
+        } catch (error) {
+            showAllLines();
+        }
+    });
+});
+
+
+
 {/footer_script}
 
 <div class="container"> 
 
     <div class="activity-header">
         <div class="select-user">
-            <span class="select-user-title"> Selected user </span>
-
-            {* <select class="user-selecter" name="users">
-                <option>--Select option--</option>
-                <option> Eren </option>
-                <option> Mikasa</option>
-                <option> Rivaille</option>
-                <option> Armin</option>
-                <option> Zoe</option>
-            </select> *}
-
+            <span class="select-user-title"> {'Selected user'|translate} </span>
             
-            <select class="user-selecter" data-selectize="users" placeholder="{'Select user'|translate}"
+            <select class="user-selecter" data-selectize="users" placeholder="{'none'|translate}"
                 single style="width:250px; height: 10px;"></select>
             
             <span class="icon-cancel cancel-icon"> </span>
 
         </div>
         <div class="acivity-time">
-            <span class="acivity-time-text"> Activity time from</span>
-            <span class="start-date"> 1 January 1970 </span>
-            <span class="acivity-time-text"> to </span>
-            <span class="end-date"> 15 April 2021 </span>
+            <span class="acivity-time-text"> {'Activity time from'|translate}</span>
+            <span class="start-date">
+                <span class="icon-spin6 animate-spin"></span>
+            </span>
+            <span class="acivity-time-text"> {'to'|translate}</span>
+            <span class="end-date">
+                <span class="icon-spin6 animate-spin"></span>
+            </span>
         </div>
     </div>
 
@@ -60,19 +323,19 @@ jQuery(".cancel-icon").click(function() {
 
     <div class="tab-title">
         <div class="action-title">
-            Action
+            {'Action'|translate}
         </div>
 
         <div class="date-title">
-            Date
+            {'Date'|translate}
         </div>
 
         <div class="user-title">
-            User
+            {'User'|translate}
         </div>
 
         <div class="detail-title">
-            Detail
+            {'Details'|translate}
         </div>
     </div>
 
@@ -177,14 +440,14 @@ jQuery(".cancel-icon").click(function() {
 
 .tab-title .action-title, 
 .line .action-section {
-    min-width: 230px;
-    max-width: 280px;
+    min-width: 280px;
+    max-width: 340px;
 }
 
 .tab-title .date-title, 
 .line .date-section {
     min-width: 240px;
-    max-width: 280px;
+    max-width: 300px;
 }
 
 .tab-title .user-title, 
@@ -290,53 +553,6 @@ jQuery(".cancel-icon").click(function() {
 
 .user-section .user-name {
     font-weight: bold;
-}
-
-/* Lines Color */
-
-.line.line-color-green {
-    border-left: 5px solid #d2ffcb;
-}
-.line.line-color-green .action-type,
-.line.line-color-green .user-pic{
-    background: #d2ffcb;
-    color: #48d73d;
-}
-
-.line.line-color-red {
-    border-left: 5px solid #ffd0d0;
-}
-.line.line-color-red .action-type,
-.line.line-color-red .user-pic {
-    background: #ffd0d0;
-    color: #ff4545;
-}
-
-.line.line-color-blue {
-    border-left: 5px solid #d0ebff;
-}
-.line.line-color-blue .action-type,
-.line.line-color-blue .user-pic {
-    background: #d0ebff;
-    color: #2b84c3;
-}
-
-.line.line-color-yellow {
-    border-left: 5px solid #ffe9ce;
-}
-.line.line-color-yellow .action-type,
-.line.line-color-yellow .user-pic {
-    background: #ffe9ce;
-    color: #ffae50;
-}
-
-.line.line-color-gray {
-    border-left: 5px solid #a3a3a3;
-}
-.line.line-color-gray .action-type,
-.line.line-color-gray .user-pic {
-    background: #a3a3a3;
-    color: black;
 }
 
 /* Activity Header */
