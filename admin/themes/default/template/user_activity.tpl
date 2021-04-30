@@ -8,7 +8,7 @@
 {combine_css id='jquery.selectize' path="themes/default/js/plugins/selectize.{$themeconf.colorscheme}.css"}
 
 {combine_script id='LocalStorageCache' load='footer' path='admin/themes/default/js/LocalStorageCache.js'}
-{combine_css path="admin/themes/default/fontello/css/animation.css" order=10}
+{combine_css path="admin/themes/default/fontello/css/animation.css" order=10} {* order 10 is required, see issue 1080 *}
 {footer_script}
 {* <!-- USERS --> *}
 var usersCache = new UsersCache({
@@ -32,16 +32,67 @@ var actionType_move = "{'move'|translate}";
 var actionType_edit = "{'edit'|translate}";
 var actionType_log = "{'log'|translate}";
 
-var action_add = "{'added'|translate}";
-var action_delete = "{'deleted'|translate}";
-var action_move = "{'moved'|translate}";
-var action_edit = "{'edited'|translate}";
-var action_login = "{'logged in'|translate}";
-var action_logout = "{'logged out'|translate}";
+{* Album keys *}
 
-var object_user = "{'user'|translate}";
-var object_album = "{'album'|translate}";
-var object_photo = "{'photo'|translate}";
+var actionInfos_album_added = "{'%d album added'|translate}";
+var actionInfos_album_deleted = "{'%d album deleted'|translate}";
+var actionInfos_album_edited = "{'%d album edited'|translate}";
+var actionInfos_album_moved = "{'%d album moved'|translate}";
+
+var actionInfos_albums_added = "{'%d albums added'|translate}";
+var actionInfos_albums_deleted = "{'%d albums deleted'|translate}";
+var actionInfos_albums_edited = "{'%d albums edited'|translate}";
+var actionInfos_albums_moved = "{'%d albums moved'|translate}";
+
+{* User keys *}
+
+var actionInfos_user_added = "{'%d user added'|translate}";
+var actionInfos_user_deleted = "{'%d user deleted'|translate}";
+var actionInfos_user_edited = "{'%d user edited'|translate}";
+var actionInfos_user_logged_in = "{'%d user logged in'|translate}";
+var actionInfos_user_logged_out = "{'%d user logged out'|translate}";
+
+var actionInfos_users_added = "{'%d users added'|translate}";
+var actionInfos_users_deleted = "{'%d users deleted'|translate}";
+var actionInfos_users_edited = "{'%d users edited'|translate}";
+var actionInfos_users_logged_in = "{'%d users logged in'|translate}";
+var actionInfos_users_logged_out = "{'%d users logged out'|translate}";
+
+{* Photo keys *}
+
+var actionInfos_photo_added = "{'%d photo added'|translate}";
+var actionInfos_photo_deleted = "{'%d photo deleted'|translate}";
+var actionInfos_photo_edited = "{'%d photo edited'|translate}";
+var actionInfos_photo_moved = "{'%d photo moved'|translate}";
+
+var actionInfos_photos_added = "{'%d photos added'|translate}";
+var actionInfos_photos_deleted = "{'%d photos deleted'|translate}";
+var actionInfos_photos_edited = "{'%d photos edited'|translate}";
+var actionInfos_photos_moved = "{'%d photos moved'|translate}";
+
+{* Group keys *}
+
+var actionInfos_group_added = "{'%d group added'|translate}";
+var actionInfos_group_deleted = "{'%d group deleted'|translate}";
+var actionInfos_group_edited = "{'%d group edited'|translate}";
+var actionInfos_group_moved = "{'%d group moved'|translate}";
+
+var actionInfos_groups_added = "{'%d groups added'|translate}";
+var actionInfos_groups_deleted = "{'%d groups deleted'|translate}";
+var actionInfos_groups_edited = "{'%d groups edited'|translate}";
+var actionInfos_groups_moved = "{'%d groups moved'|translate}";
+
+{* Tags keys *}
+
+var actionInfos_tag_added = "{'%d tag added'|translate}";
+var actionInfos_tag_deleted = "{'%d tag deleted'|translate}";
+var actionInfos_tag_edited = "{'%d tag edited'|translate}";
+var actionInfos_tag_moved = "{'%d tag moved'|translate}";
+
+var actionInfos_tags_added = "{'%d tags added'|translate}";
+var actionInfos_tags_deleted = "{'%d tags deleted'|translate}";
+var actionInfos_tags_edited = "{'%d tags edited'|translate}";
+var actionInfos_tags_moved = "{'%d tags moved'|translate}";
 
 {*<-- Getting and Displaying Activities -->*}
 
@@ -82,130 +133,364 @@ function lineConstructor(line) {
 
     newLine.removeClass("hide");
 
-    // console.log(line);
+    console.log(line);
     // newLine.attr("id", line.line_id);
     newLine.attr("id", line.id);
 
-    switch (line.object) { // La gestion du pluriel se fera ici.
-        case "user":
-            line.object = object_user;
-        break;
+    var final_albumInfos;
 
-        case "album":
-            line.object = object_album;
-        break;
+    {* Determines wich string need to be placed in the line constructed *}
 
-        case "photo":
-            line.object = object_photo;
-        break;
-    };
-
-    switch (line.action) {
-        case "edit":
+    if (line.counter > 1) {
+        // pluriel
+        switch (line.action) {
+            case "edit":
             newLine.find(".action-type").addClass("icon-blue");
             newLine.find(".user-pic").addClass("icon-blue");
             newLine.find(".action-icon").addClass("icon-pencil");
 
-            newLine.find(".action").html(action_edit);
             newLine.find(".action-name").html(actionType_edit);
-
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-            } else {
-                newLine.find(".object").html(line.object);
-            }
-            break;
+                switch (line.object) {
+                    case "user":
+                    console.log("userS Edited");
+                    final_albumInfos = actionInfos_users_edited.replace('%d', line.counter);
     
-        case "add":
+                    break;
+                    case "album":
+                    console.log("albumS Edited");
+                    final_albumInfos = actionInfos_albums_edited.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    console.log("groupS Edited");
+                    final_albumInfos = actionInfos_groups_edited.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_photos_edited.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_edited.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+                
+            break;
+
+            case "add":
             newLine.find(".action-type").addClass("icon-green");
             newLine.find(".user-pic").addClass("icon-green");
             newLine.find(".action-icon").addClass("icon-plus");
 
-            newLine.find(".action").html(action_add);
             newLine.find(".action-name").html(actionType_add);
+                switch (line.object) {
+                    case "user":
+                    console.log("userS Added");
+                    final_albumInfos = actionInfos_users_added.replace('%d', line.counter);
 
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-            } else {
-                newLine.find(".object").html(line.object);
-            }
+                    break;
+                    case "album":
+                    console.log("albumS Added");
+                    final_albumInfos = actionInfos_albums_added.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    console.log("groupS Added");
+                    final_albumInfos = actionInfos_groups_added.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    console.log("photoS Added");
+                    final_albumInfos = actionInfos_photos_added.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_added.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+
             break;
-    
-        case "delete":
+
+            case "delete":
             newLine.find(".action-type").addClass("icon-red");
             newLine.find(".user-pic").addClass("icon-red");
             newLine.find(".action-icon").addClass("icon-trash-1");
 
-            newLine.find(".action").html(action_delete);
             newLine.find(".action-name").html(actionType_delete);
+                switch (line.object) {
+                    case "user":
+                    console.log("userS Deleted");
+                    final_albumInfos = actionInfos_users_deleted.replace('%d', line.counter);
 
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-            } else {
-                newLine.find(".object").html(line.object);
-            }
-            
+                    break;
+                    case "album":
+                    console.log("albumS Deleted");
+                    final_albumInfos = actionInfos_albums_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    console.log("groupS Deleted");
+                    final_albumInfos = actionInfos_groups_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    console.log("photoS Deleted");
+                    final_albumInfos = actionInfos_photos_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_deleted.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+
             break;
-    
-        case "move":
+
+            case "move":
             newLine.find(".action-type").addClass("icon-yellow");
             newLine.find(".user-pic").addClass("icon-yellow");
             newLine.find(".action-icon").addClass("icon-move");
 
-            newLine.find(".action").html(action_move);
             newLine.find(".action-name").html(actionType_move);
+                switch (line.object) {
+                    case "album":
+                    console.log("albumS Moved");
+                    final_albumInfos = actionInfos_albums_moved.replace('%d', line.counter);
 
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-            } else {
-                newLine.find(".object").html(line.object);
-            }
+                    break;
+                    case "group":
+                    console.log("groupS Moved");
+                    final_albumInfos = actionInfos_groups_moved.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    console.log("photoS Moved");
+                    final_albumInfos = actionInfos_photos_moved.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
 
             break;
 
-        case "login":
+            case "login":
             newLine.find(".action-type").addClass("icon-purple");
             newLine.find(".user-pic").addClass("icon-purple");
+            newLine.find(".action-icon").addClass("icon-users");
 
-            newLine.find(".action").html(action_login);
             newLine.find(".action-name").html(actionType_log);
 
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-                newLine.find(".action-icon").addClass("icon-users");
-            } else {
-                newLine.find(".object").html(line.object);
-                newLine.find(".action-icon").addClass("icon-user-1");
-            }
-            
+            console.log("userS Logged in");
+            final_albumInfos = actionInfos_users_logged_in.replace('%d', line.counter);
+
             break;
- 
-        case "logout":
+
+            case "logout":
             newLine.find(".action-type").addClass("icon-purple");
-            newLine.find(".user-pic").addClass("icon-purple ");
+            newLine.find(".user-pic").addClass("icon-purple");
+            newLine.find(".action-icon").addClass("icon-users");
 
-            newLine.find(".action").html(action_logout);
             newLine.find(".action-name").html(actionType_log);
 
-            if (line.counter > 1) {
-                newLine.find(".object").html(line.object + "s");
-                newLine.find(".action-icon").addClass("icon-users");
-            } else {
-                newLine.find(".object").html(line.object);
-                newLine.find(".action-icon").addClass("icon-user-1");
-            }
+            console.log("userS Logged in");
+            final_albumInfos = actionInfos_users_logged_out.replace('%d', line.counter);
+
+            break;
+
+            default:
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
+            break;
+        }
+    } else {
+        // singulier
+        switch (line.action) {
+            case "edit":
+            newLine.find(".action-type").addClass("icon-blue");
+            newLine.find(".user-pic").addClass("icon-blue");
+            newLine.find(".action-icon").addClass("icon-pencil");
+
+            newLine.find(".action-name").html(actionType_edit);
+                switch (line.object) {
+                    case "user":
+                    final_albumInfos = actionInfos_user_edited.replace('%d', line.counter);
+
+                    break;
+                    case "album":
+                    final_albumInfos = actionInfos_album_edited.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    final_albumInfos = actionInfos_group_edited.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    final_albumInfos = actionInfos_photo_edited.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+
             
             break;
-        default:
-            newLine.addClass("line-color-gray");
-            newLine.find(".action-name").html("Error");
+            case "add":
+            newLine.find(".action-type").addClass("icon-green");
+            newLine.find(".user-pic").addClass("icon-green");
+            newLine.find(".action-icon").addClass("icon-plus");
 
-            newLine.find(".object").html("ERROR ERROR")
+            newLine.find(".action-name").html(actionType_add);
+                switch (line.object) {
+                    case "user":
+                    final_albumInfos = actionInfos_user_added.replace('%d', line.counter);
+
+                    break;
+                    case "album":
+                    final_albumInfos = actionInfos_album_added.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    final_albumInfos = actionInfos_group_added.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    final_albumInfos = actionInfos_photo_added.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+
+                    break;
+                }
+
             break;
+            case "delete":
+            newLine.find(".action-type").addClass("icon-red");
+            newLine.find(".user-pic").addClass("icon-red");
+            newLine.find(".action-icon").addClass("icon-trash-1");
+
+            newLine.find(".action-name").html(actionType_delete);
+                switch (line.object) {
+                    case "user":
+                    final_albumInfos = actionInfos_user_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "album":
+                    final_albumInfos = actionInfos_album_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    final_albumInfos = actionInfos_group_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    final_albumInfos = actionInfos_photo_deleted.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+
+            break;
+            case "move":
+            newLine.find(".action-type").addClass("icon-yellow");
+            newLine.find(".user-pic").addClass("icon-yellow");
+            newLine.find(".action-icon").addClass("icon-move");
+
+            newLine.find(".action-name").html(actionType_move);
+                switch (line.object) {
+                    case "album":
+                    final_albumInfos = actionInfos_album_moved.replace('%d', line.counter);
+
+                    break;
+                    case "group":
+                    final_albumInfos = actionInfos_group_moved.replace('%d', line.counter);
+
+                    break;
+                    case "photo":
+                    final_albumInfos = actionInfos_photo_moved.replace('%d', line.counter);
+
+                    break;
+                    case "tag":
+                    console.log("photoS Edited");
+                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+
+                    break;
+                    default:
+                     final_albumInfos = line.counter + " " +line.object + " " + line.action;
+                    break;
+                }
+
+            break;
+            case "login":
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
+            newLine.find(".action-icon").addClass("icon-user-1");
+
+            newLine.find(".action-name").html(actionType_log);
+
+            final_albumInfos = actionInfos_user_logged_in.replace('%d', line.counter);
+
+            break;
+            case "logout":
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
+            newLine.find(".action-icon").addClass("icon-user-1");
+
+            newLine.find(".action-name").html(actionType_log);
+          
+            final_albumInfos = actionInfos_user_logged_out.replace('%d', line.counter);
+
+            break;
+
+            default:
+            newLine.find(".action-type").addClass("icon-purple");
+            newLine.find(".user-pic").addClass("icon-purple");
+            break;
+        }
     }
 
+    newLine.find(".action-infos-test").html(final_albumInfos);
+
     /* Action_section */
-    {* newLine.find(".action-name").html(line.action); *}
     newLine.find(".nb_items").html(line.counter);
     
     /* Date_section */
@@ -291,8 +576,6 @@ $(document).ready(function () {
     });
 });
 
-
-
 {/footer_script}
 
 <div class="container"> 
@@ -351,9 +634,10 @@ $(document).ready(function () {
                     <span class="action-name"> Edit </span>
                 </div>
                 <div class="action-infos">
-                    <span class="nb_items"> 1 </span>
-                    <span class="object"> photo</span>
-                    <span class="action"> edited </span>
+                    {* <span class="nb_items"> 1 </span> *}
+                    {* <span class="object"> photo</span>
+                    <span class="action"> edited </span> *}
+                    <span class="action-infos-test"> T </span>
                 </div>
             </div>
 

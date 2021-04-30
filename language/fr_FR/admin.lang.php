@@ -1132,9 +1132,6 @@ $lang['deletion'] = 'suppression';
 $lang['move'] = 'déplacement';
 $lang['edit'] = 'édition';
 $lang['log'] = 'connexion';
-$lang['moved'] = 'déplacé';
-$lang['edited'] = 'édité';
-$lang['logged in'] = 'connecté';
-$lang['logged in'] = 'déconnecté';
-$lang['user'] = 'utilisateur';
-$lang['photo'] = 'photo';
+
+
+
