@@ -345,23 +345,11 @@ function ws_session_getStatus($params, &$service)
 
 function ws_getActivityList($param, &$service) {
 
-  sleep(1);
+  /* Test Lantency */ 
+  // sleep(1);
   
-  // $query = 'SELECT object, action, username, ip_address, occured_on, details, count(*) as nb_items 
-  //           FROM piwigo_activity, piwigo_users 
-  //           WHERE piwigo_users.id = piwigo_activity.performed_by 
-  //           GROUP BY action, object, session_idx 
-  //           ORDER BY occured_on DESC;';
-
   $output_lines = array();
   $current_key = '';
-  
-  // $query = '
-  // SELECT
-  //     *
-  //   FROM piwigo_activity
-  //   ORDER BY activity_id DESC
-  // ;';
 
   $query = '
   SELECT 

@@ -1,9 +1,6 @@
 {include file='include/colorbox.inc.tpl'}
 {combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
 
-{* {combine_script id='activity_js_file' load='footer' path='admin/themes/default/js/user_activity.js'} *}
-
-
 {combine_script id='jquery.selectize' load='footer' path='themes/default/js/plugins/selectize.min.js'}
 {combine_css id='jquery.selectize' path="themes/default/js/plugins/selectize.{$themeconf.colorscheme}.css"}
 
@@ -108,7 +105,8 @@ function get_user_activity() {
             b: 2
         },
         success: (data) => {
-            console.log(data);
+            /* console log to help debug */
+            {* console.log(data); *}
 
             setCreationDate(data.result[data.result.length-1].date, data.result[0].date);
             $(".loading").hide();
@@ -123,8 +121,6 @@ function get_user_activity() {
             console.log(e);
         }
 
-    }).done( () => {
-        $("#-1").hide();
     })
 }
 
@@ -133,8 +129,8 @@ function lineConstructor(line) {
 
     newLine.removeClass("hide");
 
-    console.log(line);
-    // newLine.attr("id", line.line_id);
+    /* console log to help debug */
+    {* console.log(line); *}
     newLine.attr("id", line.id);
 
     var final_albumInfos;
@@ -152,27 +148,22 @@ function lineConstructor(line) {
             newLine.find(".action-name").html(actionType_edit);
                 switch (line.object) {
                     case "user":
-                    console.log("userS Edited");
                     final_albumInfos = actionInfos_users_edited.replace('%d', line.counter);
     
                     break;
                     case "album":
-                    console.log("albumS Edited");
                     final_albumInfos = actionInfos_albums_edited.replace('%d', line.counter);
 
                     break;
                     case "group":
-                    console.log("groupS Edited");
                     final_albumInfos = actionInfos_groups_edited.replace('%d', line.counter);
 
                     break;
                     case "photo":
-                    console.log("photoS Edited");
                     final_albumInfos = actionInfos_photos_edited.replace('%d', line.counter);
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
                     final_albumInfos = actionInfos_tags_edited.replace('%d', line.counter);
 
                     break;
@@ -191,27 +182,22 @@ function lineConstructor(line) {
             newLine.find(".action-name").html(actionType_add);
                 switch (line.object) {
                     case "user":
-                    console.log("userS Added");
                     final_albumInfos = actionInfos_users_added.replace('%d', line.counter);
 
                     break;
                     case "album":
-                    console.log("albumS Added");
                     final_albumInfos = actionInfos_albums_added.replace('%d', line.counter);
 
                     break;
                     case "group":
-                    console.log("groupS Added");
                     final_albumInfos = actionInfos_groups_added.replace('%d', line.counter);
 
                     break;
                     case "photo":
-                    console.log("photoS Added");
                     final_albumInfos = actionInfos_photos_added.replace('%d', line.counter);
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
                     final_albumInfos = actionInfos_tags_added.replace('%d', line.counter);
 
                     break;
@@ -230,27 +216,22 @@ function lineConstructor(line) {
             newLine.find(".action-name").html(actionType_delete);
                 switch (line.object) {
                     case "user":
-                    console.log("userS Deleted");
                     final_albumInfos = actionInfos_users_deleted.replace('%d', line.counter);
 
                     break;
                     case "album":
-                    console.log("albumS Deleted");
                     final_albumInfos = actionInfos_albums_deleted.replace('%d', line.counter);
 
                     break;
                     case "group":
-                    console.log("groupS Deleted");
                     final_albumInfos = actionInfos_groups_deleted.replace('%d', line.counter);
 
                     break;
                     case "photo":
-                    console.log("photoS Deleted");
                     final_albumInfos = actionInfos_photos_deleted.replace('%d', line.counter);
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
                     final_albumInfos = actionInfos_tags_deleted.replace('%d', line.counter);
 
                     break;
@@ -269,22 +250,18 @@ function lineConstructor(line) {
             newLine.find(".action-name").html(actionType_move);
                 switch (line.object) {
                     case "album":
-                    console.log("albumS Moved");
                     final_albumInfos = actionInfos_albums_moved.replace('%d', line.counter);
 
                     break;
                     case "group":
-                    console.log("groupS Moved");
                     final_albumInfos = actionInfos_groups_moved.replace('%d', line.counter);
 
                     break;
                     case "photo":
-                    console.log("photoS Moved");
                     final_albumInfos = actionInfos_photos_moved.replace('%d', line.counter);
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
                     final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
 
                     break;
@@ -351,8 +328,7 @@ function lineConstructor(line) {
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
-                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+                    final_albumInfos = actionInfos_tag_edited.replace('%d', line.counter);
 
                     break;
                     default:
@@ -386,8 +362,7 @@ function lineConstructor(line) {
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
-                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+                    final_albumInfos = actionInfos_tag_added.replace('%d', line.counter);
 
                     break;
                     default:
@@ -421,7 +396,7 @@ function lineConstructor(line) {
 
                     break;
                     case "tag":
-                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+                    final_albumInfos = actionInfos_tag_deleted.replace('%d', line.counter);
 
                     break;
                     default:
@@ -450,8 +425,7 @@ function lineConstructor(line) {
 
                     break;
                     case "tag":
-                    console.log("photoS Edited");
-                    final_albumInfos = actionInfos_tags_moved.replace('%d', line.counter);
+                    final_albumInfos = actionInfos_tag_moved.replace('%d', line.counter);
 
                     break;
                     default:
