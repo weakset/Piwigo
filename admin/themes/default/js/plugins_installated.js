@@ -1,4 +1,6 @@
-function setDisplayTile() {
+function setDisplayClassic() {
+    console.log("DISPLAY CLASSIC");
+
     $(".pluginDesc").show();
     $(".pluginDescCompact").hide();
     $(".pluginActions").show();
@@ -10,6 +12,8 @@ function setDisplayTile() {
 }
 
 function setDisplayCompact() {
+    console.log("DISPLAY COMPACT");
+
     $(".pluginDesc").hide();
     $(".pluginDescCompact").show();
     $(".pluginActions").hide();
@@ -18,6 +22,10 @@ function setDisplayCompact() {
     $(".pluginMiniBoxNameCell").addClass("pluginMiniBoxNameCellCompact");
 
     reduceTitle()
+}
+
+function setDisplayLine() {
+    console.log("DISPLAY LINE");
 }
 
 function reduceTitle() {
@@ -50,21 +58,30 @@ $(document).ready(function () {
         $.cookie("pwg_plugin_manager_view", "tile");
     }
 
-    if ($("#displayTile").is(":checked")) {
-        setDisplayTile();
+    if ($("#displayClassic").is(":checked")) {
+        setDisplayClassic();
     };
 
     if ($("#displayCompact").is(":checked")) {
         setDisplayCompact();
     };
 
-    $("#displayTile").change(function () {
-        setDisplayTile();
-        $.cookie("pwg_plugin_manager_view", "tile");
+    if ($("#displayLine").is(":checked")) {
+        setDisplayLine();
+    };
+
+    $("#displayClassic").change(function () {
+        setDisplayClassic();
+        $.cookie("pwg_plugin_manager_view", "classic");
     })
 
     $("#displayCompact").change(function () {
         setDisplayCompact();
         $.cookie("pwg_plugin_manager_view", "compact");
+    })
+
+    $("#displayLine").change(function () {
+        setDisplayLine();
+        $.cookie("pwg_plugin_manager_view", "line");
     })
 })

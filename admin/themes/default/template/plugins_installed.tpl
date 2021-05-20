@@ -244,7 +244,7 @@ jQuery(".pluginMiniBox").each(function(index){
 </div>
 
 <div class="AlbumViewSelector">
-    <input type="radio" name="layout" class="switchLayout" id="displayTile" {if $smarty.cookies.pwg_plugin_manager_view == 'tile' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayTile"><span class="icon-pause firstIcon tiptip" title="{'Tile View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
+    <input type="radio" name="layout" class="switchLayout" id="displayClassic" {if $smarty.cookies.pwg_plugin_manager_view == 'classic' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayClassic"><span class="icon-pause firstIcon tiptip" title="{'Classic View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-large tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
 </div>
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>

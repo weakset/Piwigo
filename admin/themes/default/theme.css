@@ -1951,7 +1951,7 @@ h2:lang(en) { text-transform:capitalize; }
 .pluginBoxesTitle span {border-radius: 50%; margin-right: 5px; padding: 4px}
 
 .pluginBoxesTitle {display: flex;align-items: center}
-.pluginFilter {justify-content: end;position: absolute;right: 130px; z-index: 2; transform: translateY(6px);}
+.pluginFilter {justify-content: end;position: absolute;right: 160px; z-index: 2; transform: translateY(6px);}
 
 .pluginBoxesCount {
   background-color: rgb(150, 150, 150);
