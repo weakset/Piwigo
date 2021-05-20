@@ -856,7 +856,7 @@ $(document).ready(function () {
 
 .start-date, 
 .end-date {
-    padding: 3px 6px;
+    padding: 5px 10px;
     background: #eaeaea;
     border-radius: 50px;
     margin: 5px;
