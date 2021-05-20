@@ -477,14 +477,14 @@ function lineConstructor(line) {
 
     /* Detail_section */
     newLine.find(".detail-item-1").html(line.ip_address);
-    newLine.find(".detail-item-1").attr("title", "Ip");
+    newLine.find(".detail-item-1").attr("title", "IP");
 
     if (line.detailsType == "script") {
         newLine.find(".detail-item-2").html(line.details.script);
-        newLine.find(".detail-item-2").attr('title', 'script');
+        newLine.find(".detail-item-2").attr('title', 'Script');
     } else if (line.detailsType == "method") {
         newLine.find(".detail-item-2").html(line.details.method);
-        newLine.find(".detail-item-2").attr('title', 'method');
+        newLine.find(".detail-item-2").attr('title', 'API Method');
     }   
     
     if (line.details.agent) {
