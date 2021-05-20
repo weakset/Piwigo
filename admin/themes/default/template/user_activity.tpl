@@ -692,13 +692,13 @@ $(document).ready(function () {
 }
 
 .tab-title div:first-child {
-    margin: 0 4px 10px 23px;
+    margin: 0 0 10px 23px;
 
 }
 
 .tab-title .action-title, 
 .line .action-section {
-    min-width: 280px;
+    min-width: 290px;
     max-width: 340px;
 }
 
@@ -745,7 +745,7 @@ $(document).ready(function () {
     border-radius: 20px;
 
     min-width: 50px; 
-    max-width: 200px;
+    max-width: 150px;
 
     text-align: center;
 
