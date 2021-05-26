@@ -60,6 +60,15 @@ function normalTitle() {
     }
 }
 
+function activatePlugin() {
+    console.log("Plugin activated");
+}
+
+function disactivatePlugin() {
+    console.log("Plugin disactivated");
+}
+
+
 $(document).ready(function () {
 
     if (!$.cookie("pwg_plugin_manager_view")) {
@@ -91,5 +100,13 @@ $(document).ready(function () {
     $("#displayLine").change(function () {
         setDisplayLine();
         $.cookie("pwg_plugin_manager_view", "line");
+    })
+
+    $(".switch").change(function () {
+        if ($("#toggleSelectionMode").is(':checked')) {
+            activatePlugin();
+        } else {
+            disactivatePlugin()
+        }
     })
 })

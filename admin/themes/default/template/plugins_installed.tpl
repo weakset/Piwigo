@@ -275,6 +275,12 @@ jQuery(".pluginMiniBox").each(function(index){
         {/if}
       </div>
 
+    <label class="switch">
+      <input type="checkbox" id="toggleSelectionMode" {if {$plugin.STATE} === "active"} checked {/if}>
+      <span class="slider round"></span>
+    </label>
+  
+
       <div class="pluginActionsSmallIcons">
         {if $plugin.STATE == 'active'}
           {if $plugin.SETTINGS_URL != ''}
@@ -479,6 +485,10 @@ jQuery(".pluginMiniBox").each(function(index){
   padding: 0 20px;
 }
 
+.switch {
+  margin: 0 10px 0 0;
+}
+
 /* Line view */
 
 .pluginContainer.line {
@@ -513,7 +523,7 @@ jQuery(".pluginMiniBox").each(function(index){
 
 .pluginContainer.line .pluginMiniBox .pluginDesc{
   margin:  0 0 0 10px;
-  width: 700px;
+  width: 600px;
   display: flex !important;
   align-items: center;
 
