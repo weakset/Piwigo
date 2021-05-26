@@ -244,46 +244,15 @@ jQuery(".pluginMiniBox").each(function(index){
 </div>
 
 <div class="AlbumViewSelector">
-    <input type="radio" name="layout" class="switchLayout" id="displayClassic" {if $smarty.cookies.pwg_plugin_manager_view == 'classic' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayClassic"><span class="icon-pause firstIcon tiptip" title="{'Classic View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-large tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
-</div>
+    <input type="radio" name="layout" class="switchLayout" id="displayClassic" {if $smarty.cookies.pwg_plugin_manager_view == 'classic' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayClassic"><span class="icon-pause firstIcon tiptip" title="{'Classic View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
+</div>  
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
 
+<div class="pluginContainer">
+
 {foreach from=$plugins item=plugin name=plugins_loop}
-    
-{if $field_name != $plugin.STATE}
-  {if $field_name != 'null'}
-  </div> {* PluginBoxes Container*}
-  </div> {* PluginBoxes*}
-      {/if}
 
-  <div class="pluginBoxes plugin-{$plugin.STATE}" {if $plugin.STATE == 'inactive'}{if $count_types_plugins["inactive"]>$max_inactive_before_hide}style="display:none"{/if}{/if}>
-  {assign var='field_name' value=$plugin.STATE}
-
-  <div class="pluginBoxesHead">
-      <div class="pluginBoxesTitle">
-        <p>
-        {if $plugin.STATE == 'active'}
-          <span class="icon-purple icon-toggle-on"></span>{'Active Plugins'|@translate}
-        {elseif $plugin.STATE == 'inactive'}
-          <span class="icon-red icon-toggle-off"></span>{'Inactive Plugins'|@translate}
-        {elseif $plugin.STATE == 'missing'}
-          <span class="icon-green icon-toggle-off"></span>{'Missing Plugins'|@translate}
-        {elseif $plugin.STATE == 'merged'}
-          <span class="icon-yellow icon-toggle-off"></span>{'Obsolete Plugins'|@translate}
-        {/if}
-        </p>
-        <div class="pluginBoxesCount">{$count_types_plugins[$plugin.STATE]}</div>
-      </div>
-
-      {if $plugin.STATE == 'active'}
-        <div class="deactivate_all"><a>{'Deactivate all'|@translate}</a></div>
-      {/if}
-    </div>
-
-  <div class="pluginBoxesContainer">
-{/if}
-  
   {if not empty($plugin.AUTHOR)}
     {if not empty($plugin.AUTHOR_URL)}
       {assign var='author' value="<a href='%s'>%s</a>"|@sprintf:$plugin.AUTHOR_URL:$plugin.AUTHOR}
@@ -297,8 +266,8 @@ jQuery(".pluginMiniBox").each(function(index){
   {else}
     {assign var='version' value=$plugin.VERSION}
   {/if}
-              
-  <div id="{$plugin.ID}" class="pluginMiniBox {$plugin.STATE}">
+
+  <div id="{$plugin.ID}" class="pluginMiniBox {$plugin.STATE} plugin-{$plugin.STATE}">
     <div class="pluginContent">
       <div class="PluginOptionsIcons">
         {if $plugin.STATE == 'active' || $plugin.STATE == 'inactive'}
@@ -367,14 +336,10 @@ jQuery(".pluginMiniBox").each(function(index){
       </div>
     </div>
     
-  </div> {*<!-- pluginMiniBox -->*}
-    
+  </div> 
+{/foreach}
 
-    
-  {/foreach}
-  </div> {* PluginBoxes Container*}
-  </div> {* PluginBoxes*}
-
+</div>
   <div class="showInactivePlugins" {if $count_types_plugins["inactive"]<=$max_inactive_before_hide}style="display:none"{/if} >
       <div class="showInactivePluginsInfo">
         {assign var='badge_inactive' value='<span class="pluginBoxesCount">%s</span>'|@sprintf:$count_types_plugins["inactive"]}
@@ -509,4 +474,70 @@ jQuery(".pluginMiniBox").each(function(index){
   font-weight: bold;
 }
 
+.pluginContainer {
+  margin-top: 75px;
+  padding: 0 20px;
+}
+
+/* Line view */
+
+.pluginContainer.line {
+  display: flex;
+  flex-direction: column;
+}
+
+.pluginContainer.line .pluginMiniBox {
+  width: 100%;
+  height: 50px;
+
+  margin: 0 0 10px 0;
+}
+
+.pluginContainer.line .pluginMiniBox .pluginContent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pluginContainer.line .pluginMiniBox .pluginActions{
+  width: auto;
+  margin: 0 25px 0 auto;
+}
+
+.pluginContainer.line .pluginMiniBox .pluginActions a{
+  margin: 0;
+  padding: 2px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.pluginContainer.line .pluginMiniBox .pluginDesc{
+  margin:  0 0 0 10px;
+  width: 700px;
+  display: flex !important;
+  align-items: center;
+
+  min-width: 0;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+
+
+/* Classic view */
+
+.pluginContainer.classic {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Compact view */
+
+.pluginContainer.compact {
+  display: flex;
+  flex-direction: row;
+}
 </style>
