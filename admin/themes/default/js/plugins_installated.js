@@ -38,7 +38,7 @@ function setDisplayLine() {
 
 function reduceTitle() {
     var x = document.getElementsByClassName("pluginMiniBoxNameCell");
-    var length = 20;
+    var length = 15;
 
     for (const div of x) {
         var text = div.innerHTML.trim()

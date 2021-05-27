@@ -292,9 +292,20 @@ jQuery(".pluginMiniBox").each(function(index){
             </div>
           {/if}
         {elseif $plugin.STATE == 'inactive'}
-          <div class="tiptip" title="{'Activate'|@translate}">
+          {* <div class="tiptip" title="{'Activate'|@translate}">
             <a class="icon-plus-circled" href="{$plugin.U_ACTION}&amp;action=activate" class="activate"></a>
-          </div>
+          </div> *}
+{*  *}
+        {if $plugin.SETTINGS_URL != ''}
+            <div class="tiptip" title="{'Settings'|@translate}"> 
+                <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
+            </div>
+        {else}
+            <div class="tiptip" title="{'Settings'|@translate}"> 
+              <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
+            </div>
+        {/if}
+{*  *}
         {elseif $plugin.STATE == 'missing'}
           <div class="tiptip" title="{'Uninstall'|@translate}">
             <a class="uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall"></a>
@@ -560,12 +571,33 @@ jQuery(".pluginMiniBox").each(function(index){
 .pluginContainer.classic {
   display: flex;
   flex-direction: row;
+
+  flex-wrap: wrap;
 }
 
 /* Compact view */
 
+.plugin-inactive .pluginActionsSmallIcons a {
+  pointer-events: none;
+}
+
 .pluginContainer.compact {
   display: flex;
   flex-direction: row;
+
+  flex-wrap: wrap;
+}
+
+.pluginContainer.compact .pluginMiniBox {
+  max-width: 23%;
+  width: 100%;
+  min-width: 25px;
+}
+
+.pluginContainer.compact .pluginMiniBox .pluginContent {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
 }
 </style>
