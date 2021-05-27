@@ -276,10 +276,9 @@ jQuery(".pluginMiniBox").each(function(index){
       </div>
 
     <label class="switch">
-      <input type="checkbox" id="toggleSelectionMode" {if {$plugin.STATE} === "active"} checked {/if}>
+      <input type="checkbox" id="toggleSelectionMode" {if {$plugin.STATE} === "active"}checked{/if}>
       <span class="slider round"></span>
     </label>
-  
 
       <div class="pluginActionsSmallIcons">
         {if $plugin.STATE == 'active'}
@@ -312,12 +311,8 @@ jQuery(".pluginMiniBox").each(function(index){
         <div class="pluginDescCompact">
           {$plugin.DESC}
         </div>
-        {if $plugin.STATE == 'active'}
-          <a class="dropdown-option icon-back-in-time plugin-restore separator-top" href="{$plugin.U_ACTION}&amp;action=restore">{'Restore'|@translate}</a>  
-          <a class="dropdown-option icon-cancel-circled" href="{$plugin.U_ACTION}&amp;action=deactivate">{'Deactivate'|@translate}</a>
-        {elseif $plugin.STATE == 'inactive'}
+          <a class="dropdown-option icon-back-in-time plugin-restore separator-top" href="{$plugin.U_ACTION}&amp;action=restore">{'Restore'|@translate}</a>
           <a class="dropdown-option icon-trash delete-plugin-button" href="{$plugin.U_ACTION}&amp;action=delete">{'Delete'|@translate}</a>
-        {/if}      
       </div>
       <div class="pluginMiniBoxNameCell" data-title="{$plugin.NAME}">
         {$plugin.NAME}
@@ -330,10 +325,14 @@ jQuery(".pluginMiniBox").each(function(index){
           {if $plugin.SETTINGS_URL != ''}
             <a href="{$plugin.SETTINGS_URL}" class="pluginActionLevel1 icon-cog">{'Settings'|@translate}</a>
           {else}
-            <div class="pluginUnavailableAction icon-cog tiptip" title="{'N/A'|translate}">{'Settings'|@translate}</div>
+            <a class="pluginUnavailableAction icon-cog tiptip" title="{'N/A'|translate}">{'Settings'|@translate}</a>
           {/if}
         {elseif $plugin.STATE == 'inactive'}
-          <a class="pluginActionLevel1 icon-plus" href="{$plugin.U_ACTION}&amp;action=activate" class="activate">{'Activate'|@translate}</a>
+          {if $plugin.SETTINGS_URL != ''}
+            <a href="{$plugin.SETTINGS_URL}" class="pluginUnavailableAction icon-cog">{'Settings'|@translate}</a>
+          {else}
+            <a class="pluginUnavailableAction icon-cog tiptip" title="{'N/A'|translate}">{'Settings'|@translate}</a>
+          {/if}
         {elseif $plugin.STATE == 'missing'}
           <a class="pluginActionLevel3 uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall">{'Uninstall'|@translate}</a>
         {elseif $plugin.STATE == 'merged'}
@@ -346,13 +345,15 @@ jQuery(".pluginMiniBox").each(function(index){
 {/foreach}
 
 </div>
-  <div class="showInactivePlugins" {if $count_types_plugins["inactive"]<=$max_inactive_before_hide}style="display:none"{/if} >
+
+ {* No need to hide inactives plugins *}
+  {* <div class="showInactivePlugins" {if $count_types_plugins["inactive"]<=$max_inactive_before_hide}style="display:none"{/if} >
       <div class="showInactivePluginsInfo">
         {assign var='badge_inactive' value='<span class="pluginBoxesCount">%s</span>'|@sprintf:$count_types_plugins["inactive"]}
         <div>{'You have %s inactive plugins'|translate:$badge_inactive}</div>
       </div>
       <button class="buttonLike" id="showInactivePluginsAction">{'Show inactive plugins'|@translate}</button>
-  </div>
+  </div> *}
 
 {/if}
 
@@ -489,6 +490,25 @@ jQuery(".pluginMiniBox").each(function(index){
   margin: 0 10px 0 0;
 }
 
+.plugin-inactive .pluginActions a {
+  pointer-events: none;
+}
+
+.plugin-active .dropdown .delete-plugin-button {
+  display: none;
+}
+  
+.plugin-inactive .dropdown .plugin-restore {
+ display: none;
+}
+
+.plugin-inactive .dropdown .delete-plugin-button {
+  display: block;
+}
+  
+.plugin-active .dropdown .plugin-restore {
+ display: block;
+}
 /* Line view */
 
 .pluginContainer.line {
@@ -534,8 +554,6 @@ jQuery(".pluginMiniBox").each(function(index){
   text-overflow: ellipsis;
 
 }
-
-
 
 /* Classic view */
 

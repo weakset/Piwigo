@@ -60,12 +60,59 @@ function normalTitle() {
     }
 }
 
-function activatePlugin() {
+function activatePlugin(id) {
     console.log("Plugin activated");
+    console.log(id);
+
+    $("#"+id+" .switch").attr("disabled", true);
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'ws.php',
+        data: { method: 'pwg.plugins.performAction', 
+                action: 'activate', 
+                plugin: id, 
+                pwg_token: pwg_token, 
+                format: 'json' },
+        success: function (data) {
+            console.log(data);
+            console.log("it works (activated)");
+        }, 
+        error: function () {
+            console.log("It didn't work");
+        }
+    }).done(function (data) {
+        console.log(data);
+        $("#"+id+" .switch").attr("disabled", false);
+    })
 }
 
-function disactivatePlugin() {
+function disactivatePlugin(id, action) {
     console.log("Plugin disactivated");
+    console.log(id);
+    $("#"+id+" .switch").attr("disabled", true);
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'ws.php',
+        data: { method: 'pwg.plugins.performAction', 
+                action: 'deactivate', 
+                plugin: id, 
+                pwg_token: pwg_token, 
+                format: 'json' },
+        success: function (data) {
+            console.log(data);
+            console.log("it works (deactivated)");
+        }, 
+        error: function () {
+            console.log("It didn't work");
+        }
+    }).done(function (data) {
+        console.log(data);
+        $("#"+id+" .switch").attr("disabled", false);
+    })
 }
 
 
@@ -103,10 +150,20 @@ $(document).ready(function () {
     })
 
     $(".switch").change(function () {
-        if ($("#toggleSelectionMode").is(':checked')) {
-            activatePlugin();
+        if ($(this).find("#toggleSelectionMode").is(':checked')) {
+            activatePlugin($(this).parent().parent().attr("id"));
+            console.log("activatePlugin");
+
+            $(this).parent().parent().addClass("plugin-active").removeClass("plugin-inactive");
+            if ($(this).parent().parent().find(".pluginUnavailableAction").attr("href")) {
+                $(this).parent().parent().find(".pluginUnavailableAction").removeClass("pluginUnavailableAction").addClass("pluginActionLevel1");
+            }
         } else {
-            disactivatePlugin()
+            disactivatePlugin($(this).parent().parent().attr("id"))
+            console.log("disactivatePlugin");
+
+            $(this).parent().parent().removeClass("plugin-active").addClass("plugin-inactive");
+            $(this).parent().parent().find(".pluginActionLevel1").removeClass("pluginActionLevel1").addClass("pluginUnavailableAction");
         }
     })
 })
