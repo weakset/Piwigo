@@ -78,6 +78,11 @@ function activatePlugin(id) {
         success: function (data) {
             console.log(data);
             console.log("it works (activated)");
+            if (data.stat == 'ok') {
+                let pluginName = id;
+                $("#AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
+                $("#AddPluginSuccess").css("display", "flex");
+            }
         }, 
         error: function () {
             console.log("It didn't work");
@@ -85,6 +90,7 @@ function activatePlugin(id) {
     }).done(function (data) {
         console.log(data);
         $("#"+id+" .switch").attr("disabled", false);
+        $("#AddPluginSuccess").delay(1500).fadeOut(2500);
     })
 }
 

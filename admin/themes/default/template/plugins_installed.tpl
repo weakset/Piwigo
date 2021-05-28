@@ -22,6 +22,7 @@ const cancel_msg = "{"No, I have changed my mind"|@translate}";
 let delete_plugin_msg = '{'Are you sure you want to delete the plugin "%s"?'|@translate|@escape:'javascript'}';
 let restore_plugin_msg = '{'Are you sure you want to restore the plugin "%s"?'|@translate|@escape:'javascript'}';
 const restore_tip_msg = "{'Restore default configuration. You will lose your plugin settings!'|@translate}";
+const plugin_added_str = '{'Plugin "%s" has been activated!'|@translate}';
 {literal}
 var queuedManager = jQuery.manageAjax.create('queued', { 
   queue: true,  
@@ -237,6 +238,10 @@ jQuery(".pluginMiniBox").each(function(index){
 {assign var='field_name' value='null'} {* <!-- 'counter' for fieldset management --> *}
 {counter start=0 assign=i} {* <!-- counter for 'deactivate all' link --> *}
 
+<div class="pluginTypeFilter">
+  <input type="radio" name="p-filter" class="filter" id="seeAll" checked><label for="seeAll">All</label><input type="radio" name="p-filter" class="filter" id="seeActive"><label for="seeActive">Active</label><input type="radio" name="p-filter" class="filter" id="seeInactive"><label for="seeInactive">Inactive</label><input type="radio" name="p-filter" class="filter" id="seeOther"><label for="seeOther">Other</label>
+</div>
+
 <div class="pluginFilter"> 
   <span class="icon-filter search-icon"></span>
   <span class="icon-cancel search-cancel"></span>
@@ -246,6 +251,12 @@ jQuery(".pluginMiniBox").each(function(index){
 <div class="AlbumViewSelector">
     <input type="radio" name="layout" class="switchLayout" id="displayClassic" {if $smarty.cookies.pwg_plugin_manager_view == 'classic' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayClassic"><span class="icon-pause firstIcon tiptip" title="{'Classic View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
 </div>  
+
+<div id="AddPluginSuccess">
+  <label class="icon-ok">
+    <span>{'Plugin activated'|@translate}</span>
+  </label>
+</div>
 
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
 
@@ -292,20 +303,15 @@ jQuery(".pluginMiniBox").each(function(index){
             </div>
           {/if}
         {elseif $plugin.STATE == 'inactive'}
-          {* <div class="tiptip" title="{'Activate'|@translate}">
-            <a class="icon-plus-circled" href="{$plugin.U_ACTION}&amp;action=activate" class="activate"></a>
-          </div> *}
-{*  *}
-        {if $plugin.SETTINGS_URL != ''}
-            <div class="tiptip" title="{'Settings'|@translate}"> 
+          {if $plugin.SETTINGS_URL != ''}
+              <div class="tiptip" title="{'Settings'|@translate}"> 
+                  <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
+              </div>
+          {else}
+              <div class="tiptip" title="{'Settings'|@translate}"> 
                 <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
-            </div>
-        {else}
-            <div class="tiptip" title="{'Settings'|@translate}"> 
-              <a href="{$plugin.SETTINGS_URL}"><span class="icon-cog"></span></a>
-            </div>
-        {/if}
-{*  *}
+              </div>
+          {/if}
         {elseif $plugin.STATE == 'missing'}
           <div class="tiptip" title="{'Uninstall'|@translate}">
             <a class="uninstall-plugin-button" href="{$plugin.U_ACTION}&amp;action=uninstall"></a>
@@ -418,6 +424,42 @@ jQuery(".pluginMiniBox").each(function(index){
 
 /****************************************/
 
+.filter {
+  display: none;
+}
+
+.pluginTypeFilter {
+  display: flex;
+  flex-direction: row;
+
+  position: absolute;
+
+  left: 225px;
+  z-index: 2;
+
+  transform: translateY(13px);
+}
+
+.pluginTypeFilter label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 70px;
+  height: 30px;
+
+  color: #898989;
+  background: #f3f3f3;
+  box-shadow: 0px 2px #00000024;
+}
+
+.pluginTypeFilter input:checked + label{
+  background: #ffc17e;
+  color: white;
+  box-shadow: none;
+}
+
 .pluginActionsSmallIcons a, .PluginOptionsIcons a{
   width: 25px;
   height: 25px;
@@ -520,6 +562,37 @@ jQuery(".pluginMiniBox").each(function(index){
 .plugin-active .dropdown .plugin-restore {
  display: block;
 }
+
+.plugin-inactive .pluginActionsSmallIcons {
+  opacity: 0.5;
+}
+
+#AddPluginSuccess {
+  display:none;
+  position: absolute;
+  top:80px;
+  right:30px;
+  font-weight:bold;
+}
+
+#AddPluginSuccess span {
+  color: #0a0;
+}
+
+#AddPluginSuccess label {
+  padding: 10px;
+  background-color:  #c2f5c2;
+  border-left: 2px solid #00FF00;
+  cursor: default;
+  color: #0a0;
+}
+
+#AddPluginSuccess .edit-now {
+  color: #3a3a3a;
+  cursor: pointer;
+  margin-left:10px;
+}
+
 /* Line view */
 
 .pluginContainer.line {
@@ -545,7 +618,8 @@ jQuery(".pluginMiniBox").each(function(index){
   margin: 0 25px 0 auto;
 }
 
-.pluginContainer.line .pluginMiniBox .pluginActions a{
+.pluginContainer.line .pluginMiniBox .pluginActions a,
+.pluginContainer.classic .pluginMiniBox .pluginActions a{
   margin: 0;
   padding: 2px 10px;
   border-radius: 5px;
@@ -575,6 +649,21 @@ jQuery(".pluginMiniBox").each(function(index){
   flex-wrap: wrap;
 }
 
+.pluginContainer.classic .pluginMiniBoxNameCell {
+  position: relative;
+}
+
+.pluginContainer.classic .switch {
+  position: absolute;
+  top: 45px;
+}
+
+.pluginContainer.classic .pluginMiniBox .pluginActions {
+  position: absolute;
+  top: 47px;
+  right: 17px;
+}
+
 /* Compact view */
 
 .plugin-inactive .pluginActionsSmallIcons a {
@@ -592,6 +681,8 @@ jQuery(".pluginMiniBox").each(function(index){
   max-width: 23%;
   width: 100%;
   min-width: 25px;
+
+  margin: 15px 15px 0 0;
 }
 
 .pluginContainer.compact .pluginMiniBox .pluginContent {
