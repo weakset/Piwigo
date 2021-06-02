@@ -94,7 +94,7 @@ function activatePlugin(id) {
     })
 }
 
-function disactivatePlugin(id, action) {
+function disactivatePlugin(id) {
     console.log("Plugin disactivated");
     console.log(id);
     $("#"+id+" .switch").attr("disabled", true);
@@ -121,6 +121,80 @@ function disactivatePlugin(id, action) {
     })
 }
 
+function deletePlugin(id) {
+    console.log("Plugin deletetion");
+    console.log(id);
+    console.log(pwg_token);
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'ws.php',
+        data: { method: 'pwg.plugins.performAction', 
+                action: 'delete', 
+                plugin: id, 
+                pwg_token: pwg_token, 
+                format: 'json' },
+        success: function (data) {
+            console.log(data);
+            console.log("it works (deleted)");
+        }, 
+        error: function (e) {
+            console.log(e);
+            console.log("It didn't work");
+        }
+    })
+}
+
+function restorePlugin(id) {
+    console.log("Plugin restoration");
+    console.log(id);
+    console.log(pwg_token);
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'ws.php',
+        data: { method: 'pwg.plugins.performAction', 
+                action: 'restore', 
+                plugin: id, 
+                pwg_token: pwg_token, 
+                format: 'json' },
+        success: function (data) {
+            console.log(data);
+            console.log("it works (restored)");
+        }, 
+        error: function (e) {
+            console.log(e);
+            console.log("It didn't work");
+        }
+    })
+}
+
+function uninstallPlugin(id) {
+    console.log("Plugin uninstallated");
+    console.log(id);
+    console.log(pwg_token);
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'ws.php',
+        data: { method: 'pwg.plugins.performAction', 
+                action: 'uninstall', 
+                plugin: id, 
+                pwg_token: pwg_token, 
+                format: 'json' },
+        success: function (data) {
+            console.log(data);
+            console.log("it works (uninstallated)");
+        }, 
+        error: function (e) {
+            console.log(e);
+            console.log("It didn't work");
+        }
+    })
+}
 
 $(document).ready(function () {
 
@@ -172,4 +246,73 @@ $(document).ready(function () {
             $(this).parent().parent().find(".pluginActionLevel1").removeClass("pluginActionLevel1").addClass("pluginUnavailableAction");
         }
     })
+
+
+    $(".pluginContent").find('.dropdown-option.delete-plugin-button').on('click', function () {
+        let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
+        let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
+        console.log($(this).closest(".pluginContent").parent().attr("id"));
+        $.confirm({
+          title: delete_plugin_msg.replace("%s",plugin_name),
+          buttons: {
+            confirm: {
+              text: confirm_msg,
+              btnClass: 'btn-red',
+              action: function () {
+                deletePlugin(plugin_id);
+              },
+            },
+            cancel: {
+              text: cancel_msg
+            }
+          },
+          ...jConfirm_confirm_options
+        })
+      })
+
+      $(".pluginContent").find('.dropdown-option.plugin-restore').on('click', function () {
+        let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
+        let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
+        console.log($(this).closest(".pluginContent").parent().attr("id"));
+        $.confirm({
+          title: restore_plugin_msg.replace('%s', plugin_name),
+          buttons: {
+            confirm: {
+              text: confirm_msg,
+              btnClass: 'btn-red',
+              action: function () {
+                restorePlugin(plugin_id);
+              },
+            },
+            cancel: {
+              text: cancel_msg
+            }
+          },
+          ...jConfirm_confirm_options
+        })
+      })
+
+      $(".pluginContent").find('.uninstall-plugin-button').on('click', function () {
+        let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
+        let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
+        console.log($(this).closest(".pluginContent").parent().attr("id"));
+        $.confirm({
+          title: restore_plugin_msg.replace('%s', plugin_name),
+          buttons: {
+            confirm: {
+              text: confirm_msg,
+              btnClass: 'btn-red',
+              action: function () {
+                uninstallPlugin(plugin_id);
+              },
+            },
+            cancel: {
+              text: cancel_msg
+            }
+          },
+          ...jConfirm_confirm_options
+        })
+      })
+
+      
 })

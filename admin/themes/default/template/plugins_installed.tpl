@@ -33,30 +33,6 @@ var done = 0;
 /* group action */
 
 jQuery(document).ready(function() {
-  $(".delete-plugin-button").each(function() {
-    let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
-    $(this).pwg_jconfirm_follow_href({
-      alert_title: delete_plugin_msg.replace('%s', plugin_name),
-      alert_confirm: confirm_msg,
-      alert_cancel: cancel_msg
-    });
-  });
-  $(".plugin-restore").each(function() {
-    let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
-    $(this).pwg_jconfirm_follow_href({
-      alert_title: restore_plugin_msg.replace('%s', plugin_name),
-      alert_confirm: confirm_msg,
-      alert_cancel: cancel_msg,
-      alert_content: restore_tip_msg,
-    });
-  });
-  $(".uninstall-plugin-button").each(function() {
-    $(this).pwg_jconfirm_follow_href({
-      alert_title: are_you_sure_msg,
-      alert_confirm: confirm_msg,
-      alert_cancel: cancel_msg
-    });
-  });
   jQuery('div.deactivate_all a').click(function() {
     $.confirm({
       title: deactivate_all_msg,
@@ -328,8 +304,8 @@ jQuery(".pluginMiniBox").each(function(index){
         <div class="pluginDescCompact">
           {$plugin.DESC}
         </div>
-          <a class="dropdown-option icon-back-in-time plugin-restore separator-top" href="{$plugin.U_ACTION}&amp;action=restore">{'Restore'|@translate}</a>
-          <a class="dropdown-option icon-trash delete-plugin-button" href="{$plugin.U_ACTION}&amp;action=delete">{'Delete'|@translate}</a>
+          <a class="dropdown-option icon-back-in-time plugin-restore separator-top">{'Restore'|@translate}</a>
+          <a class="dropdown-option icon-trash delete-plugin-button">{'Delete'|@translate}</a>
       </div>
       <div class="pluginMiniBoxNameCell" data-title="{$plugin.NAME}">
         {$plugin.NAME}
