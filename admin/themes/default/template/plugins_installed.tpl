@@ -653,9 +653,7 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .pluginContainer.compact .pluginMiniBox {
-  max-width: 23%;
-  width: 100%;
-  min-width: 25px;
+  width: 300px;
 
   margin: 15px 15px 0 0;
 }
