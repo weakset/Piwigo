@@ -603,17 +603,15 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .pluginContainer.line .pluginMiniBox .pluginDesc{
-  margin:  0 0 0 10px;
-  width: 600px;
-  display: flex !important;
+  margin:  auto 10px auto 10px;
+  display: block !important;
   align-items: center;
-
-  min-width: 0;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
+  flex: 1;
 }
 
 /* Classic view */
