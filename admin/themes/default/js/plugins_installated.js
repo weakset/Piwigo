@@ -196,7 +196,24 @@ function uninstallPlugin(id) {
     })
 }
 
+function actualizeFilter() {
+    $(".filterLabel").hide();
+    $(".pluginMiniBox").each(function () {
+        if ($(this).hasClass("plugin-active")) {
+            $("label[for='seeActive']").show();
+            console.log("BLEU");
+        }
+        if ($(this).hasClass("plugin-inactive")) {
+            $("label[for='seeInactive']").show();
+        }
+        if (($(this).hasClass("plugin-merged")) || ($(this).hasClass("plugin-missing"))) {
+            $("label[for='seeOther']").show();
+        }
+    })
+}
+
 $(document).ready(function () {
+    actualizeFilter();
 
     if (!$.cookie("pwg_plugin_manager_view")) {
         $.cookie("pwg_plugin_manager_view", "tile");
@@ -287,6 +304,8 @@ $(document).ready(function () {
             $(this).parent().parent().removeClass("plugin-active").addClass("plugin-inactive");
             $(this).parent().parent().find(".pluginActionLevel1").removeClass("pluginActionLevel1").addClass("pluginUnavailableAction");
         }
+        
+        actualizeFilter();
     })
 
     /**

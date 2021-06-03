@@ -215,7 +215,7 @@ jQuery(".pluginMiniBox").each(function(index){
 {counter start=0 assign=i} {* <!-- counter for 'deactivate all' link --> *}
 
 <div class="pluginTypeFilter">
-  <input type="radio" name="p-filter" class="filter" id="seeAll" checked><label for="seeAll">All</label><input type="radio" name="p-filter" class="filter" id="seeActive"><label for="seeActive">Active</label><input type="radio" name="p-filter" class="filter" id="seeInactive"><label for="seeInactive">Inactive</label><input type="radio" name="p-filter" class="filter" id="seeOther"><label for="seeOther">Other</label>
+  <input type="radio" name="p-filter" class="filter" id="seeAll" checked><label for="seeAll">All</label><input type="radio" name="p-filter" class="filter" id="seeActive"><label class="filterLabel" for="seeActive">Active</label><input type="radio" name="p-filter" class="filter" id="seeInactive"><label class="filterLabel" for="seeInactive">Inactive</label><input type="radio" name="p-filter" class="filter" id="seeOther"><label class="filterLabel" for="seeOther">Other</label>
 </div>
 
 <div class="pluginFilter"> 
