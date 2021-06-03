@@ -229,6 +229,48 @@ $(document).ready(function () {
         $.cookie("pwg_plugin_manager_view", "line");
     })
 
+    /* Plugin Filters */
+
+    $("#seeAll").on("change", function () {
+        console.log("All");
+        $(".pluginMiniBox").show();
+    })
+
+    $("#seeActive").on("change", function () {
+        console.log("Active");
+        $(".pluginMiniBox").show();
+        $(".pluginMiniBox").each(function () {
+            if (!$(this).hasClass("plugin-active")) {
+                $(this).hide();
+            }
+        })
+    })
+
+    $("#seeInactive").on("change", function () {
+        console.log("Inactive");
+        $(".pluginMiniBox").show();
+        $(".pluginMiniBox").each(function () {
+            if (!$(this).hasClass("plugin-inactive")) {
+                $(this).hide();
+            }
+        })
+    })
+
+    $("#seeOther").on("change", function () {
+        console.log("Other");
+        $(".pluginMiniBox").show();
+        $(".pluginMiniBox").each(function () {
+            if (($(this).hasClass("plugin-active") || $(this).hasClass("plugin-inactive"))) {
+                $(this).hide();
+            }
+        })
+    })
+
+
+    /* Plugin Actions */ 
+    /**
+     * Activate / Deactivate
+     */
     $(".switch").change(function () {
         if ($(this).find("#toggleSelectionMode").is(':checked')) {
             activatePlugin($(this).parent().parent().attr("id"));
@@ -247,7 +289,9 @@ $(document).ready(function () {
         }
     })
 
-
+    /**
+     * Delete
+     */
     $(".pluginContent").find('.dropdown-option.delete-plugin-button').on('click', function () {
         let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
         let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
@@ -270,6 +314,9 @@ $(document).ready(function () {
         })
       })
 
+      /**
+       * Restore
+       */
       $(".pluginContent").find('.dropdown-option.plugin-restore').on('click', function () {
         let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
         let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
@@ -292,6 +339,9 @@ $(document).ready(function () {
         })
       })
 
+      /**
+       * Uninstall
+       */
       $(".pluginContent").find('.uninstall-plugin-button').on('click', function () {
         let plugin_name = $(this).closest(".pluginContent").find(".pluginMiniBoxNameCell").html().trim();
         let plugin_id = $(this).closest(".pluginContent").parent().attr("id");
@@ -313,6 +363,4 @@ $(document).ready(function () {
           ...jConfirm_confirm_options
         })
       })
-
-      
 })
