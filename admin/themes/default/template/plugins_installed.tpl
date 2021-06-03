@@ -611,6 +611,7 @@ jQuery(".pluginMiniBox").each(function(index){
   overflow: hidden;
   text-overflow: ellipsis;
 
+  max-width: 1000px;
   flex: 1;
 }
 
