@@ -80,6 +80,7 @@ function activatePlugin(id) {
             console.log("it works (activated)");
             if (data.stat == 'ok') {
                 let pluginName = id;
+                $("#AddPluginSuccess").stop(false, true);
                 $("#AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
                 $("#AddPluginSuccess").css("display", "flex");
             }
@@ -138,6 +139,8 @@ function deletePlugin(id) {
         success: function (data) {
             console.log(data);
             console.log("it works (deleted)");
+            $("#"+id).remove();
+            actualizeFilter();
         }, 
         error: function (e) {
             console.log(e);
