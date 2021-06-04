@@ -603,6 +603,29 @@ jQuery(".pluginMiniBox").each(function(index){
   margin: 0 25px 0 auto;
 }
 
+.pluginContainer.line .pluginMiniBox .PluginOptionsBlock{
+  display:none;
+  position:absolute;
+  right: 30px;
+  top: 0;
+  z-index: 2;
+  transform: translateY(calc(50% - 30px));
+}
+
+
+.pluginContainer.line .pluginMiniBox .dropdown::after {
+  content: " ";
+  position: absolute;
+  bottom: 55%;
+  left: calc(100% + 5px);
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #ff7700 transparent;
+  transform: rotate(90deg);
+}
+
+
 .pluginContainer.line .pluginMiniBox .pluginActions a,
 .pluginContainer.classic .pluginMiniBox .pluginActions a{
   margin: 0;
