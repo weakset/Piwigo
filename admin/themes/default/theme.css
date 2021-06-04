@@ -2035,11 +2035,11 @@ h2:lang(en) { text-transform:capitalize; }
 } */
 .pluginEmptyInput {width: 90px;}
 .pluginUnavailableAction {
-  opacity: 0.5 !important;
+  opacity: 0.5;
   font-size: 12px;
   padding: 2px 10px;
   /* margin-top: 15px; */
-  background-color:#ddd !important;
+  background-color:#dddddddd;
   font-weight:700;
   border-radius: 5px;
 }
