@@ -419,9 +419,9 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .pluginTypeFilter input:checked + label{
-  background: #ffc17e;
+  background: #ffa500;
   color: white;
-  box-shadow: none;
+  box-shadow: 0 2px #d18800;
 }
 
 .pluginActionsSmallIcons a, .PluginOptionsIcons a{
@@ -673,7 +673,7 @@ jQuery(".pluginMiniBox").each(function(index){
 }
 
 .pluginContainer.compact .pluginMiniBox {
-  width: 300px;
+  width: 350px;
 
   margin: 15px 15px 0 0;
 }

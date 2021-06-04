@@ -34,11 +34,12 @@ function setDisplayLine() {
     $(".pluginDescCompact").hide();
     $(".pluginActions").show();
     $(".pluginActionsSmallIcons").hide();
+    normalTitle();
 }
 
 function reduceTitle() {
     var x = document.getElementsByClassName("pluginMiniBoxNameCell");
-    var length = 15;
+    var length = 22;
 
     for (const div of x) {
         var text = div.innerHTML.trim()
