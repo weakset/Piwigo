@@ -137,35 +137,23 @@ jQuery(document).ready(function() {
     jQuery(".pluginFilter input").on("input", function() {
       let text = jQuery(this).val().toLowerCase();
       var searchNumber = 0;
-      jQuery('.pluginBoxes').each(function () {
-        let searchNumberInBox = 0;
-        let pluginBoxes = jQuery(this);
-        pluginBoxes.find(".pluginMiniBox").each(function() {
+      
+        $(".pluginMiniBox").each(function() {
           if (text == "") {
-            jQuery(this).fadeIn()
-            searchNumberInBox++;
+            jQuery(this).fadeIn();
+            searchNumber++
           } else {
             let name = jQuery(this).find(".pluginMiniBoxNameCell").text().toLowerCase();
             let description = jQuery(this).find(".pluginDesc").text().toLowerCase();
             if (name.search(text) != -1 || description.search(text) != -1){
-              jQuery(this).fadeIn()
-              searchNumberInBox++;
+              searchNumber++;
+              jQuery(this).fadeIn();
             } else {
-              jQuery(this).fadeOut()
+              jQuery(this).fadeOut();
             }
           }
         })
-        if (searchNumberInBox == 0) {
-          pluginBoxes.fadeOut();
-        } else {
-          if (pluginBoxes.hasClass("plugin-inactive")) {
-            showInactivePlugins()
-          } else {
-            pluginBoxes.fadeIn();
-          }
-        }
-        searchNumber += searchNumberInBox;
-      });
+
       if (searchNumber == 0) {
           jQuery(".emptyResearch").fadeIn();
         } else {
