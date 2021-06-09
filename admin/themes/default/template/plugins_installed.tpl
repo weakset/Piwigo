@@ -147,7 +147,21 @@ jQuery(document).ready(function() {
             let description = jQuery(this).find(".pluginDesc").text().toLowerCase();
             if (name.search(text) != -1 || description.search(text) != -1){
               searchNumber++;
-              jQuery(this).fadeIn();
+
+              if ($("#seeAll").is(":checked")) {
+                jQuery(this).fadeIn();
+              }
+              if ($("#seeActive").is(":checked") && jQuery(this).hasClass("plugin-active")) {
+                jQuery(this).fadeIn();
+              }
+              if ($("#seeInactive").is(":checked") && jQuery(this).hasClass("plugin-inactive")) {
+                
+                jQuery(this).fadeIn();
+              }
+              if ($("#seeOther").is(":checked") && (jQuery(this).hasClass("plugin-merged") || jQuery(this).hasClass("plugin-missing"))) {
+                jQuery(this).fadeIn();
+              }
+
             } else {
               jQuery(this).fadeOut();
             }
