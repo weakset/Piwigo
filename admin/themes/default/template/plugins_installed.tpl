@@ -589,6 +589,11 @@ jQuery(".pluginMiniBox").each(function(index){
   background: #ffe5cc;
 }
 
+.pluginContainer.line .pluginMiniBox:hover.plugin-inactive .slider {
+  transition: 0.4s;
+  background: #999999;
+}
+
 .pluginContainer.line .pluginMiniBox:hover .pluginContent .pluginActions a{
   color: #ffffff;
   opacity: 1;
