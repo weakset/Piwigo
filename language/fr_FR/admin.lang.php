@@ -1173,3 +1173,4 @@ $lang['Select an album... or type it!'] = 'Sélectionnez un album... ou tapez-le
 $lang['Plugin activated!'] = 'Plugin activé!';
 $lang['Plugin deactivated!'] = 'Plugin désactivé!';
 $lang['Plugin "%s" deleted!'] = 'Plugin "%s" supprimé !';
+$lang['Plugin restored!'] = 'Plugin restoré !';

@@ -82,6 +82,7 @@ function activatePlugin(id) {
             if (data.stat == 'ok') {
                 let pluginName = id;
                 $("#" + id + " .DeactivatePluginSuccess").stop(false, true);
+                $("#" + id + " .RestorePluginSuccess").stop(false, true);
                 // $("#" + id + " .AddPluginSuccess").css("display", "none");
                 $("#" + id + " .AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
                 $("#" + id + " .AddPluginSuccess").css("display", "flex");
@@ -117,6 +118,7 @@ function disactivatePlugin(id) {
             if (data.stat == 'ok') {
                 let pluginName = id;
                 $("#" + id + " .AddPluginSuccess").stop(false, true);
+                $("#" + id + " .RestorePluginSuccess").stop(false, true);
                 // $("#" + id + " .DeactivatePluginSuccess").css("display", "none");
                 $("#" + id + " .DeactivatePluginSuccess label span:first").html(plugin_deactivated_str.replace("%s", pluginName));
                 $("#" + id + " .DeactivatePluginSuccess").css("display", "flex");
@@ -184,11 +186,21 @@ function restorePlugin(id) {
         success: function (data) {
             console.log(data);
             console.log("it works (restored)");
+            if (data.stat == 'ok') {
+                let pluginName = id;
+                $("#" + id + " .AddPluginSuccess").stop(false, true);
+                $("#" + id + " .DeactivatePluginSuccess").stop(false, true);
+                // $("#" + id + " .DeactivatePluginSuccess").css("display", "none");
+                $("#" + id + " .RestorePluginSuccess label span:first").html(plugin_restored_str.replace("%s", pluginName));
+                $("#" + id + " .RestorePluginSuccess").css("display", "flex");
+            }
         }, 
         error: function (e) {
             console.log(e);
             console.log("It didn't work");
         }
+    }).done(function (data) {
+        $("#" + id + " .RestorePluginSuccess").delay(1500).fadeOut(2500);
     })
 }
 

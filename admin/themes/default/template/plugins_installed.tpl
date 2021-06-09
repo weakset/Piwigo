@@ -25,6 +25,7 @@ let restore_plugin_msg = '{'Are you sure you want to restore the plugin "%s"?'|@
 const restore_tip_msg = "{'Restore default configuration. You will lose your plugin settings!'|@translate}";
 const plugin_added_str = '{'Plugin activated!'|@translate}';
 const plugin_deactivated_str = '{'Plugin deactivated!'|@translate}';
+const plugin_restored_str = '{'Plugin restored!'|@translate}';
 {literal}
 var queuedManager = jQuery.manageAjax.create('queued', { 
   queue: true,  
@@ -261,6 +262,12 @@ jQuery(".pluginMiniBox").each(function(index){
     </div>
 
     <div class="DeactivatePluginSuccess pluginNotif">
+      <label class="icon-ok">
+        <span>{'Plugin deactivated'|@translate}</span>
+      </label>
+    </div>
+
+    <div class="RestorePluginSuccess pluginNotif">
       <label class="icon-ok">
         <span>{'Plugin deactivated'|@translate}</span>
       </label>
@@ -588,6 +595,18 @@ jQuery(".pluginMiniBox").each(function(index){
   border-left: 2px solid #ff0000;
   cursor: default;
   color: rgb(170, 0, 0);
+}
+
+.RestorePluginSuccess span {
+  color: rgb(0, 0, 170);
+}
+
+.RestorePluginSuccess label {
+  padding: 10px;
+  background-color:  #c7c2f5;
+  border-left: 2px solid #0000ff;
+  cursor: default;
+  color: rgb(0, 0, 170);
 }
 
 /* Line view */
