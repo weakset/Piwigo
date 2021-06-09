@@ -77,13 +77,14 @@ function activatePlugin(id) {
                 pwg_token: pwg_token, 
                 format: 'json' },
         success: function (data) {
-            console.log(data);
-            console.log("it works (activated)");
+            // console.log(data);
+            // console.log("it works (activated)");
             if (data.stat == 'ok') {
                 let pluginName = id;
-                $("#AddPluginSuccess").stop(false, true);
-                $("#AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
-                $("#AddPluginSuccess").css("display", "flex");
+                $("#" + id + " .DeactivatePluginSuccess").stop(false, true);
+                // $("#" + id + " .AddPluginSuccess").css("display", "none");
+                $("#" + id + " .AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
+                $("#" + id + " .AddPluginSuccess").css("display", "flex");
             }
         }, 
         error: function () {
@@ -92,7 +93,7 @@ function activatePlugin(id) {
     }).done(function (data) {
         console.log(data);
         $("#"+id+" .switch").attr("disabled", false);
-        $("#AddPluginSuccess").delay(1500).fadeOut(2500);
+        $("#" + id + " .AddPluginSuccess").delay(1500).fadeOut(2500);
     })
 }
 
@@ -113,6 +114,13 @@ function disactivatePlugin(id) {
         success: function (data) {
             console.log(data);
             console.log("it works (deactivated)");
+            if (data.stat == 'ok') {
+                let pluginName = id;
+                $("#" + id + " .AddPluginSuccess").stop(false, true);
+                // $("#" + id + " .DeactivatePluginSuccess").css("display", "none");
+                $("#" + id + " .DeactivatePluginSuccess label span:first").html(plugin_deactivated_str.replace("%s", pluginName));
+                $("#" + id + " .DeactivatePluginSuccess").css("display", "flex");
+            }
         }, 
         error: function () {
             console.log("It didn't work");
@@ -120,6 +128,7 @@ function disactivatePlugin(id) {
     }).done(function (data) {
         console.log(data);
         $("#"+id+" .switch").attr("disabled", false);
+        $("#" + id + " .DeactivatePluginSuccess").delay(1500).fadeOut(2500);
     })
 }
 

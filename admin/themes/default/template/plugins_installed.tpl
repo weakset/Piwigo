@@ -23,7 +23,8 @@ let delete_plugin_msg = '{'Are you sure you want to delete the plugin "%s"?'|@tr
 let deleted_plugin_msg = '{'Plugin "%s" deleted!'|@translate|@escape:'javascript'}';
 let restore_plugin_msg = '{'Are you sure you want to restore the plugin "%s"?'|@translate|@escape:'javascript'}';
 const restore_tip_msg = "{'Restore default configuration. You will lose your plugin settings!'|@translate}";
-const plugin_added_str = '{'Plugin "%s" has been activated!'|@translate}';
+const plugin_added_str = '{'Plugin activated!'|@translate}';
+const plugin_deactivated_str = '{'Plugin deactivated!'|@translate}';
 {literal}
 var queuedManager = jQuery.manageAjax.create('queued', { 
   queue: true,  
@@ -231,12 +232,6 @@ jQuery(".pluginMiniBox").each(function(index){
     <input type="radio" name="layout" class="switchLayout" id="displayClassic" {if $smarty.cookies.pwg_plugin_manager_view == 'classic' || !$smarty.cookies.pwg_plugin_manager_view}checked{/if}/><label for="displayClassic"><span class="icon-pause firstIcon tiptip" title="{'Classic View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayLine" {if $smarty.cookies.pwg_plugin_manager_view == 'line'}checked{/if}/><label for="displayLine"><span class="icon-th-list tiptip" title="{'Line View'|translate}"></span></label><input type="radio" name="layout" class="switchLayout" id="displayCompact" {if $smarty.cookies.pwg_plugin_manager_view == 'compact'}checked{/if}/><label for="displayCompact"><span class="icon-th-large lastIcon tiptip" title="{'Compact View'|translate}"></span></label>
 </div>  
 
-<div id="AddPluginSuccess">
-  <label class="icon-ok">
-    <span>{'Plugin activated'|@translate}</span>
-  </label>
-</div>
-
 <div class="emptyResearch"> {'No plugins found'|@translate} </div>
 
 <div class="pluginContainer">
@@ -258,6 +253,19 @@ jQuery(".pluginMiniBox").each(function(index){
   {/if}
 
   <div id="{$plugin.ID}" class="pluginMiniBox {$plugin.STATE} plugin-{$plugin.STATE}">
+
+    <div class="AddPluginSuccess pluginNotif">
+      <label class="icon-ok">
+        <span>{'Plugin activated'|@translate}</span>
+      </label>
+    </div>
+
+    <div class="DeactivatePluginSuccess pluginNotif">
+      <label class="icon-ok">
+        <span>{'Plugin deactivated'|@translate}</span>
+      </label>
+    </div>
+
     <div class="pluginContent">
       <div class="PluginOptionsIcons">
         {if $plugin.STATE == 'active' || $plugin.STATE == 'inactive'}
@@ -479,6 +487,7 @@ jQuery(".pluginMiniBox").each(function(index){
 
 .pluginMiniBox {
   transition: 0.5s;
+  position: relative;
 }
 
 .unavailablePlugin {
@@ -546,19 +555,22 @@ jQuery(".pluginMiniBox").each(function(index){
   opacity: 0.5;
 }
 
-#AddPluginSuccess {
+.pluginNotif {
   display:none;
   position: absolute;
-  top:80px;
-  right:30px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -20px;
   font-weight:bold;
+  z-index: 2;
+  white-space: nowrap;
 }
 
-#AddPluginSuccess span {
+.AddPluginSuccess span {
   color: #0a0;
 }
 
-#AddPluginSuccess label {
+.AddPluginSuccess label {
   padding: 10px;
   background-color:  #c2f5c2;
   border-left: 2px solid #00FF00;
@@ -566,10 +578,16 @@ jQuery(".pluginMiniBox").each(function(index){
   color: #0a0;
 }
 
-#AddPluginSuccess .edit-now {
-  color: #3a3a3a;
-  cursor: pointer;
-  margin-left:10px;
+.DeactivatePluginSuccess span {
+  color: rgb(170, 0, 0);
+}
+
+.DeactivatePluginSuccess label {
+  padding: 10px;
+  background-color:  #f5c2c2;
+  border-left: 2px solid #ff0000;
+  cursor: default;
+  color: rgb(170, 0, 0);
 }
 
 /* Line view */
