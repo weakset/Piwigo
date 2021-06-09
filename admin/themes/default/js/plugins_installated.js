@@ -123,31 +123,39 @@ function disactivatePlugin(id) {
     })
 }
 
-function deletePlugin(id) {
+function deletePlugin(id, name) {
     console.log("Plugin deletetion");
     console.log(id);
     console.log(pwg_token);
 
-    $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        url: 'ws.php',
-        data: { method: 'pwg.plugins.performAction', 
-                action: 'delete', 
-                plugin: id, 
-                pwg_token: pwg_token, 
-                format: 'json' },
-        success: function (data) {
-            console.log(data);
-            console.log("it works (deleted)");
-            $("#"+id).remove();
-            actualizeFilter();
-        }, 
-        error: function (e) {
-            console.log(e);
-            console.log("It didn't work");
-        }
-    })
+    $.alert({
+        title : deleted_plugin_msg.replace("%s",name),
+        content: function() {
+        return $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: 'ws.php',
+                    data: { method: 'pwg.plugins.performAction', 
+                            action: 'delete', 
+                            plugin: id, 
+                            pwg_token: pwg_token, 
+                            format: 'json' },
+                    success: function (data) {
+                        console.log(data);
+                        console.log("it works (deleted)");
+                        if (data.stat === "ok") {
+                            $("#"+id).remove();  
+                            actualizeFilter();
+                        }
+                    }, 
+                    error: function (e) {
+                        console.log(e);
+                        console.log("It didn't work");
+                    }
+                })
+            },
+        ...jConfirm_alert_options
+    });
 }
 
 function restorePlugin(id) {
@@ -326,7 +334,7 @@ $(document).ready(function () {
               text: confirm_msg,
               btnClass: 'btn-red',
               action: function () {
-                deletePlugin(plugin_id);
+                deletePlugin(plugin_id, plugin_name);
               },
             },
             cancel: {

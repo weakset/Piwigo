@@ -1169,3 +1169,4 @@ $lang['Apply to the whole hierarchy'] = 'Apply to the whole hierarchy';
 $lang['<b>%d+</b> albums found, try to refine the search'] = '<b>%d+</b> albums found, try to refine the search';
 $lang['Select an album... or type it!'] = 'Select an album... or type it!';
 $lang['Plugin "%s" has been activated!'] = 'Plugin "%s" has been activated!';
+$lang['Plugin "%s" deleted!'] = 'Plugin "%s" deleted!';
