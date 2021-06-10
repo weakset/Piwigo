@@ -675,20 +675,6 @@ $(document).ready(function () {
     display: none !important;
 }
 
-.line {
-    background: #fafafa;
-    box-shadow: 0px 2px 4px #00000024;
-
-    display: flex;
-    flex-direction: row;
-
-    height: 40px;
-
-    align-items: center;
-
-    margin-bottom: 10px;
-}
-
 .tab-title div {
     text-align: left;
     font-size: 1.1em;
@@ -746,25 +732,6 @@ $(document).ready(function () {
     display: flex;
     flex-grow: 1;
     margin-right: 0;
-}
-
-.line .detail-item {
-    background: #f0f0f0f0;
-    margin: 0 10px 0 0;
-    padding: 3px 6px;
-    border-radius: 20px;
-
-    min-width: 50px; 
-    max-width: 150px;
-
-    text-align: center;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: default;
-
-    white-space: nowrap;
-
 }
 
 .action-section {
@@ -835,19 +802,6 @@ $(document).ready(function () {
     width: 100%;
 }
 
-.select-user {
-    background: #fafafa;
-    height: 50%;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 20px;
-
-    box-shadow: 0px 2px 4px #00000024;
-    border-radius: 5px;
-}
-
 .select-user span {
     font-size: 15px;
     font-weight: bold;
@@ -857,19 +811,6 @@ $(document).ready(function () {
 
 .acivity-time {
     margin: 0 25px;
-}
-
-.acivity-time-text {
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.start-date, 
-.end-date {
-    padding: 5px 10px;
-    background: #eaeaea;
-    border-radius: 50px;
-    margin: 5px;
 }
 
 .user-selecter {
