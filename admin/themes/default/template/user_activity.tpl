@@ -515,13 +515,17 @@ function filterUsers(username) {
     let lines =  $(".line");
 
     showAllLines()
+    let resultLines = [];
 
     for (let index = 1; index < lines.length; index++) {
         
         if (username != lines[index].children[2].children[1].innerHTML) {
             $("#" + lines[index].id).hide();
+        } else  {
+            resultLines.push(lines[index].getElementsByClassName("date-day")[0].textContent)
         }
     }
+    setCreationDate((!resultLines[resultLines.length-1]) ? "-" : resultLines[resultLines.length-1], (!resultLines[0]) ? "-" : resultLines[0])
 }
 
 function showAllLines() {
@@ -546,6 +550,12 @@ $(document).ready(function () {
             filterUsers($(".selectize-input .item")[0].innerHTML);
         } catch (error) {
             showAllLines();
+            let lines =  $(".line");
+            let resultLines = [];
+            for (let index = 1; index < lines.length; index++) {
+                resultLines.push(lines[index].getElementsByClassName("date-day")[0].textContent)
+            }
+            setCreationDate((!resultLines[resultLines.length-1]) ? "-" : resultLines[resultLines.length-1], (!resultLines[0]) ? "-" : resultLines[0])
         }
     });
 });
