@@ -330,7 +330,7 @@ jQuery(".pluginMiniBox").each(function(index){
           {$plugin.DESC}
         </div>
           <a class="dropdown-option icon-back-in-time plugin-restore separator-top">{'Restore'|@translate}</a>
-          <a class="dropdown-option icon-trash delete-plugin-button">{'Delete'|@translate}</a>
+          <a class="dropdown-option icon-trash delete-plugin-button separator-top">{'Delete'|@translate}</a>
       </div>
       <div class="pluginMiniBoxNameCell" data-title="{$plugin.NAME}">
         {$plugin.NAME}
