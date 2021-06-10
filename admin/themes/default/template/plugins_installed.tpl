@@ -257,25 +257,25 @@ jQuery(".pluginMiniBox").each(function(index){
   <div id="{$plugin.ID}" class="pluginMiniBox {$plugin.STATE} plugin-{$plugin.STATE}">
 
     <div class="AddPluginSuccess pluginNotif">
-      <label class="icon-ok">
+      <label class="">
         <span>{'Plugin activated'|@translate}</span>
       </label>
     </div>
 
     <div class="DeactivatePluginSuccess pluginNotif">
-      <label class="icon-ok">
+      <label class="">
         <span>{'Plugin deactivated'|@translate}</span>
       </label>
     </div>
 
     <div class="RestorePluginSuccess pluginNotif">
-      <label class="icon-ok">
+      <label class="">
         <span>{'Plugin deactivated'|@translate}</span>
       </label>
     </div>
 
     <div class="PluginActionError pluginNotif">
-      <label class="icon-ok">
+      <label class="">
         <span>{'Plugin deactivated'|@translate}</span>
       </label>
     </div>
@@ -361,18 +361,7 @@ jQuery(".pluginMiniBox").each(function(index){
     
   </div> 
 {/foreach}
-
 </div>
-
- {* No need to hide inactives plugins *}
-  {* <div class="showInactivePlugins" {if $count_types_plugins["inactive"]<=$max_inactive_before_hide}style="display:none"{/if} >
-      <div class="showInactivePluginsInfo">
-        {assign var='badge_inactive' value='<span class="pluginBoxesCount">%s</span>'|@sprintf:$count_types_plugins["inactive"]}
-        <div>{'You have %s inactive plugins'|translate:$badge_inactive}</div>
-      </div>
-      <button class="buttonLike" id="showInactivePluginsAction">{'Show inactive plugins'|@translate}</button>
-  </div> *}
-
 {/if}
 
 
@@ -587,9 +576,9 @@ jQuery(".pluginMiniBox").each(function(index){
 .AddPluginSuccess label {
   padding: 10px;
   background-color:  #c2f5c2;
-  border-left: 2px solid #00FF00;
   cursor: default;
   color: #0a0;
+  border-radius: 30px;
 }
 
 .DeactivatePluginSuccess span,
@@ -601,9 +590,9 @@ jQuery(".pluginMiniBox").each(function(index){
 .PluginActionError label {
   padding: 10px;
   background-color:  #f5c2c2;
-  border-left: 2px solid #ff0000;
   cursor: default;
   color: rgb(170, 0, 0);
+  border-radius: 30px;
 }
 
 .RestorePluginSuccess span {
@@ -613,9 +602,9 @@ jQuery(".pluginMiniBox").each(function(index){
 .RestorePluginSuccess label {
   padding: 10px;
   background-color:  #c7c2f5;
-  border-left: 2px solid #0000ff;
   cursor: default;
   color: rgb(0, 0, 170);
+  border-radius: 30px;
 }
 
 /* Line view */
