@@ -1083,6 +1083,10 @@ li.plupload_delete a:hover {background: url("images/cancelhover.svg")!important;
   background-color:#999999;
 }
 
+.pluginContent {
+  border-left: solid 5px #ff8c27;
+}
+
 .pluginUnavailableAction{
   background-color:#888;
   color:#666;
