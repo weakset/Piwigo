@@ -77,24 +77,25 @@ function activatePlugin(id) {
                 pwg_token: pwg_token, 
                 format: 'json' },
         success: function (data) {
-            // console.log(data);
-            // console.log("it works (activated)");
             if (data.stat == 'ok') {
                 let pluginName = id;
-                $("#" + id + " .DeactivatePluginSuccess").stop(false, true);
-                $("#" + id + " .RestorePluginSuccess").stop(false, true);
-                // $("#" + id + " .AddPluginSuccess").css("display", "none");
+                $("#" + id + " .pluginNotif").stop(false, true);
                 $("#" + id + " .AddPluginSuccess label span:first").html(plugin_added_str.replace("%s", pluginName));
                 $("#" + id + " .AddPluginSuccess").css("display", "flex");
             }
         }, 
         error: function () {
+            console.log(e);
             console.log("It didn't work");
+            $("#" + id + " .pluginNotif").stop(false, true);
+            $("#" + id + " .PluginActionError label span:first").html(plugin_action_error);
+            $("#" + id + " .PluginActionError").css("display", "flex");
+            $("#" + id + " .PluginActionError").delay(1500).fadeOut(2500);
         }
     }).done(function (data) {
         console.log(data);
         $("#"+id+" .switch").attr("disabled", false);
-        $("#" + id + " .AddPluginSuccess").delay(1500).fadeOut(2500);
+        $("#" + id + " .AddPluginSuccess").fadeOut(2500);
     })
 }
 
@@ -113,24 +114,25 @@ function disactivatePlugin(id) {
                 pwg_token: pwg_token, 
                 format: 'json' },
         success: function (data) {
-            console.log(data);
-            console.log("it works (deactivated)");
             if (data.stat == 'ok') {
                 let pluginName = id;
-                $("#" + id + " .AddPluginSuccess").stop(false, true);
-                $("#" + id + " .RestorePluginSuccess").stop(false, true);
-                // $("#" + id + " .DeactivatePluginSuccess").css("display", "none");
+                $("#" + id + " .pluginNotif").stop(false, true);
                 $("#" + id + " .DeactivatePluginSuccess label span:first").html(plugin_deactivated_str.replace("%s", pluginName));
                 $("#" + id + " .DeactivatePluginSuccess").css("display", "flex");
             }
         }, 
         error: function () {
+            console.log(e);
             console.log("It didn't work");
+            $("#" + id + " .pluginNotif").stop(false, true);
+            $("#" + id + " .PluginActionError label span:first").html(plugin_action_error);
+            $("#" + id + " .PluginActionError").css("display", "flex");
+            $("#" + id + " .PluginActionError").delay(1500).fadeOut(2500);
         }
     }).done(function (data) {
         console.log(data);
         $("#"+id+" .switch").attr("disabled", false);
-        $("#" + id + " .DeactivatePluginSuccess").delay(1500).fadeOut(2500);
+        $("#" + id + " .DeactivatePluginSuccess").fadeOut(2500);
     })
 }
 
@@ -152,8 +154,6 @@ function deletePlugin(id, name) {
                             pwg_token: pwg_token, 
                             format: 'json' },
                     success: function (data) {
-                        console.log(data);
-                        console.log("it works (deleted)");
                         if (data.stat === "ok") {
                             $("#"+id).remove();  
                             actualizeFilter();
@@ -162,6 +162,10 @@ function deletePlugin(id, name) {
                     error: function (e) {
                         console.log(e);
                         console.log("It didn't work");
+                        $("#" + id + " .pluginNotif").stop(false, true);
+                        $("#" + id + " .PluginActionError label span:first").html(plugin_action_error);
+                        $("#" + id + " .PluginActionError").css("display", "flex");
+                        $("#" + id + " .PluginActionError").delay(1500).fadeOut(2500);
                     }
                 })
             },
@@ -184,13 +188,9 @@ function restorePlugin(id) {
                 pwg_token: pwg_token, 
                 format: 'json' },
         success: function (data) {
-            console.log(data);
-            console.log("it works (restored)");
             if (data.stat == 'ok') {
                 let pluginName = id;
-                $("#" + id + " .AddPluginSuccess").stop(false, true);
-                $("#" + id + " .DeactivatePluginSuccess").stop(false, true);
-                // $("#" + id + " .DeactivatePluginSuccess").css("display", "none");
+                $("#" + id + " .pluginNotif").stop(false, true);
                 $("#" + id + " .RestorePluginSuccess label span:first").html(plugin_restored_str.replace("%s", pluginName));
                 $("#" + id + " .RestorePluginSuccess").css("display", "flex");
             }
@@ -198,9 +198,13 @@ function restorePlugin(id) {
         error: function (e) {
             console.log(e);
             console.log("It didn't work");
+            $("#" + id + " .pluginNotif").stop(false, true);
+            $("#" + id + " .PluginActionError label span:first").html(plugin_action_error);
+            $("#" + id + " .PluginActionError").css("display", "flex");
+            $("#" + id + " .PluginActionError").delay(1500).fadeOut(2500);
         }
     }).done(function (data) {
-        $("#" + id + " .RestorePluginSuccess").delay(1500).fadeOut(2500);
+        $("#" + id + " .RestorePluginSuccess").fadeOut(2500);
     })
 }
 
