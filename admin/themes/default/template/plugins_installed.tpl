@@ -414,42 +414,6 @@ jQuery(".pluginMiniBox").each(function(index){
 
 /****************************************/
 
-.filter {
-  display: none;
-}
-
-.pluginTypeFilter {
-  display: flex;
-  flex-direction: row;
-
-  position: absolute;
-
-  left: 225px;
-  z-index: 2;
-
-  transform: translateY(13px);
-}
-
-.pluginTypeFilter label {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  width: 70px;
-  height: 30px;
-
-  color: #898989;
-  background: #f3f3f3;
-  box-shadow: 0px 2px #00000024;
-}
-
-.pluginTypeFilter input:checked + label{
-  background: #ffa500;
-  color: white;
-  box-shadow: 0 2px #d18800;
-}
-
 .pluginActionsSmallIcons a, .PluginOptionsIcons a{
   width: 25px;
   height: 25px;

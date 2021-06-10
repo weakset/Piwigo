@@ -1088,6 +1088,38 @@ li.plupload_delete a:hover {background: url("images/cancelhover.svg")!important;
   color:#666;
 }
 
+.pluginTypeFilter {
+  display: flex;
+  flex-direction: row;
+
+  position: absolute;
+
+  left: 225px;
+  z-index: 2;
+
+  transform: translateY(13px);
+}
+
+.pluginTypeFilter label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 70px;
+  height: 30px;
+
+  color: #c1c1c1;
+  background: #555555;
+  box-shadow: 0px 2px #00000066;
+}
+
+.pluginTypeFilter input:checked + label{
+  background: #ffa500;
+  color: #444444;
+  box-shadow: 0 2px #925f00;
+}
+
 .addAlbum label{
   color:#aaa;
   margin:-5px 0;
