@@ -1120,6 +1120,26 @@ li.plupload_delete a:hover {background: url("images/cancelhover.svg")!important;
   box-shadow: 0 2px #925f00;
 }
 
+.pluginContainer.line .pluginMiniBox:hover .pluginContent{
+  transition: 0.4s;
+  background: #333333;
+}
+
+.pluginContainer.line .pluginMiniBox:hover.plugin-inactive .slider {
+  transition: 0.4s;
+  background: #777777;
+}
+
+.pluginContainer .pluginMiniBox.plugin-inactive .slider {
+  transition: 0.4s;
+  background: #777777;
+}
+
+.pluginContainer.line .pluginMiniBox:hover .pluginContent .pluginActions .pluginUnavailableAction{
+  color: #ffffff;
+  opacity: 0.5;
+}
+
 .addAlbum label{
   color:#aaa;
   margin:-5px 0;

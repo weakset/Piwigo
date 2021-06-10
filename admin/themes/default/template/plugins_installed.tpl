@@ -584,20 +584,6 @@ jQuery(".pluginMiniBox").each(function(index){
 
   margin: 0 0 10px 0;
 }
-.pluginContainer.line .pluginMiniBox:hover .pluginContent{
-  transition: 0.4s;
-  background: #ffe5cc;
-}
-
-.pluginContainer.line .pluginMiniBox:hover.plugin-inactive .slider {
-  transition: 0.4s;
-  background: #999999;
-}
-
-.pluginContainer.line .pluginMiniBox:hover .pluginContent .pluginActions a{
-  color: #ffffff;
-  opacity: 1;
-}
 
 .pluginContainer.line .pluginMiniBox .pluginContent{
   display: flex;
@@ -618,7 +604,6 @@ jQuery(".pluginMiniBox").each(function(index){
   z-index: 2;
   transform: translateY(calc(50% - 30px));
 }
-
 
 .pluginContainer.line .pluginMiniBox .dropdown::after {
   content: " ";
