@@ -439,8 +439,7 @@ if (!$need_generate)
 
 include_once(PHPWG_ROOT_PATH . 'admin/include/image.class.php');
 $page['coi'] = null;
-if (strpos($page['src_location'], '/pwg_representative/')===false
-    && strpos($page['src_location'], 'themes/')===false
+if (strpos($page['src_location'], 'themes/')===false
     && strpos($page['src_location'], 'plugins/')===false)
 {
   try
